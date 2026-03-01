@@ -1,0 +1,77 @@
+<div class="d-flex flex-column" style="min-height: 100vh;">
+  <header class="border-bottom">
+    <nav class="navbar navbar-expand-lg bg-white">
+      <div class="container">
+        <a class="navbar-brand fw-bold" routerLink="/app">Medicare</a>
+
+        <div class="collapse navbar-collapse show">
+          <!-- Menu gauche -->
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link"
+                 routerLink="/app"
+                 routerLinkActive="active"
+                 [routerLinkActiveOptions]="{ exact: true }">
+                Home
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link"
+                 routerLink="/app/appointments"
+                 routerLinkActive="active">
+                Appointments
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link"
+                 routerLink="/app/billing"
+                 routerLinkActive="active">
+                Billing
+              </a>
+            </li>
+          </ul>
+
+          <!-- Partie droite : Auth -->
+          <div class="d-flex gap-2 align-items-center">
+            <ng-container *ngIf="(auth.user$ | async) as user; else loggedOut">
+              <span class="small text-muted">
+                Bonjour, {{ user.fullName }}
+              </span>
+              <button class="btn btn-outline-secondary btn-sm"
+                      type="button"
+                      (click)="auth.logout()">
+                Logout
+              </button>
+            </ng-container>
+
+            <ng-template #loggedOut>
+              <button class="btn btn-outline-primary btn-sm"
+                      type="button"
+                      (click)="auth.loginAs('PATIENT')">
+                Login Patient
+              </button>
+              <button class="btn btn-primary btn-sm"
+                      type="button"
+                      (click)="auth.loginAs('ADMIN')">
+                Login Admin
+              </button>
+            </ng-template>
+          </div>
+
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="flex-grow-1">
+    <div class="container py-4">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+
+  <footer class="border-top py-3 bg-light">
+    <div class="container small text-muted">
+      © Medicare
+    </div>
+  </footer>
+</div>

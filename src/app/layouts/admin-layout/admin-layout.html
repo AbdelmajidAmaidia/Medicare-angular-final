@@ -1,0 +1,59 @@
+<div class="d-flex" style="min-height: 100vh;">
+
+  <!-- Sidebar -->
+  <aside class="border-end bg-light" style="width: 260px;">
+    <div class="p-3 border-bottom">
+      <strong>Admin</strong>
+    </div>
+
+    <nav class="p-2 nav nav-pills flex-column">
+      <a class="nav-link"
+         routerLink="/admin"
+         routerLinkActive="active"
+         [routerLinkActiveOptions]="{ exact: true }">
+        Dashboard
+      </a>
+
+      <a class="nav-link"
+         routerLink="/admin/billing"
+         routerLinkActive="active">
+        Billing
+      </a>
+
+      <a class="nav-link"
+         routerLink="/admin/pharmacy"
+         routerLinkActive="active">
+        Pharmacy
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <div class="flex-grow-1 d-flex flex-column">
+
+    <!-- Header -->
+    <header class="border-bottom px-4 py-3 d-flex justify-content-between align-items-center bg-white">
+      <div>
+        <strong>Medicare Backoffice</strong>
+      </div>
+
+      <!-- User Info -->
+      <div class="d-flex align-items-center gap-2">
+        <span class="small text-muted">
+          {{ (auth.user$ | async)?.fullName || 'Guest' }}
+        </span>
+        <button class="btn btn-outline-secondary btn-sm"
+                type="button"
+                (click)="auth.logout()">
+          Logout
+        </button>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <main class="p-4 flex-grow-1">
+      <router-outlet></router-outlet>
+    </main>
+
+  </div>
+</div>
