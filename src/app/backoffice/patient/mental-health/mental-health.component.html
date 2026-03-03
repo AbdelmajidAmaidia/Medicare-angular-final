@@ -106,8 +106,8 @@
               <tbody>
                 <tr *ngFor="let session of sessions">
                   <td>
-                    <div class="fw-semibold">{{ session.startTime | date:'dd/MM/yyyy' }}</div>
-                    <small class="text-secondary">{{ session.startTime | date:'HH:mm' }}</small>
+                    <div class="fw-semibold">{{ session.startedAt | date:'dd/MM/yyyy' }}</div>
+                    <small class="text-secondary">{{ session.startedAt | date:'HH:mm' }}</small>
                   </td>
                   <td>
                     <span class="badge bg-light text-dark">
@@ -122,18 +122,18 @@
                   <td>
                     <span class="badge" 
                           *ngIf="session.stressAssessment"
-                          [ngClass]="getStressLevelBadgeClass(session.stressAssessment.level)">
+                          [ngClass]="getStressLevelBadgeClass(session.stressAssessment.stressLevel)">
                       <i class="bi bi-activity me-1"></i>
-                      {{ getStressLevelLabel(session.stressAssessment.level) }}
+                      {{ getStressLevelLabel(session.stressAssessment.stressLevel) }}
                     </span>
                     <span class="text-muted" *ngIf="!session.stressAssessment">-</span>
                   </td>
                   <td>
                     <span class="badge" 
                           *ngIf="session.burnoutPrediction"
-                          [ngClass]="getBurnoutRiskBadgeClass(session.burnoutPrediction.riskLevel)">
+                          [ngClass]="getBurnoutRiskBadgeClass(session.burnoutPrediction.burnoutRisk)">
                       <i class="bi bi-thermometer-half me-1"></i>
-                      {{ getBurnoutRiskLabel(session.burnoutPrediction.riskLevel) }}
+                      {{ getBurnoutRiskLabel(session.burnoutPrediction.burnoutRisk) }}
                     </span>
                     <span class="text-muted" *ngIf="!session.burnoutPrediction">-</span>
                   </td>
@@ -354,25 +354,25 @@
               <div class="card-body text-center">
                 <div class="assessment-icon mb-3">
                   <i class="bi bi-activity fs-1" 
-                     [class]="getStressLevelIconClass(currentReport.session.stressAssessment?.level)"></i>
+                     [class]="getStressLevelIconClass(currentReport.session.stressAssessment?.stressLevel)"></i>
                 </div>
                 <h5 class="card-title">Niveau de Stress</h5>
                 <div class="score-display mb-3">
                   <div class="score-number h2 mb-1" 
-                       [class]="getStressLevelTextClass(currentReport.session.stressAssessment?.level)">
+                       [class]="getStressLevelTextClass(currentReport.session.stressAssessment?.stressLevel)">
                     {{ currentReport.session.stressAssessment?.score }}/100
                   </div>
                   <div class="score-level">
                     <span class="badge" 
-                          [ngClass]="getStressLevelBadgeClass(currentReport.session.stressAssessment?.level)">
-                      {{ getStressLevelLabel(currentReport.session.stressAssessment?.level) }}
+                          [ngClass]="getStressLevelBadgeClass(currentReport.session.stressAssessment?.stressLevel)">
+                      {{ getStressLevelLabel(currentReport.session.stressAssessment?.stressLevel) }}
                     </span>
                   </div>
                 </div>
                 <div class="progress mb-3" style="height: 10px;">
                   <div class="progress-bar" 
                        [style.width]="currentReport.session.stressAssessment?.score + '%'"
-                       [ngClass]="getStressLevelProgressClass(currentReport.session.stressAssessment?.level)"></div>
+                       [ngClass]="getStressLevelProgressClass(currentReport.session.stressAssessment?.stressLevel)"></div>
                 </div>
               </div>
             </div>
@@ -384,25 +384,25 @@
               <div class="card-body text-center">
                 <div class="assessment-icon mb-3">
                   <i class="bi bi-thermometer-half fs-1" 
-                     [class]="getBurnoutRiskIconClass(currentReport.session.burnoutPrediction?.riskLevel)"></i>
+                     [class]="getBurnoutRiskIconClass(currentReport.session.burnoutPrediction?.burnoutRisk)"></i>
                 </div>
                 <h5 class="card-title">Risque de Burnout</h5>
                 <div class="score-display mb-3">
                   <div class="score-number h2 mb-1" 
-                       [class]="getBurnoutRiskTextClass(currentReport.session.burnoutPrediction?.riskLevel)">
+                       [class]="getBurnoutRiskTextClass(currentReport.session.burnoutPrediction?.burnoutRisk)">
                     {{ currentReport.session.burnoutPrediction?.score }}/100
                   </div>
                   <div class="score-level">
                     <span class="badge" 
-                          [ngClass]="getBurnoutRiskBadgeClass(currentReport.session.burnoutPrediction?.riskLevel)">
-                      {{ getBurnoutRiskLabel(currentReport.session.burnoutPrediction?.riskLevel) }}
+                          [ngClass]="getBurnoutRiskBadgeClass(currentReport.session.burnoutPrediction?.burnoutRisk)">
+                      {{ getBurnoutRiskLabel(currentReport.session.burnoutPrediction?.burnoutRisk) }}
                     </span>
                   </div>
                 </div>
                 <div class="progress mb-3" style="height: 10px;">
                   <div class="progress-bar" 
                        [style.width]="currentReport.session.burnoutPrediction?.score + '%'"
-                       [ngClass]="getBurnoutRiskProgressClass(currentReport.session.burnoutPrediction?.riskLevel)"></div>
+                       [ngClass]="getBurnoutRiskProgressClass(currentReport.session.burnoutPrediction?.burnoutRisk)"></div>
                 </div>
               </div>
             </div>
@@ -427,15 +427,15 @@
                   <div class="captured-signals mb-4">
                     <h6 class="text-primary mb-3">Signaux Analysés</h6>
                     <div class="row g-3">
-                      <div class="col-md-6" *ngFor="let signal of currentReport.session.faceSignals">
+                      <div class="col-md-6" *ngFor="let signal of currentReport.session.snapshots">
                         <div class="signal-card border rounded p-3">
                           <div class="d-flex align-items-center">
                             <i class="bi bi-check-circle text-success me-2"></i>
                             <div>
                               <div class="fw-semibold small">{{ getSignalTypeLabel(signal.signalType) }}</div>
                               <div class="text-secondary small">
-                                Intensité: {{ signal.intensity }}% | 
-                                Confiance: {{ signal.confidence }}%
+                                Valeur: {{ signal.value }} | 
+                                Capturé: {{ signal.capturedAt | date:'HH:mm:ss' }}
                               </div>
                             </div>
                           </div>
