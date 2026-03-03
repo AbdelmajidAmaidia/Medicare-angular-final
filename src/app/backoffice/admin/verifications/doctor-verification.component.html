@@ -1,0 +1,16 @@
+<div>
+  <h2>Doctor Verifications</h2>
+  <table>
+    <thead><tr><th>ID</th><th>Name</th><th>Specialty</th><th>License</th><th>Submitted</th><th>Status</th><th>Actions</th></tr></thead>
+    <tbody>
+      <tr *ngFor="let v of verifications">
+        <td>{{ v.id }}</td><td>{{ v.name }}</td><td>{{ v.specialty }}</td><td>{{ v.license }}</td>
+        <td>{{ v.submittedDate }}</td><td>{{ v.status }}</td>
+        <td>
+          <button type="button" (click)="approve(v.id)" *ngIf="v.status === 'Pending' || v.status === 'Under Review'">Approve</button>
+          <button type="button" (click)="reject(v.id)" *ngIf="v.status === 'Pending' || v.status === 'Under Review'">Reject</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

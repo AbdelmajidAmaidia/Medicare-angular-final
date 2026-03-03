@@ -1,0 +1,11 @@
+<header><nav><a routerLink="/">MediCare AI</a></nav></header>
+<main>
+  <h1>Our Services</h1>
+  <ul>
+    <li *ngFor="let s of services">
+      <h3>{{ s.title }}</h3>
+      <p>{{ s.desc }}</p>
+    </li>
+  </ul>
+</main>
+<footer><p>© 2024 MediCare AI</p></footer>

@@ -1,35 +1,45 @@
 import { Routes } from '@angular/router';
 
-import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout';
-import { FrontLayoutComponent } from './layouts/front-layout/front-layout';
-
-import { AdminDashboard } from './features/admin/admin-dashboard/admin-dashboard';
-import { AdminBilling } from './features/admin/billing/admin-billing/admin-billing';
-import { AdminPharmacy } from './features/admin/pharmacy/admin-pharmacy/admin-pharmacy';
-
-import { FrontHome } from './features/front/front-home/front-home';
-import { FrontAppointments } from './features/front/appointments/front-appointments/front-appointments';
-import { FrontBilling} from './features/front/billing/front-billing/front-billing';
-
 export const routes: Routes = [
+  { path: '', redirectTo: '/landing', pathMatch: 'full' },
+  { path: 'landing', loadComponent: () => import('./frontoffice/landing/landing.component').then(m => m.LandingComponent) },
+  { path: 'about', loadComponent: () => import('./frontoffice/about/about.component').then(m => m.AboutComponent) },
+  { path: 'services', loadComponent: () => import('./frontoffice/services/services.component').then(m => m.ServicesComponent) },
+  { path: 'blog', loadComponent: () => import('./frontoffice/blog/blog.component').then(m => m.BlogComponent) },
+  { path: 'pricing', loadComponent: () => import('./frontoffice/pricing/pricing.component').then(m => m.PricingComponent) },
+  { path: 'login', loadComponent: () => import('./frontoffice/auth/auth.component').then(m => m.AuthComponent) },
   {
-    path: 'admin',
-    component: AdminLayoutComponent,
+    path: 'dashboard',
+    loadComponent: () => import('./backoffice/layout/layout.component').then(m => m.LayoutComponent),
     children: [
-      { path: '', component: AdminDashboard },
-      { path: 'billing', component: AdminBilling },
-      { path: 'pharmacy', component: AdminPharmacy },
-    ],
+      { path: 'patient/home', loadComponent: () => import('./backoffice/patient/dashboard/patient-dashboard.component').then(m => m.PatientDashboardComponent) },
+      { path: 'patient/appointments', loadComponent: () => import('./backoffice/patient/appointments/appointment-booking.component').then(m => m.AppointmentBookingComponent) },
+      { path: 'patient/records', loadComponent: () => import('./backoffice/patient/records/medical-records.component').then(m => m.MedicalRecordsComponent) },
+      { path: 'patient/ai-chat', loadComponent: () => import('./backoffice/patient/ai-chat/ai-chat.component').then(m => m.AiChatComponent) },
+      { path: 'patient/billing', loadComponent: () => import('./backoffice/patient/billing/billing-history.component').then(m => m.BillingHistoryComponent) },
+      { path: 'patient/pharmacy', loadComponent: () => import('./backoffice/patient/pharmacy/pharmacy-orders.component').then(m => m.PharmacyOrdersComponent) },
+      { path: 'patient/prescriptions', loadComponent: () => import('./backoffice/patient/prescriptions/prescription-flow.component').then(m => m.PrescriptionFlowComponent) },
+      { path: 'patient/mental-health', loadComponent: () => import('./backoffice/patient/mental-health/mental-health.component').then(m => m.MentalHealthComponent) },
+      { path: 'patient/pricing', loadComponent: () => import('./frontoffice/pricing/pricing.component').then(m => m.PricingComponent) },
+      { path: 'doctor/home', loadComponent: () => import('./backoffice/doctor/dashboard/doctor-dashboard.component').then(m => m.DoctorDashboardComponent) },
+      { path: 'doctor/patients', loadComponent: () => import('./backoffice/doctor/patients/patient-list.component').then(m => m.PatientListComponent) },
+      { path: 'doctor/appointments', loadComponent: () => import('./backoffice/doctor/appointments/doctor-scheduler.component').then(m => m.DoctorSchedulerComponent) },
+      { path: 'doctor/consultations', loadComponent: () => import('./backoffice/doctor/consultations/consultation.component').then(m => m.ConsultationComponent) },
+      { path: 'doctor/financial', loadComponent: () => import('./backoffice/doctor/financial/doctor-financial.component').then(m => m.DoctorFinancialComponent) },
+      { path: 'lab/home', loadComponent: () => import('./backoffice/lab/dashboard/lab-dashboard.component').then(m => m.LabDashboardComponent) },
+      { path: 'lab/results', loadComponent: () => import('./backoffice/lab/results/lab-result-entry.component').then(m => m.LabResultEntryComponent) },
+      { path: 'lab/payroll', loadComponent: () => import('./backoffice/lab/payroll/lab-payroll.component').then(m => m.LabPayrollComponent) },
+      { path: 'pharmacy/home', loadComponent: () => import('./backoffice/pharmacy/dashboard/pharmacy-dashboard.component').then(m => m.PharmacyDashboardComponent) },
+      { path: 'pharmacy/delivery', loadComponent: () => import('./backoffice/pharmacy/delivery/delivery-management.component').then(m => m.DeliveryManagementComponent) },
+      { path: 'pharmacy/wallet', loadComponent: () => import('./backoffice/pharmacy/wallet/pharmacy-wallet.component').then(m => m.PharmacyWalletComponent) },
+      { path: 'admin/home', loadComponent: () => import('./backoffice/admin/dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent) },
+      { path: 'admin/users', loadComponent: () => import('./backoffice/admin/users/user-management.component').then(m => m.UserManagementComponent) },
+      { path: 'admin/verifications', loadComponent: () => import('./backoffice/admin/verifications/doctor-verification.component').then(m => m.DoctorVerificationComponent) },
+      { path: 'admin/financials', loadComponent: () => import('./backoffice/admin/financials/financial-admin.component').then(m => m.FinancialAdminComponent) },
+      { path: 'admin/payroll', loadComponent: () => import('./backoffice/admin/payroll/payroll-management.component').then(m => m.PayrollManagementComponent) },
+      { path: 'admin/settings', loadComponent: () => import('./backoffice/admin/settings/admin-settings.component').then(m => m.AdminSettingsComponent) },
+      { path: '', redirectTo: 'patient/home', pathMatch: 'full' },
+    ]
   },
-  {
-    path: 'app',
-    component: FrontLayoutComponent,
-    children: [
-      { path: '', component: FrontHome },
-      { path: 'appointments', component: FrontAppointments},
-      { path: 'billing', component: FrontBilling },
-    ],
-  },
-  { path: '', pathMatch: 'full', redirectTo: 'app' },
-  { path: '**', redirectTo: 'app' },
+  { path: '**', redirectTo: '/landing' },
 ];

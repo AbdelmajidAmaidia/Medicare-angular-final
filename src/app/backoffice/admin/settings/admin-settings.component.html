@@ -1,0 +1,34 @@
+<div>
+  <h2>Platform Settings</h2>
+  <form (ngSubmit)="saveSettings()">
+    <div>
+      <label>Platform Name</label>
+      <input type="text" [(ngModel)]="settings.platformName" name="platformName">
+    </div>
+    <div>
+      <label>Support Email</label>
+      <input type="email" [(ngModel)]="settings.supportEmail" name="supportEmail">
+    </div>
+    <div>
+      <label>Max Consultation Duration (min)</label>
+      <input type="number" [(ngModel)]="settings.maxConsultationDuration" name="maxConsultationDuration">
+    </div>
+    <div>
+      <label>Platform Fee (%)</label>
+      <input type="number" [(ngModel)]="settings.platformFeePercentage" name="platformFeePercentage">
+    </div>
+    <div>
+      <label>
+        <input type="checkbox" [(ngModel)]="settings.maintenanceMode" name="maintenanceMode">
+        Maintenance Mode
+      </label>
+    </div>
+    <div>
+      <label>
+        <input type="checkbox" [(ngModel)]="settings.autoVerifyDoctors" name="autoVerifyDoctors">
+        Auto-Verify Doctors
+      </label>
+    </div>
+    <button type="submit">Save Settings</button>
+  </form>
+</div>

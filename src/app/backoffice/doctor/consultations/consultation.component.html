@@ -1,0 +1,31 @@
+<div>
+  <h2>Consultation</h2>
+  <section>
+    <h3>Current Patient: {{ activeConsultation.patient }} (Age: {{ activeConsultation.age }})</h3>
+    <p>Reason: {{ activeConsultation.condition }}</p>
+    <div>
+      <label>Clinical Notes</label>
+      <textarea [(ngModel)]="activeConsultation.notes" rows="4"></textarea>
+    </div>
+    <div>
+      <label>Diagnosis</label>
+      <input type="text" [(ngModel)]="activeConsultation.diagnosis">
+    </div>
+    <div>
+      <label>Prescription</label>
+      <textarea [(ngModel)]="activeConsultation.prescription" rows="3"></textarea>
+    </div>
+    <button type="button" (click)="saveConsultation()">Save Consultation</button>
+  </section>
+  <section>
+    <h3>Consultation History</h3>
+    <table>
+      <thead><tr><th>Date</th><th>Patient</th><th>Diagnosis</th><th>Duration</th></tr></thead>
+      <tbody>
+        <tr *ngFor="let c of consultationHistory">
+          <td>{{ c.date }}</td><td>{{ c.patient }}</td><td>{{ c.diagnosis }}</td><td>{{ c.duration }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</div>

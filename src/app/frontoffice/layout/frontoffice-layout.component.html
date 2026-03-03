@@ -1,0 +1,65 @@
+<!-- src/app/frontoffice/layout/frontoffice-layout.component.html -->
+<div class="frontoffice-wrapper">
+  <!-- Navigation Header -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" routerLink="/landing">
+        <i class="bi bi-heart-pulse-fill text-primary me-2 fs-3"></i>
+        <span class="fw-bold text-primary">MediCare AI</span>
+      </a>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/landing">Accueil</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/about">À Propos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/services">Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/blog">Blog</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-primary ms-2" routerLink="/auth">Connexion</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenu Principal -->
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-light py-5 mt-auto">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h5 class="text-primary">MediCare AI</h5>
+          <p>Plateforme médicale intelligente pour des soins de qualité.</p>
+        </div>
+        <div class="col-md-4">
+          <h6>Liens Rapides</h6>
+          <ul class="list-unstyled">
+            <li><a href="#" class="text-light text-decoration-none">Services</a></li>
+            <li><a href="#" class="text-light text-decoration-none">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <h6>Contact</h6>
+          <p><i class="bi bi-envelope me-2"></i>contact@medicareai.com</p>
+          <p><i class="bi bi-telephone me-2"></i>+33 1 23 45 67 89</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>

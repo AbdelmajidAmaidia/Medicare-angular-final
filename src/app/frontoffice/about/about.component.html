@@ -1,0 +1,17 @@
+<header><nav><a routerLink="/">MediCare AI</a></nav></header>
+<main>
+  <section>
+    <h1>About MediCare AI</h1>
+    <p>We are transforming healthcare through artificial intelligence.</p>
+  </section>
+  <section>
+    <h2>Our Team</h2>
+    <ul>
+      <li *ngFor="let m of team">
+        <h3>{{ m.name }}</h3>
+        <p>{{ m.role }} – {{ m.specialty }}</p>
+      </li>
+    </ul>
+  </section>
+</main>
+<footer><p>© 2024 MediCare AI</p></footer>

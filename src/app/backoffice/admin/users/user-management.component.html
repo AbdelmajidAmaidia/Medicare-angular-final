@@ -1,0 +1,15 @@
+<div>
+  <h2>User Management</h2>
+  <div>
+    <label>Search</label>
+    <input type="text" [(ngModel)]="searchTerm" placeholder="Search users...">
+  </div>
+  <table>
+    <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Joined</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr *ngFor="let u of filteredUsers">
+        <td>{{ u.id }}</td><td>{{ u.name }}</td><td>{{ u.email }}</td><td>{{ u.role }}</td><td>{{ u.joined }}</td><td>{{ u.status }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

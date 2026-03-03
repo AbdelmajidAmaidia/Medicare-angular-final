@@ -1,0 +1,23 @@
+<div>
+  <h2>Financial Administration</h2>
+  <ul>
+    <li>Total Revenue: ${{ summary.totalRevenue }}</li>
+    <li>Platform Fees: ${{ summary.platformFees }}</li>
+    <li>Doctor Payouts: ${{ summary.doctorPayouts }}</li>
+    <li>Lab Payouts: ${{ summary.labPayouts }}</li>
+    <li>Pharmacy Payouts: ${{ summary.pharmacyPayouts }}</li>
+  </ul>
+  <h3>Recent Transactions</h3>
+  <table>
+    <thead><tr><th>Date</th><th>Type</th><th>Party</th><th>Amount</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr *ngFor="let t of transactions">
+        <td>{{ t.date }}</td>
+        <td>{{ t.type }}</td>
+        <td>{{ getParty(t) }}</td>
+        <td>${{ t.amount }}</td>
+        <td>{{ t.status }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

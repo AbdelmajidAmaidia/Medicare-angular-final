@@ -1,0 +1,490 @@
+<!-- src/app/backoffice/patient/mental-health/mental-health.component.html -->
+<div class="mental-health-dashboard">
+  <!-- Header Section -->
+  <div class="page-header mb-4">
+    <div class="d-flex align-items-center justify-content-between">
+      <div>
+        <h1 class="h3 text-primary mb-1">
+          <i class="bi bi-brain me-2"></i>
+          Évaluation Santé Mentale
+        </h1>
+        <p class="text-secondary mb-0">Analyse IA du stress et prévention du burnout</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-primary" 
+                (click)="startSession()" 
+                [disabled]="!hasConsent || isSessionActive">
+          <i class="bi bi-play-circle me-2"></i>
+          Nouvelle Évaluation
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Consent Status Card -->
+  <div class="row g-4 mb-4" *ngIf="currentView === 'list'">
+    <div class="col-12">
+      <div class="consent-card card border-0 shadow-sm" 
+           [class.border-success]="hasConsent" 
+           [class.border-warning]="!hasConsent">
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-md-8">
+              <div class="d-flex align-items-center">
+                <div class="consent-icon me-3">
+                  <i class="bi bi-shield-check fs-2" 
+                     [class.text-success]="hasConsent"
+                     [class.text-warning]="!hasConsent"></i>
+                </div>
+                <div>
+                  <h5 class="mb-1">Statut du Consentement</h5>
+                  <p class="mb-1" *ngIf="hasConsent">
+                    <span class="badge bg-success">
+                      <i class="bi bi-check-circle me-1"></i>Consentement accordé
+                    </span>
+                  </p>
+                  <p class="mb-1" *ngIf="!hasConsent">
+                    <span class="badge bg-warning">
+                      <i class="bi bi-exclamation-triangle me-1"></i>Consentement requis
+                    </span>
+                  </p>
+                  <small class="text-secondary">
+                    {{ hasConsent ? 'Vous pouvez commencer les évaluations' : 'Accordez votre consentement pour débuter' }}
+                  </small>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 text-end">
+              <button class="btn btn-outline-primary" 
+                      *ngIf="!hasConsent"
+                      (click)="currentView = 'consent'">
+                <i class="bi bi-file-text me-2"></i>Accorder le Consentement
+              </button>
+              <button class="btn btn-outline-secondary" 
+                      *ngIf="hasConsent"
+                      (click)="currentView = 'consent'">
+                <i class="bi bi-gear me-2"></i>Modifier les Préférences
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sessions History -->
+  <div class="row g-4" *ngIf="currentView === 'list'">
+    <div class="col-12">
+      <div class="card border-0 shadow-sm">
+        <div class="card-header bg-transparent border-0 d-flex align-items-center justify-content-between">
+          <h5 class="card-title mb-0">
+            <i class="bi bi-clock-history text-info me-2"></i>
+            Historique des Évaluations
+          </h5>
+          <div class="d-flex gap-2">
+            <button class="btn btn-sm btn-outline-secondary">
+              <i class="bi bi-funnel me-1"></i>Filtrer
+            </button>
+            <button class="btn btn-sm btn-outline-secondary">
+              <i class="bi bi-download me-1"></i>Exporter
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive" *ngIf="sessions.length > 0; else noSessions">
+            <table class="table table-hover">
+              <thead class="table-light">
+                <tr>
+                  <th>Date</th>
+                  <th>Durée</th>
+                  <th>Statut</th>
+                  <th>Niveau de Stress</th>
+                  <th>Risque Burnout</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let session of sessions">
+                  <td>
+                    <div class="fw-semibold">{{ session.startTime | date:'dd/MM/yyyy' }}</div>
+                    <small class="text-secondary">{{ session.startTime | date:'HH:mm' }}</small>
+                  </td>
+                  <td>
+                    <span class="badge bg-light text-dark">
+                      {{ getSessionDuration(session) }}
+                    </span>
+                  </td>
+                  <td>
+                    <span class="badge" [ngClass]="getStatusBadgeClass(session.status)">
+                      {{ getStatusLabel(session.status) }}
+                    </span>
+                  </td>
+                  <td>
+                    <span class="badge" 
+                          *ngIf="session.stressAssessment"
+                          [ngClass]="getStressLevelBadgeClass(session.stressAssessment.level)">
+                      <i class="bi bi-activity me-1"></i>
+                      {{ getStressLevelLabel(session.stressAssessment.level) }}
+                    </span>
+                    <span class="text-muted" *ngIf="!session.stressAssessment">-</span>
+                  </td>
+                  <td>
+                    <span class="badge" 
+                          *ngIf="session.burnoutPrediction"
+                          [ngClass]="getBurnoutRiskBadgeClass(session.burnoutPrediction.riskLevel)">
+                      <i class="bi bi-thermometer-half me-1"></i>
+                      {{ getBurnoutRiskLabel(session.burnoutPrediction.riskLevel) }}
+                    </span>
+                    <span class="text-muted" *ngIf="!session.burnoutPrediction">-</span>
+                  </td>
+                  <td>
+                    <div class="btn-group btn-group-sm">
+                      <button class="btn btn-outline-primary" 
+                              *ngIf="session.report"
+                              (click)="viewReport(session)">
+                        <i class="bi bi-eye"></i>
+                      </button>
+                      <button class="btn btn-outline-secondary">
+                        <i class="bi bi-download"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <!-- No Sessions State -->
+          <ng-template #noSessions>
+            <div class="empty-state text-center py-5">
+              <i class="bi bi-clipboard2-data text-muted display-1 mb-3"></i>
+              <h5 class="text-muted mb-3">Aucune évaluation pour le moment</h5>
+              <p class="text-secondary mb-4">Commencez votre première évaluation de santé mentale</p>
+              <button class="btn btn-primary" 
+                      (click)="startSession()"
+                      [disabled]="!hasConsent">
+                <i class="bi bi-play-circle me-2"></i>
+                Commencer maintenant
+              </button>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Consent Form -->
+  <div class="consent-form" *ngIf="currentView === 'consent'">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card border-0 shadow-sm">
+          <div class="card-header bg-primary text-white">
+            <h4 class="card-title mb-0">
+              <i class="bi bi-shield-lock me-2"></i>
+              Consentement pour l'Évaluation IA
+            </h4>
+          </div>
+          <div class="card-body p-4">
+            <div class="consent-content">
+              <div class="alert alert-info border-0">
+                <i class="bi bi-info-circle me-2"></i>
+                <strong>Important :</strong> Votre consentement est requis pour utiliser l'analyse IA de santé mentale.
+              </div>
+              
+              <div class="mb-4">
+                <h6 class="text-primary mb-3">Finalités du traitement :</h6>
+                <div class="consent-purposes">
+                  <div class="form-check mb-3" *ngFor="let purpose of consentPurposes">
+                    <input class="form-check-input" 
+                           type="checkbox" 
+                           [id]="'purpose-' + purpose.value"
+                           [(ngModel)]="purpose.granted">
+                    <label class="form-check-label" [for]="'purpose-' + purpose.value">
+                      <strong>{{ purpose.label }}</strong>
+                      <div class="small text-secondary">{{ purpose.description }}</div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="mb-4">
+                <h6 class="text-primary mb-3">Informations importantes :</h6>
+                <ul class="list-unstyled">
+                  <li class="mb-2">
+                    <i class="bi bi-shield-check text-success me-2"></i>
+                    Vos données sont cryptées et sécurisées
+                  </li>
+                  <li class="mb-2">
+                    <i class="bi bi-clock text-info me-2"></i>
+                    Analyse en temps réel (environ 3 secondes)
+                  </li>
+                  <li class="mb-2">
+                    <i class="bi bi-person-check text-primary me-2"></i>
+                    Résultats personnalisés et confidentiels
+                  </li>
+                  <li class="mb-2">
+                    <i class="bi bi-x-circle text-warning me-2"></i>
+                    Vous pouvez retirer votre consentement à tout moment
+                  </li>
+                </ul>
+              </div>
+              
+              <div class="d-flex justify-content-between">
+                <button class="btn btn-outline-secondary" 
+                        (click)="currentView = 'list'">
+                  <i class="bi bi-arrow-left me-2"></i>Retour
+                </button>
+                <div>
+                  <button class="btn btn-outline-danger me-2" 
+                          *ngIf="hasConsent"
+                          (click)="revokeConsent()">
+                    <i class="bi bi-shield-x me-2"></i>Révoquer
+                  </button>
+                  <button class="btn btn-success" 
+                          (click)="grantConsent()"
+                          [disabled]="!isConsentValid()">
+                    <i class="bi bi-shield-check me-2"></i>
+                    {{ hasConsent ? 'Mettre à jour' : 'Accorder le consentement' }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Active Session -->
+  <div class="active-session" *ngIf="currentView === 'active'">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <div class="card border-0 shadow-lg">
+          <div class="card-header bg-gradient-primary text-white text-center">
+            <h4 class="card-title mb-0">
+              <i class="bi bi-cpu me-2"></i>
+              Analyse IA en Cours
+            </h4>
+          </div>
+          <div class="card-body p-5 text-center">
+            <div class="session-progress mb-4">
+              <div class="progress mb-3" style="height: 8px;">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" 
+                     [style.width]="sessionProgress + '%'"></div>
+              </div>
+              <div class="progress-label text-secondary">
+                {{ sessionProgressLabel }}
+              </div>
+            </div>
+            
+            <div class="camera-simulation mb-4">
+              <div class="camera-frame bg-light border rounded-3 mx-auto mb-3" 
+                   style="width: 200px; height: 150px; display: flex; align-items: center; justify-content: center;">
+                <div class="text-center">
+                  <i class="bi bi-camera-video text-primary fs-1 mb-2"></i>
+                  <div class="scanning-indicator">
+                    <div class="spinner-border spinner-border-sm text-primary me-2"></div>
+                    <small class="text-secondary">Analyse en cours...</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="instructions">
+              <div class="alert alert-info border-0 mb-3">
+                <i class="bi bi-info-circle me-2"></i>
+                L'IA analyse vos signaux faciaux pour évaluer votre niveau de stress.
+                Restez immobile et regardez la caméra.
+              </div>
+              
+              <div class="current-signals mb-3">
+                <small class="text-secondary">Signaux captés :</small>
+                <div class="signal-indicators mt-2">
+                  <span class="badge bg-success me-1" *ngFor="let signal of capturedSignals">
+                    <i class="bi bi-check-circle me-1"></i>{{ signal }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            
+            <button class="btn btn-outline-danger" (click)="cancelSession()">
+              <i class="bi bi-x-circle me-2"></i>Annuler
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Report View -->
+  <div class="report-view" *ngIf="currentView === 'report' && currentReport">
+    <div class="row">
+      <div class="col-12">
+        <!-- Report Header -->
+        <div class="card border-0 shadow-sm mb-4">
+          <div class="card-header bg-transparent border-0 d-flex align-items-center justify-content-between">
+            <div>
+              <h4 class="card-title mb-1">
+                <i class="bi bi-file-medical text-primary me-2"></i>
+                Rapport d'Évaluation
+              </h4>
+              <small class="text-secondary">
+                Généré le {{ currentReport.generatedAt | date:'dd/MM/yyyy à HH:mm' }}
+              </small>
+            </div>
+            <div class="report-actions">
+              <button class="btn btn-outline-secondary me-2" (click)="currentView = 'list'">
+                <i class="bi bi-arrow-left me-1"></i>Retour
+              </button>
+              <button class="btn btn-outline-primary me-2">
+                <i class="bi bi-download me-1"></i>PDF
+              </button>
+              <button class="btn btn-outline-success">
+                <i class="bi bi-share me-1"></i>Partager
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Assessment Results -->
+        <div class="row g-4 mb-4">
+          <!-- Stress Assessment -->
+          <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <div class="assessment-icon mb-3">
+                  <i class="bi bi-activity fs-1" 
+                     [class]="getStressLevelIconClass(currentReport.session.stressAssessment?.level)"></i>
+                </div>
+                <h5 class="card-title">Niveau de Stress</h5>
+                <div class="score-display mb-3">
+                  <div class="score-number h2 mb-1" 
+                       [class]="getStressLevelTextClass(currentReport.session.stressAssessment?.level)">
+                    {{ currentReport.session.stressAssessment?.score }}/100
+                  </div>
+                  <div class="score-level">
+                    <span class="badge" 
+                          [ngClass]="getStressLevelBadgeClass(currentReport.session.stressAssessment?.level)">
+                      {{ getStressLevelLabel(currentReport.session.stressAssessment?.level) }}
+                    </span>
+                  </div>
+                </div>
+                <div class="progress mb-3" style="height: 10px;">
+                  <div class="progress-bar" 
+                       [style.width]="currentReport.session.stressAssessment?.score + '%'"
+                       [ngClass]="getStressLevelProgressClass(currentReport.session.stressAssessment?.level)"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Burnout Risk -->
+          <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body text-center">
+                <div class="assessment-icon mb-3">
+                  <i class="bi bi-thermometer-half fs-1" 
+                     [class]="getBurnoutRiskIconClass(currentReport.session.burnoutPrediction?.riskLevel)"></i>
+                </div>
+                <h5 class="card-title">Risque de Burnout</h5>
+                <div class="score-display mb-3">
+                  <div class="score-number h2 mb-1" 
+                       [class]="getBurnoutRiskTextClass(currentReport.session.burnoutPrediction?.riskLevel)">
+                    {{ currentReport.session.burnoutPrediction?.score }}/100
+                  </div>
+                  <div class="score-level">
+                    <span class="badge" 
+                          [ngClass]="getBurnoutRiskBadgeClass(currentReport.session.burnoutPrediction?.riskLevel)">
+                      {{ getBurnoutRiskLabel(currentReport.session.burnoutPrediction?.riskLevel) }}
+                    </span>
+                  </div>
+                </div>
+                <div class="progress mb-3" style="height: 10px;">
+                  <div class="progress-bar" 
+                       [style.width]="currentReport.session.burnoutPrediction?.score + '%'"
+                       [ngClass]="getBurnoutRiskProgressClass(currentReport.session.burnoutPrediction?.riskLevel)"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Report Content -->
+        <div class="row g-4">
+          <!-- Summary -->
+          <div class="col-lg-8">
+            <div class="card border-0 shadow-sm">
+              <div class="card-header bg-transparent border-0">
+                <h5 class="card-title mb-0">
+                  <i class="bi bi-clipboard2-data text-info me-2"></i>
+                  Résumé de l'Analyse
+                </h5>
+              </div>
+              <div class="card-body">
+                <div class="summary-content">
+                  <p class="lead mb-4">{{ currentReport.summary }}</p>
+                  
+                  <div class="captured-signals mb-4">
+                    <h6 class="text-primary mb-3">Signaux Analysés</h6>
+                    <div class="row g-3">
+                      <div class="col-md-6" *ngFor="let signal of currentReport.session.faceSignals">
+                        <div class="signal-card border rounded p-3">
+                          <div class="d-flex align-items-center">
+                            <i class="bi bi-check-circle text-success me-2"></i>
+                            <div>
+                              <div class="fw-semibold small">{{ getSignalTypeLabel(signal.signalType) }}</div>
+                              <div class="text-secondary small">
+                                Intensité: {{ signal.intensity }}% | 
+                                Confiance: {{ signal.confidence }}%
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Recommendations -->
+          <div class="col-lg-4">
+            <div class="card border-0 shadow-sm">
+              <div class="card-header bg-transparent border-0">
+                <h5 class="card-title mb-0">
+                  <i class="bi bi-lightbulb text-warning me-2"></i>
+                  Recommandations
+                </h5>
+              </div>
+              <div class="card-body">
+                <div class="recommendations-list">
+                  <div class="recommendation-item mb-3" *ngFor="let recommendation of currentReport.recommendations">
+                    <div class="d-flex">
+                      <i class="bi bi-arrow-right-circle text-primary me-2 mt-1"></i>
+                      <div class="small">{{ recommendation }}</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="mt-4 pt-3 border-top">
+                  <div class="text-center">
+                    <small class="text-secondary">Besoin d'aide ?</small>
+                    <div class="mt-2">
+                      <button class="btn btn-sm btn-primary me-2">
+                        <i class="bi bi-chat-dots me-1"></i>Chat IA
+                      </button>
+                      <button class="btn btn-sm btn-outline-primary">
+                        <i class="bi bi-calendar me-1"></i>RDV
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

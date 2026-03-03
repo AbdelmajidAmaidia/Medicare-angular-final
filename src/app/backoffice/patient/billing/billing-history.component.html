@@ -1,0 +1,18 @@
+<div>
+  <h2>Billing History</h2>
+  <p>Total Paid: ${{ totalPaid }}</p>
+  <table>
+    <thead>
+      <tr><th>Invoice</th><th>Date</th><th>Description</th><th>Amount</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i of invoices">
+        <td>{{ i.id }}</td>
+        <td>{{ i.date }}</td>
+        <td>{{ i.description }}</td>
+        <td>${{ i.amount }}</td>
+        <td>{{ i.status }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

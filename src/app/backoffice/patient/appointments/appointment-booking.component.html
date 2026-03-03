@@ -1,0 +1,61 @@
+<div>
+  <h2>Book Appointment</h2>
+  <p>Step {{ currentStep }} of 3</p>
+
+  <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+    <div *ngIf="currentStep === 1">
+      <h3>Select Specialty & Doctor</h3>
+      <div>
+        <label>Specialty</label>
+        <select formControlName="specialty">
+          <option value="">Select specialty</option>
+          <option value="cardiology">Cardiology</option>
+          <option value="general">General Practice</option>
+          <option value="dermatology">Dermatology</option>
+          <option value="neurology">Neurology</option>
+        </select>
+      </div>
+      <div>
+        <label>Doctor</label>
+        <select formControlName="doctor">
+          <option value="">Select doctor</option>
+          <option *ngFor="let d of doctors" [value]="d.name" [disabled]="!d.available">
+            {{ d.name }} – {{ d.specialty }}
+          </option>
+        </select>
+      </div>
+      <button type="button" (click)="nextStep()">Next</button>
+    </div>
+
+    <div *ngIf="currentStep === 2">
+      <h3>Select Date & Time</h3>
+      <div>
+        <label>Date</label>
+        <input type="date" formControlName="date">
+      </div>
+      <div>
+        <label>Time</label>
+        <select formControlName="time">
+          <option value="">Select time</option>
+          <option value="09:00">09:00 AM</option>
+          <option value="10:00">10:00 AM</option>
+          <option value="11:00">11:00 AM</option>
+          <option value="14:00">02:00 PM</option>
+          <option value="15:00">03:00 PM</option>
+        </select>
+      </div>
+      <button type="button" (click)="prevStep()">Back</button>
+      <button type="button" (click)="nextStep()">Next</button>
+    </div>
+
+    <div *ngIf="currentStep === 3">
+      <h3>Confirm Appointment</h3>
+      <div>
+        <label>Reason for visit</label>
+        <textarea formControlName="reason" rows="4"></textarea>
+      </div>
+      <button type="button" (click)="prevStep()">Back</button>
+      <button type="submit" [disabled]="bookingForm.invalid">Confirm Booking</button>
+    </div>
+  </form>
+</div>

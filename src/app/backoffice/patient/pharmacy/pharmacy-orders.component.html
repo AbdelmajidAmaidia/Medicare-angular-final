@@ -1,0 +1,18 @@
+<div>
+  <h2>Pharmacy Orders</h2>
+  <table>
+    <thead>
+      <tr><th>Order ID</th><th>Medication</th><th>Quantity</th><th>Prescribed By</th><th>Date</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let o of orders">
+        <td>{{ o.id }}</td>
+        <td>{{ o.medication }}</td>
+        <td>{{ o.quantity }}</td>
+        <td>{{ o.prescribedBy }}</td>
+        <td>{{ o.orderedDate }}</td>
+        <td>{{ o.status }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

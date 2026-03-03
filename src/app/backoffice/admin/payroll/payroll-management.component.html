@@ -1,0 +1,15 @@
+<div>
+  <h2>Payroll Management</h2>
+  <table>
+    <thead><tr><th>Name</th><th>Role</th><th>Base</th><th>Bonus</th><th>Total</th><th>Status</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr *ngFor="let p of payroll">
+        <td>{{ p.name }}</td><td>{{ p.role }}</td><td>${{ p.baseSalary }}</td><td>${{ p.bonus }}</td>
+        <td>${{ p.total }}</td><td>{{ p.status }}</td>
+        <td>
+          <button type="button" (click)="processPayroll(p.name)" *ngIf="p.status === 'Pending'">Process</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

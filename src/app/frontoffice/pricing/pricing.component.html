@@ -1,0 +1,15 @@
+<header><nav><a routerLink="/">MediCare AI</a></nav></header>
+<main>
+  <h1>Pricing Plans</h1>
+  <ul>
+    <li *ngFor="let p of plans">
+      <h3>{{ p.name }}</h3>
+      <p>{{ p.price }}</p>
+      <ul>
+        <li *ngFor="let f of p.features">{{ f }}</li>
+      </ul>
+      <a routerLink="/login">Get Started</a>
+    </li>
+  </ul>
+</main>
+<footer><p>© 2024 MediCare AI</p></footer>

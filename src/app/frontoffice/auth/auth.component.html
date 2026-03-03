@@ -1,0 +1,62 @@
+<main>
+  <h2>MediCare AI</h2>
+  <nav>
+    <button type="button" (click)="activeTab = 'login'">Sign In</button>
+    <button type="button" (click)="activeTab = 'register'">Register</button>
+  </nav>
+
+  <form *ngIf="activeTab === 'login'" [formGroup]="loginForm" (ngSubmit)="onLogin()">
+    <h3>Sign In</h3>
+    <div>
+      <label>Email</label>
+      <input type="email" formControlName="email" placeholder="you@example.com">
+    </div>
+    <div>
+      <label>Password</label>
+      <input type="password" formControlName="password">
+    </div>
+    <div>
+      <label>Role</label>
+      <select formControlName="role">
+        <option value="patient">Patient</option>
+        <option value="doctor">Doctor</option>
+        <option value="lab">Lab Technician</option>
+        <option value="pharmacy">Pharmacist</option>
+        <option value="admin">Admin</option>
+      </select>
+    </div>
+    <button type="submit" [disabled]="loginForm.invalid">Sign In</button>
+  </form>
+
+  <form *ngIf="activeTab === 'register'" [formGroup]="registerForm" (ngSubmit)="onRegister()">
+    <h3>Create Account</h3>
+    <div>
+      <label>First Name</label>
+      <input type="text" formControlName="firstName">
+    </div>
+    <div>
+      <label>Last Name</label>
+      <input type="text" formControlName="lastName">
+    </div>
+    <div>
+      <label>Email</label>
+      <input type="email" formControlName="email">
+    </div>
+    <div>
+      <label>Password</label>
+      <input type="password" formControlName="password">
+    </div>
+    <div>
+      <label>I am a</label>
+      <select formControlName="role">
+        <option value="patient">Patient</option>
+        <option value="doctor">Doctor</option>
+        <option value="lab">Lab Technician</option>
+        <option value="pharmacy">Pharmacist</option>
+      </select>
+    </div>
+    <button type="submit" [disabled]="registerForm.invalid">Create Account</button>
+  </form>
+
+  <a routerLink="/landing">← Back to Home</a>
+</main>

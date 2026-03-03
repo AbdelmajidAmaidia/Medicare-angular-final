@@ -1,0 +1,11 @@
+<div>
+  <h2>My Patients</h2>
+  <table>
+    <thead><tr><th>Name</th><th>Age</th><th>Condition</th><th>Last Visit</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr *ngFor="let p of patients">
+        <td>{{ p.name }}</td><td>{{ p.age }}</td><td>{{ p.condition }}</td><td>{{ p.lastVisit }}</td><td>{{ p.status }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

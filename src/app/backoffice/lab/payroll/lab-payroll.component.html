@@ -1,0 +1,16 @@
+<div>
+  <h2>Lab Payroll</h2>
+  <table>
+    <thead><tr><th>Period</th><th>Base Salary</th><th>Tests Completed</th><th>Bonus</th><th>Total</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr *ngFor="let p of payrollData">
+        <td>{{ p.period }}</td>
+        <td>${{ p.baseSalary }}</td>
+        <td>{{ p.testsCompleted }}</td>
+        <td>${{ p.bonus }}</td>
+        <td>${{ p.total }}</td>
+        <td>{{ p.status }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
