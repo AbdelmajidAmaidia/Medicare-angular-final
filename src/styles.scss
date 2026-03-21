@@ -1,3 +1,6 @@
+// src/styles.scss - Styles globaux
+@use 'bootstrap/scss/bootstrap';
+
 // src/styles.scss - Variables globales
 :root {
   // Couleurs Primaires Médicales
@@ -13,9 +16,6 @@
   --text-secondary: #64748B;      // Texte secondaire
   --border-color: #E2E8F0;        // Bordures
 }
-// src/styles.scss - Styles globaux
-@import 'bootstrap/scss/bootstrap';
-
 // Custom Properties
 :root {
   --medical-primary: #0066CC;
@@ -45,8 +45,8 @@ body {
   border-color: var(--medical-primary);
   
   &:hover {
-    background-color: darken(var(--medical-primary), 10%);
-    border-color: darken(var(--medical-primary), 10%);
+    background-color: #0052a3;
+    border-color: #0052a3;
   }
 }
 
