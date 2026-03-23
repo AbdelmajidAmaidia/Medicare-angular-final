@@ -1,6 +1,8 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateFn, Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { AuthService, UserRole } from '../../services/auth.service';
+
+const VALID_ROLES: UserRole[] = ['patient', 'doctor', 'lab', 'pharmacy', 'admin'];
 
 export const roleGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
   const router = inject(Router);
@@ -14,6 +16,11 @@ export const roleGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
     return true;
   }
 
-  router.navigate(['/login']);
+  // Si connecté mais mauvais rôle → rediriger vers son propre tableau de bord
+  if (currentUser && VALID_ROLES.includes(currentUser.role)) {
+    router.navigate([`/dashboard/${currentUser.role}/home`]);
+  } else {
+    router.navigate(['/login']);
+  }
   return false;
 };

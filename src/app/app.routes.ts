@@ -1,6 +1,8 @@
+import { inject } from '@angular/core';
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 import { roleGuard } from './core/guards/role.guard';
+import { AuthService, UserRole } from './services/auth.service';
 
 export const routes: Routes = [
 
@@ -63,11 +65,19 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
 
-      // Redirect par défaut
+      // Redirect par défaut vers le home du rôle connecté
+      // Note: authGuard runs before this redirect, ensuring the user is authenticated.
       {
         path: '',
-        redirectTo: 'patient/home',
         pathMatch: 'full',
+        redirectTo: () => {
+          const authService = inject(AuthService);
+          const user = authService.getCurrentUser();
+          const validRoles: UserRole[] = ['patient', 'doctor', 'lab', 'pharmacy', 'admin'];
+          const role: UserRole =
+            user?.role && validRoles.includes(user.role) ? user.role : 'patient';
+          return `${role}/home`;
+        },
       },
 
       // ── Patient ──────────────────────────
