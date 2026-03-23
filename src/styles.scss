@@ -2519,3 +2519,191 @@ form.user {
 .text-gray-700 { color: #475569 !important; }
 .text-gray-800 { color: #334155 !important; }
 .text-gray-900 { color: #1E293B !important; }
+// ═══════════════════════════════════════════════════════════════════════════════
+// Backoffice – Shared utility classes
+// Used by inline templates and component-level stylesheets
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// ─── Page layout helpers ──────────────────────────────────────────────────────
+.page-container { max-width: 1400px; }
+
+.page-header {
+  margin-bottom: 1.75rem;
+  .page-title  { font-size: 1.5rem; font-weight: 700; color: #0f172a; margin: 0; }
+  .page-subtitle { font-size: 0.875rem; color: #64748b; margin: 0.25rem 0 0; }
+}
+
+// ─── Table card ───────────────────────────────────────────────────────────────
+.table-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+// ─── Data table ───────────────────────────────────────────────────────────────
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+
+  thead tr   { background: #f8fafc; }
+
+  th {
+    padding: 0.875rem 1rem;
+    text-align: left;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 2px solid #e2e8f0;
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 0.875rem 1rem;
+    vertical-align: middle;
+    border-bottom: 1px solid #f1f5f9;
+    color: #374151;
+  }
+
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover         { background: #fafafa; }
+}
+
+// ─── Status badge ─────────────────────────────────────────────────────────────
+.status-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+
+  &.status--active    { background: #dcfce7; color: #16a34a; }
+  &.status--pending   { background: #fef3c7; color: #d97706; }
+  &.status--suspended { background: #fee2e2; color: #dc2626; }
+  &.status--info      { background: #dbeafe; color: #3b82f6; }
+  &.status--urgent    { background: #fee2e2; color: #dc2626; }
+}
+
+// ─── Role chip ────────────────────────────────────────────────────────────────
+.role-chip {
+  background: #eff6ff;
+  color: #3b82f6;
+  border: 1px solid #bfdbfe;
+  border-radius: 20px;
+  padding: 0.15rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+// ─── Time chip ────────────────────────────────────────────────────────────────
+.time-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: #f1f5f9;
+  border-radius: 20px;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #475569;
+}
+
+// ─── Panel ────────────────────────────────────────────────────────────────────
+.panel {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.panel-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  i { color: #3b82f6; }
+}
+
+.panel-link {
+  font-size: 0.8rem;
+  color: #3b82f6;
+  text-decoration: none;
+  &:hover { text-decoration: underline; }
+}
+
+// ─── Empty state ──────────────────────────────────────────────────────────────
+.empty-state {
+  padding: 3rem;
+  text-align: center;
+  color: #94a3b8;
+  i  { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
+  p  { margin: 0; font-size: 0.875rem; }
+}
+
+// ─── Search bar (shared) ──────────────────────────────────────────────────────
+.search-wrap {
+  position: relative;
+  .search-icon {
+    position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%);
+    color: #94a3b8; font-size: 0.875rem; pointer-events: none;
+  }
+  .search-input {
+    width: 100%; background: #fff; border: 1px solid #e2e8f0;
+    border-radius: 8px; padding: 0.5rem 0.75rem 0.5rem 2.25rem;
+    font-size: 0.875rem; color: #1e293b; transition: border-color 0.2s;
+    &:focus { outline: none; border-color: #3b82f6; }
+  }
+}
+
+// ─── Stats grid (shared) ──────────────────────────────────────────────────────
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.stat-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.25rem;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.2s;
+  &:hover { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); }
+
+  .stat-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.25rem; flex-shrink: 0;
+  }
+  .stat-label { font-size: 0.8rem; color: #64748b; margin: 0 0 0.25rem; font-weight: 500; }
+  .stat-value { font-size: 1.5rem; font-weight: 700; color: #0f172a; margin: 0; line-height: 1.2; }
+
+  &--primary .stat-icon { background: #dbeafe; color: #3b82f6; }
+  &--success .stat-icon { background: #dcfce7; color: #22c55e; }
+  &--info    .stat-icon { background: #e0f2fe; color: #0ea5e9; }
+  &--warning .stat-icon { background: #fef3c7; color: #f59e0b; }
+  &--danger  .stat-icon { background: #fee2e2; color: #ef4444; }
+}

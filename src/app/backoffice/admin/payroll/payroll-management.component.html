@@ -1,15 +1,60 @@
-<div>
-  <h2>Payroll Management</h2>
-  <table>
-    <thead><tr><th>Name</th><th>Role</th><th>Base</th><th>Bonus</th><th>Total</th><th>Status</th><th>Action</th></tr></thead>
-    <tbody>
-      <tr *ngFor="let p of payroll">
-        <td>{{ p.name }}</td><td>{{ p.role }}</td><td>${{ p.baseSalary }}</td><td>${{ p.bonus }}</td>
-        <td>${{ p.total }}</td><td>{{ p.status }}</td>
-        <td>
-          <button type="button" (click)="processPayroll(p.name)" *ngIf="p.status === 'Pending'">Process</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<!-- src/app/backoffice/admin/payroll/payroll-management.component.html -->
+<div class="page-container">
+  <div class="page-header d-flex align-items-center justify-content-between flex-wrap gap-3 mb-4">
+    <div>
+      <h1 class="page-title">Gestion de la Paie</h1>
+      <p class="page-subtitle">Total net à payer : <strong class="text-success">{{ totalNet | number }} €</strong></p>
+    </div>
+    <select class="form-select" style="width:auto" [(ngModel)]="selectedMonth" aria-label="Sélectionner le mois">
+      <option>Janvier 2026</option>
+      <option>Février 2026</option>
+      <option>Mars 2026</option>
+    </select>
+  </div>
+
+  <div class="table-card">
+    <div class="table-responsive">
+      <table class="data-table" aria-label="Tableau de paie">
+        <thead>
+          <tr>
+            <th>Employé</th>
+            <th>Rôle</th>
+            <th>Salaire Base</th>
+            <th>Primes</th>
+            <th>Déductions</th>
+            <th>Net</th>
+            <th>Statut</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let entry of payrollEntries">
+            <td class="fw-semibold">{{ entry.name }}</td>
+            <td><span class="role-chip">{{ entry.role }}</span></td>
+            <td>{{ entry.baseSalary | number }} €</td>
+            <td class="text-success">+{{ entry.bonuses | number }} €</td>
+            <td class="text-danger">-{{ entry.deductions | number }} €</td>
+            <td class="fw-bold">{{ entry.net | number }} €</td>
+            <td>
+              <span class="status-badge" [class.status--active]="entry.status === 'Payé'" [class.status--pending]="entry.status === 'En attente'">
+                {{ entry.status }}
+              </span>
+            </td>
+            <td>
+              <button
+                class="btn btn-primary btn-sm"
+                *ngIf="entry.status === 'En attente'"
+                (click)="markAsPaid(entry.id)"
+              >
+                <i class="bi bi-check-circle"></i> Payer
+              </button>
+              <span *ngIf="entry.status === 'Payé'" class="text-muted small">
+                <i class="bi bi-check2-all text-success"></i> Traité
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

@@ -1,102 +1,100 @@
+<!-- src/app/backoffice/admin/dashboard/admin-dashboard.component.html -->
 <div class="admin-dashboard">
-  <!-- Header -->
-  <div class="dashboard-header">
-    <div class="header-content">
-      <h1>Tableau de Bord Administrateur</h1>
-      <p class="subtitle">Vue d'ensemble du système</p>
+
+  <!-- ─── En-tête ─────────────────────────────────────────────────── -->
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Tableau de Bord Administrateur</h1>
+      <p class="page-subtitle">{{ currentDate | date:"EEEE d MMMM yyyy" : '' : 'fr' }}</p>
     </div>
-    <div class="header-actions">
-      <button class="btn btn-secondary" (click)="refreshData()">
-        <i class="fas fa-sync-alt"></i> Actualiser
-      </button>
-    </div>
+    <button class="btn-refresh" (click)="refreshData()">
+      <i class="bi bi-arrow-clockwise"></i>
+      Actualiser
+    </button>
   </div>
 
-  <!-- Stats Grid -->
+  <!-- ─── Cartes statistiques ──────────────────────────────────────── -->
   <div class="stats-grid">
-    <div *ngFor="let stat of stats" class="stat-card" [ngClass]="'stat-' + stat.icon">
+    <div class="stat-card" *ngFor="let stat of stats" [ngClass]="'stat-card--' + stat.colorClass">
       <div class="stat-icon">
-        <i [class]="'fas ' + stat.icon"></i>
+        <i [class]="'bi ' + stat.icon"></i>
       </div>
-      <div class="stat-content">
+      <div class="stat-body">
         <p class="stat-label">{{ stat.label }}</p>
-        <h3 class="stat-value">{{ stat.value }}</h3>
-        <span class="stat-change" [ngClass]="stat.changeClass">
-          <i class="fas" [ngClass]="stat.changeIcon"></i>
+        <p class="stat-value">{{ stat.value }}</p>
+        <span class="stat-change" [class.positive]="stat.changePositive" [class.negative]="!stat.changePositive">
+          <i class="bi" [ngClass]="stat.changePositive ? 'bi-arrow-up-short' : 'bi-arrow-down-short'"></i>
           {{ stat.change }}
         </span>
       </div>
     </div>
   </div>
 
-  <!-- Main Content -->
-  <div class="dashboard-content">
-    <!-- Recent Alerts -->
-    <div class="card alerts-card">
-      <div class="card-header">
-        <h2>Alertes Récentes</h2>
-        <a href="#" class="link-secondary">Voir tout</a>
+  <!-- ─── Grille principale ─────────────────────────────────────────── -->
+  <div class="main-grid">
+
+    <!-- Alertes récentes -->
+    <section class="panel alerts-panel">
+      <div class="panel-header">
+        <h2 class="panel-title">
+          <i class="bi bi-bell-fill"></i>
+          Alertes Récentes
+        </h2>
+        <a href="#" class="panel-link">Voir tout</a>
       </div>
-      <div class="alerts-list">
-        <div *ngFor="let alert of recentAlerts" class="alert-item" [ngClass]="'alert-' + alert.type">
-          <div class="alert-badge" [ngClass]="'badge-' + alert.type">
-            <i [class]="'fas ' + getAlertIcon(alert.type)"></i>
-          </div>
-          <div class="alert-content">
-            <p class="alert-message">{{ alert.message }}</p>
+
+      <ul class="alerts-list" *ngIf="alerts.length > 0; else noAlerts">
+        <li *ngFor="let alert of alerts" class="alert-item" [ngClass]="'alert-item--' + alert.type">
+          <span class="alert-icon">
+            <i [class]="'bi ' + getAlertIcon(alert.type)"></i>
+          </span>
+          <span class="alert-body">
+            <span class="alert-msg">{{ alert.message }}</span>
             <span class="alert-time">
-              <i class="fas fa-clock"></i> {{ alert.time }}
+              <i class="bi bi-clock"></i> {{ alert.time }}
+            </span>
+          </span>
+          <button class="btn-close-sm" (click)="closeAlert(alert.id)" aria-label="Fermer l'alerte">
+            <i class="bi bi-x"></i>
+          </button>
+        </li>
+      </ul>
+
+      <ng-template #noAlerts>
+        <div class="empty-state">
+          <i class="bi bi-check2-circle"></i>
+          <p>Aucune alerte — Tout fonctionne correctement</p>
+        </div>
+      </ng-template>
+    </section>
+
+    <!-- État du système -->
+    <section class="panel health-panel">
+      <div class="panel-header">
+        <h2 class="panel-title">
+          <i class="bi bi-activity"></i>
+          État du Système
+        </h2>
+      </div>
+
+      <div class="health-list">
+        <div *ngFor="let h of healthIndicators" class="health-item">
+          <div class="health-meta">
+            <span class="health-label">{{ h.label }}</span>
+            <span class="health-badge" [ngClass]="'badge--' + h.status">
+              {{ h.status === 'online' ? 'En ligne' : h.status === 'warning' ? 'Attention' : 'Critique' }}
             </span>
           </div>
-          <button class="btn-close" (click)="closeAlert(alert)">×</button>
-        </div>
-
-        <div *ngIf="recentAlerts.length === 0" class="empty-state">
-          <i class="fas fa-check-circle"></i>
-          <p>Aucune alerte – Tout fonctionne correctement</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- System Health -->
-    <div class="card health-card">
-      <div class="card-header">
-        <h2>État du Système</h2>
-      </div>
-      <div class="health-items">
-        <div class="health-item">
-          <div class="health-label">
-            <span>API Server</span>
-            <span class="badge badge-success">En ligne</span>
+          <div class="health-bar-wrap">
+            <div
+              class="health-bar-fill"
+              [style.width.%]="h.percent"
+              [ngClass]="'fill--' + h.status"
+            ></div>
           </div>
-          <div class="health-bar">
-            <div class="health-fill" style="width: 92%"></div>
-          </div>
-          <p class="health-value">92% CPU</p>
-        </div>
-
-        <div class="health-item">
-          <div class="health-label">
-            <span>Database</span>
-            <span class="badge badge-success">En ligne</span>
-          </div>
-          <div class="health-bar">
-            <div class="health-fill" style="width: 65%"></div>
-          </div>
-          <p class="health-value">65% Utilisation</p>
-        </div>
-
-        <div class="health-item">
-          <div class="health-label">
-            <span>Storage</span>
-            <span class="badge badge-warning">Attention</span>
-          </div>
-          <div class="health-bar">
-            <div class="health-fill health-warning" style="width: 82%"></div>
-          </div>
-          <p class="health-value">82% Utilisé</p>
+          <span class="health-pct">{{ h.percent }} %</span>
         </div>
       </div>
-    </div>
+    </section>
   </div>
 </div>

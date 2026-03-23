@@ -1,11 +1,53 @@
-<div>
-  <h2>My Patients</h2>
-  <table>
-    <thead><tr><th>Name</th><th>Age</th><th>Condition</th><th>Last Visit</th><th>Status</th></tr></thead>
-    <tbody>
-      <tr *ngFor="let p of patients">
-        <td>{{ p.name }}</td><td>{{ p.age }}</td><td>{{ p.condition }}</td><td>{{ p.lastVisit }}</td><td>{{ p.status }}</td>
-      </tr>
-    </tbody>
-  </table>
+<!-- src/app/backoffice/doctor/patients/patient-list.component.html -->
+<div class="page-container">
+  <div class="page-header d-flex align-items-center justify-content-between flex-wrap gap-3 mb-4">
+    <div>
+      <h1 class="page-title">Mes Patients</h1>
+      <p class="page-subtitle">{{ filteredPatients.length }} patient(s)</p>
+    </div>
+    <div class="search-wrap" style="max-width:320px;flex:1">
+      <i class="bi bi-search search-icon"></i>
+      <input class="search-input w-100" [(ngModel)]="searchTerm" placeholder="Rechercher un patient…" />
+    </div>
+  </div>
+
+  <div class="table-card">
+    <div class="table-responsive">
+      <table class="data-table" aria-label="Liste des patients">
+        <thead>
+          <tr>
+            <th>Patient</th>
+            <th>Âge</th>
+            <th>Condition</th>
+            <th>Dernière Visite</th>
+            <th>Prochaine Visite</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of filteredPatients">
+            <td class="fw-semibold">{{ p.name }}</td>
+            <td>{{ p.age }} ans</td>
+            <td>{{ p.condition }}</td>
+            <td class="text-muted small">{{ p.lastVisit }}</td>
+            <td class="text-muted small">{{ p.nextVisit }}</td>
+            <td>
+              <span class="status-badge" [ngClass]="getStatusClass(p.status)">{{ p.status }}</span>
+            </td>
+            <td>
+              <div class="d-flex gap-2">
+                <button class="btn btn-primary btn-sm"><i class="bi bi-folder2-open"></i> Dossier</button>
+                <button class="btn btn-outline-secondary btn-sm"><i class="bi bi-calendar-plus"></i> RDV</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="empty-state" *ngIf="filteredPatients.length === 0">
+      <i class="bi bi-people"></i>
+      <p>Aucun patient trouvé.</p>
+    </div>
+  </div>
 </div>

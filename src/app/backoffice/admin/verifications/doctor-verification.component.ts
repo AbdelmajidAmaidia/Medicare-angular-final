@@ -1,8 +1,18 @@
+/**
+ * @file doctor-verification.component.ts
+ * @description Vérification des dossiers de médecins en attente d'activation.
+ */
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-interface DoctorVerification {
-  id: string; name: string; specialty: string; license: string; submittedDate: string; status: string;
+/** Demande de vérification d'un médecin */
+export interface VerificationRequest {
+  id: string;
+  name: string;
+  specialty: string;
+  submittedAt: string;
+  status: 'En attente' | 'Approuvé' | 'Rejeté';
+  documents: string[];
 }
 
 @Component({
@@ -12,12 +22,25 @@ interface DoctorVerification {
   templateUrl: './doctor-verification.component.html',
 })
 export class DoctorVerificationComponent {
-  verifications: DoctorVerification[] = [
-    { id: 'VER-001', name: 'Dr. Ahmed Hassan', specialty: 'Cardiology', license: 'MED-2024-001', submittedDate: 'Dec 14, 2024', status: 'Pending' },
-    { id: 'VER-002', name: 'Dr. Lisa Park', specialty: 'Neurology', license: 'MED-2024-002', submittedDate: 'Dec 13, 2024', status: 'Under Review' },
-    { id: 'VER-003', name: 'Dr. James Wilson', specialty: 'Orthopedics', license: 'MED-2024-003', submittedDate: 'Dec 12, 2024', status: 'Approved' },
+  requests: VerificationRequest[] = [
+    { id: 'VER-001', name: 'Dr. Amina Bouali', specialty: 'Cardiologie', submittedAt: '20 Mar 2026', status: 'En attente', documents: ['diplome.pdf', 'licence.pdf'] },
+    { id: 'VER-002', name: 'Dr. Karim Mansouri', specialty: 'Pédiatrie', submittedAt: '18 Mar 2026', status: 'En attente', documents: ['diplome.pdf'] },
+    { id: 'VER-003', name: 'Dr. Leila Benali', specialty: 'Dermatologie', submittedAt: '15 Mar 2026', status: 'Approuvé', documents: ['diplome.pdf', 'cv.pdf'] },
   ];
 
-  approve(id: string) { const v = this.verifications.find(v => v.id === id); if (v) v.status = 'Approved'; }
-  reject(id: string) { const v = this.verifications.find(v => v.id === id); if (v) v.status = 'Rejected'; }
+  /** Approuver une demande */
+  approve(id: string): void {
+    const req = this.requests.find(r => r.id === id);
+    if (req) { req.status = 'Approuvé'; }
+  }
+
+  /** Rejeter une demande */
+  reject(id: string): void {
+    const req = this.requests.find(r => r.id === id);
+    if (req) { req.status = 'Rejeté'; }
+  }
+
+  get pendingCount(): number {
+    return this.requests.filter(r => r.status === 'En attente').length;
+  }
 }

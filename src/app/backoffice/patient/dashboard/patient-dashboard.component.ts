@@ -1,146 +1,64 @@
+/**
+ * @file patient-dashboard.component.ts
+ * @description Tableau de bord patient avec résumé santé et prochain rendez-vous.
+ */
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { AuthService } from '../../../services/auth.service';
 
-interface Stat {
+export interface HealthMetric {
   label: string;
   value: string;
+  unit: string;
   icon: string;
-  color: string;
+  status: 'good' | 'warning' | 'critical';
 }
 
-interface Appointment {
+export interface UpcomingAppointment {
   doctor: string;
   specialty: string;
-  date: Date;
+  date: string;
   time: string;
-  status: 'Confirmed' | 'Pending' | 'Cancelled';
-}
-
-interface LabResult {
-  name: string;
-  date: Date;
-  status: 'Normal' | 'Abnormal' | 'Pending';
-}
-
-interface Activity {
-  title: string;
-  time: string;
-  icon: string;
-  type: 'success' | 'primary' | 'warning' | 'info';
+  type: 'Présentiel' | 'Téléconsultation';
 }
 
 @Component({
   selector: 'app-patient-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule],
   templateUrl: './patient-dashboard.component.html',
   styleUrl: './patient-dashboard.component.scss',
 })
 export class PatientDashboardComponent implements OnInit {
-  currentUser: any;
   currentDate = new Date();
 
-  stats: Stat[] = [
-    {
-      label: 'Rendez-vous',
-      value: '3',
-      icon: 'bi-calendar2-check',
-      color: 'primary',
-    },
-    {
-      label: 'Ordonnances',
-      value: '5',
-      icon: 'bi-capsule',
-      color: 'warning',
-    },
-    {
-      label: 'Analyses',
-      value: '2',
-      icon: 'bi-file-medical',
-      color: 'success',
-    },
-    {
-      label: 'Messages',
-      value: '1',
-      icon: 'bi-chat-dots',
-      color: 'info',
-    },
+  metrics: HealthMetric[] = [
+    { label: 'Fréquence Cardiaque', value: '72', unit: 'bpm', icon: 'bi-heart-pulse', status: 'good' },
+    { label: 'Pression Artérielle', value: '135/85', unit: 'mmHg', icon: 'bi-activity', status: 'warning' },
+    { label: 'Glycémie', value: '5.6', unit: 'mmol/L', icon: 'bi-droplet', status: 'good' },
+    { label: 'IMC', value: '24.8', unit: 'kg/m²', icon: 'bi-person', status: 'good' },
   ];
 
-  appointments: Appointment[] = [
-    {
-      doctor: 'Dr. Martin Dubois',
-      specialty: 'Consultation générale',
-      date: new Date(2026, 2, 15),
-      time: '14:30',
-      status: 'Confirmed',
-    },
-    {
-      doctor: 'Dr. Sarah Leroy',
-      specialty: 'Téléconsultation',
-      date: new Date(2026, 2, 20),
-      time: '10:00',
-      status: 'Pending',
-    },
-    {
-      doctor: 'Dr. Jean Martin',
-      specialty: 'Cardiologie',
-      date: new Date(2026, 2, 25),
-      time: '15:00',
-      status: 'Confirmed',
-    },
+  upcomingAppointments: UpcomingAppointment[] = [
+    { doctor: 'Dr. Michael Chen', specialty: 'Cardiologie', date: '25 Mars 2026', time: '10:00', type: 'Présentiel' },
+    { doctor: 'Dr. Sarah Kim', specialty: 'Endocrinologie', date: '2 Avr 2026', time: '14:30', type: 'Téléconsultation' },
   ];
 
-  labResults: LabResult[] = [
-    {
-      name: 'Analyse sanguine complète',
-      date: new Date(2026, 2, 10),
-      status: 'Normal',
-    },
-    {
-      name: 'Test glycémie',
-      date: new Date(2026, 2, 8),
-      status: 'Normal',
-    },
-    {
-      name: 'Radiographie thoracique',
-      date: new Date(2026, 2, 5),
-      status: 'Pending',
-    },
+  recentActivities = [
+    { type: 'Ordonnance', desc: 'Metformine 500mg renouvelée', date: '20 Mar 2026', icon: 'bi-capsule' },
+    { type: 'Résultat', desc: 'Bilan sanguin disponible', date: '18 Mar 2026', icon: 'bi-file-medical' },
+    { type: 'Consultation', desc: 'Consultation Dr. Chen', date: '15 Mar 2026', icon: 'bi-chat-dots' },
   ];
-
-  recentActivities: Activity[] = [
-    {
-      title: 'Analyse sanguine complétée',
-      time: 'Il y a 2 heures',
-      icon: 'bi-check-circle-fill',
-      type: 'success',
-    },
-    {
-      title: 'Rendez-vous confirmé',
-      time: 'Hier',
-      icon: 'bi-calendar-check',
-      type: 'primary',
-    },
-    {
-      title: 'Nouvelle ordonnance',
-      time: 'Il y a 3 jours',
-      icon: 'bi-file-earmark-text',
-      type: 'warning',
-    },
-    {
-      title: 'Message du Dr. Martin',
-      time: 'Il y a 5 jours',
-      icon: 'bi-chat-dots-fill',
-      type: 'info',
-    },
-  ];
-
-  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.currentUser = this.authService.getCurrentUser();
+    // TODO : charger les données via PatientService
+  }
+
+  getMetricClass(status: HealthMetric['status']): string {
+    const map: Record<HealthMetric['status'], string> = {
+      good: 'metric--good',
+      warning: 'metric--warning',
+      critical: 'metric--critical',
+    };
+    return map[status];
   }
 }

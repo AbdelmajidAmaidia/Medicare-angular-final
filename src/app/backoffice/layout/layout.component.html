@@ -1,199 +1,195 @@
 <!-- src/app/backoffice/layout/layout.component.html -->
-<div class="dashboard-wrapper">
-  <!-- SIDEBAR PROFESSIONNEL -->
-  <aside class="sidebar" [class.collapsed]="sidebarCollapsed">
-    <!-- LOGO SECTION -->
+<div class="bo-wrapper" [class.sidebar-collapsed]="sidebarCollapsed">
+
+  <!-- ═══════════════════════ BARRE LATÉRALE ═══════════════════════ -->
+  <aside class="bo-sidebar" [class.mobile-open]="mobileMenuOpen">
+
+    <!-- En-tête logo -->
     <div class="sidebar-header">
-      <div class="logo-container">
-        <div class="logo-icon">
-          <i class="bi bi-hospital"></i>
-        </div>
-        <div class="logo-text-container" [class.hidden]="sidebarCollapsed">
-          <div class="logo-main">MediCare</div>
-          <div class="logo-sub">AI</div>
-        </div>
-      </div>
-      <button class="toggle-btn" (click)="toggleSidebar()" [title]="sidebarCollapsed ? 'Ouvrir' : 'Fermer'">
-        <i class="bi" [ngClass]="sidebarCollapsed ? 'bi-chevron-right' : 'bi-chevron-left'"></i>
+      <a routerLink="/" class="sidebar-brand">
+        <i class="bi bi-hospital brand-icon"></i>
+        <span class="brand-text">MediCare <span class="brand-ai">AI</span></span>
+      </a>
+      <button class="sidebar-toggle" (click)="toggleSidebar()" [title]="sidebarCollapsed ? 'Développer' : 'Réduire'">
+        <i class="bi" [ngClass]="sidebarCollapsed ? 'bi-chevron-double-right' : 'bi-chevron-double-left'"></i>
       </button>
     </div>
 
-    <!-- USER PROFILE CARD PREMIUM -->
-    <div class="user-profile-card">
-      <div class="user-avatar-wrapper">
-        <img [src]="'https://api.dicebear.com/7.x/avataaars/svg?seed=' + (currentUser?.email || 'user')" 
-             alt="Avatar" class="user-avatar">
-        <div class="user-status online"></div>
+    <!-- Carte profil utilisateur -->
+    <div class="sidebar-profile">
+      <div class="profile-avatar">
+        <img [src]="getAvatarUrl()" alt="Avatar utilisateur" />
+        <span class="status-dot online" title="En ligne"></span>
       </div>
-      <div class="user-details" [class.hidden]="sidebarCollapsed">
-        <div class="user-name">{{ currentUser?.firstName }} {{ currentUser?.lastName }}</div>
-        <div class="user-role">{{ currentUser?.role | titlecase }}</div>
+      <div class="profile-info">
+        <p class="profile-name">{{ currentUser?.firstName }} {{ currentUser?.lastName }}</p>
+        <span class="profile-role badge">{{ getRoleLabel() }}</span>
       </div>
     </div>
 
-    <!-- NAVIGATION MENU -->
-    <nav class="sidebar-nav">
-      <!-- SECTIONS DYNAMIQUES PAR RÔLE -->
+    <!-- Navigation par rôle -->
+    <nav class="sidebar-nav" aria-label="Navigation principale">
       <ng-container *ngFor="let section of getNavSections()">
         <div class="nav-section">
-          <div class="nav-section-title" [class.hidden]="sidebarCollapsed">
-            {{ section.title }}
-          </div>
-
-          <a *ngFor="let item of section.items"
-             [routerLink]="item.route"
-             routerLinkActive="active"
-             [routerLinkActiveOptions]="{exact: true}"
-             class="nav-item">
-            <div class="nav-icon-wrapper">
-              <i [class]="'bi ' + item.icon"></i>
-            </div>
-            <span class="nav-label" [class.hidden]="sidebarCollapsed">{{ item.label }}</span>
-            <span class="badge" *ngIf="item.badge && !sidebarCollapsed">{{ item.badge }}</span>
-            <div class="nav-hover-indicator"></div>
+          <span class="nav-section-label">{{ section.title }}</span>
+          <a
+            *ngFor="let item of section.items"
+            [routerLink]="item.route"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="nav-link"
+            [title]="sidebarCollapsed ? item.label : ''"
+          >
+            <i [class]="'bi ' + item.icon + ' nav-icon'"></i>
+            <span class="nav-label">{{ item.label }}</span>
+            <span class="nav-badge" *ngIf="item.badge">{{ item.badge }}</span>
           </a>
         </div>
       </ng-container>
-
-      <!-- SECTION GÉNÉRALE (commune à tous les rôles) -->
-      <div class="nav-section">
-        <div class="nav-section-title" [class.hidden]="sidebarCollapsed">
-          ⚙️ GÉNÉRAL
-        </div>
-
-        <a href="#"
-           class="nav-item">
-          <div class="nav-icon-wrapper">
-            <i class="bi bi-gear"></i>
-          </div>
-          <span class="nav-label" [class.hidden]="sidebarCollapsed">Paramètres</span>
-          <div class="nav-hover-indicator"></div>
-        </a>
-
-        <a href="#"
-           class="nav-item">
-          <div class="nav-icon-wrapper">
-            <i class="bi bi-question-circle"></i>
-          </div>
-          <span class="nav-label" [class.hidden]="sidebarCollapsed">Aide & Support</span>
-          <div class="nav-hover-indicator"></div>
-        </a>
-      </div>
     </nav>
 
-    <!-- SIDEBAR FOOTER -->
+    <!-- Pied de barre latérale -->
     <div class="sidebar-footer">
-      <div class="upgrade-card" *ngIf="!sidebarCollapsed">
-        <div class="upgrade-icon">
-          <i class="bi bi-star-fill"></i>
-        </div>
-        <div class="upgrade-text">
-          <div class="upgrade-title">Version Pro</div>
-          <div class="upgrade-desc">Débloquez plus de fonctionnalités</div>
-        </div>
-      </div>
-
-      <button class="logout-btn" (click)="logout()" [title]="sidebarCollapsed ? 'Déconnexion' : ''">
-        <i class="bi bi-box-arrow-right"></i>
-        <span [class.hidden]="sidebarCollapsed">Déconnexion</span>
+      <button class="btn-logout" (click)="logout()" title="Déconnexion">
+        <i class="bi bi-box-arrow-right nav-icon"></i>
+        <span class="nav-label">Déconnexion</span>
       </button>
     </div>
   </aside>
 
-  <!-- MAIN CONTENT AREA -->
-  <main class="main-content">
-    <!-- TOP HEADER -->
-    <header class="top-header">
-      <div class="header-left">
-        <button class="menu-toggle" (click)="toggleSidebar()">
+  <!-- Fond semi-transparent pour mobile -->
+  <div
+    class="sidebar-overlay"
+    *ngIf="mobileMenuOpen"
+    (click)="toggleMobileMenu()"
+    aria-hidden="true"
+  ></div>
+
+  <!-- ═══════════════════════ ZONE PRINCIPALE ═══════════════════════ -->
+  <div class="bo-main">
+
+    <!-- En-tête supérieur -->
+    <header class="bo-topbar">
+      <div class="topbar-left">
+        <!-- Bouton menu burger mobile -->
+        <button class="btn-icon d-lg-none" (click)="toggleMobileMenu()" aria-label="Ouvrir le menu">
           <i class="bi bi-list"></i>
         </button>
-        <div class="breadcrumb">
-          <span>{{ pageTitle }}</span>
-        </div>
+        <!-- Bouton replier/déplier sidebar sur desktop -->
+        <button class="btn-icon d-none d-lg-flex" (click)="toggleSidebar()" aria-label="Basculer la barre latérale">
+          <i class="bi bi-layout-sidebar"></i>
+        </button>
+        <nav aria-label="Fil d'Ariane">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+              <a routerLink="/dashboard"><i class="bi bi-house-door"></i></a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">{{ pageTitle }}</li>
+          </ol>
+        </nav>
       </div>
 
-      <div class="header-right">
-        <!-- SEARCH BAR -->
-        <div class="search-container">
-          <input type="text" placeholder="Rechercher..." class="search-input">
-          <i class="bi bi-search"></i>
+      <div class="topbar-right">
+        <!-- Barre de recherche -->
+        <div class="topbar-search">
+          <i class="bi bi-search search-icon"></i>
+          <input type="search" class="search-input" placeholder="Rechercher…" aria-label="Recherche" />
         </div>
 
-        <!-- NOTIFICATIONS -->
+        <!-- Cloche de notifications -->
         <div class="notification-dropdown" [class.open]="notificationOpen">
-          <button class="notification-btn" (click)="toggleNotifications()">
+          <button
+            class="btn-icon position-relative"
+            (click)="toggleNotifications()"
+            aria-label="Notifications"
+            [attr.aria-expanded]="notificationOpen"
+          >
             <i class="bi bi-bell"></i>
-            <span class="notification-badge" *ngIf="notifications.length > 0">
-              {{ notifications.length }}
-            </span>
+            <span class="notif-badge" *ngIf="unreadCount > 0">{{ unreadCount }}</span>
           </button>
 
-          <div class="notification-panel" *ngIf="notificationOpen">
-            <div class="notification-header">
-              <h5>Notifications</h5>
-              <button class="close-btn" (click)="toggleNotifications()">
-                <i class="bi bi-x"></i>
-              </button>
+          <div class="notif-panel" *ngIf="notificationOpen" role="dialog" aria-label="Panneau de notifications">
+            <div class="notif-panel-header">
+              <h6 class="mb-0">Notifications</h6>
+              <button class="btn-link-sm" (click)="markAllRead()">Tout marquer lu</button>
             </div>
-            <div class="notification-list">
-              <div *ngIf="notifications.length > 0">
-                <div class="notification-item" *ngFor="let notif of notifications" [ngClass]="'notif-' + notif.type">
-                  <i [class]="'bi ' + notif.icon"></i>
-                  <div class="notif-content">
-                    <div class="notif-title">{{ notif.title }}</div>
-                    <div class="notif-time">{{ notif.time }}</div>
-                  </div>
-                </div>
-              </div>
-              <div *ngIf="notifications.length === 0" class="empty-state">
+            <ul class="notif-list" *ngIf="notifications.length > 0; else noNotifs">
+              <li
+                *ngFor="let n of notifications"
+                class="notif-item"
+                [class.unread]="!n.read"
+              >
+                <span class="notif-icon" [ngClass]="'notif-icon--' + n.type">
+                  <i [class]="'bi ' + n.icon"></i>
+                </span>
+                <span class="notif-body">
+                  <span class="notif-title">{{ n.title }}</span>
+                  <span class="notif-time">{{ n.time }}</span>
+                </span>
+                <button class="btn-icon btn-xs" (click)="dismissNotification(n.id)" aria-label="Ignorer">
+                  <i class="bi bi-x"></i>
+                </button>
+              </li>
+            </ul>
+            <ng-template #noNotifs>
+              <div class="notif-empty">
                 <i class="bi bi-inbox"></i>
                 <p>Aucune notification</p>
               </div>
-            </div>
+            </ng-template>
           </div>
         </div>
 
-        <!-- QUICK ACTION BUTTON -->
-        <button class="btn-primary" (click)="openQuickAction()">
-          <i class="bi bi-plus-lg"></i>
-          <span>Nouveau</span>
-        </button>
-
-        <!-- USER DROPDOWN -->
+        <!-- Menu utilisateur -->
         <div class="user-dropdown" [class.open]="userDropdownOpen">
-          <button class="user-dropdown-btn" (click)="toggleUserDropdown()">
-            <img [src]="'https://api.dicebear.com/7.x/avataaars/svg?seed=' + (currentUser?.email || 'user')" 
-                 alt="Profile" class="avatar-img">
-            <i class="bi bi-chevron-down"></i>
+          <button
+            class="btn-user"
+            (click)="toggleUserDropdown()"
+            [attr.aria-expanded]="userDropdownOpen"
+            aria-label="Menu utilisateur"
+          >
+            <img [src]="getAvatarUrl()" alt="Avatar" class="user-avatar-sm" />
+            <span class="user-display-name d-none d-md-inline">
+              {{ currentUser?.firstName }}
+            </span>
+            <i class="bi bi-chevron-down chevron"></i>
           </button>
 
-          <div class="dropdown-menu" *ngIf="userDropdownOpen">
-            <a href="#" class="dropdown-item">
-              <i class="bi bi-person"></i>
-              <span>Mon Profil</span>
-            </a>
-            <a href="#" class="dropdown-item">
-              <i class="bi bi-gear"></i>
-              <span>Paramètres</span>
-            </a>
-            <a href="#" class="dropdown-item">
-              <i class="bi bi-question-circle"></i>
-              <span>Aide</span>
-            </a>
-            <hr>
-            <a href="#" class="dropdown-item danger" (click)="logout()">
-              <i class="bi bi-box-arrow-right"></i>
-              <span>Déconnexion</span>
-            </a>
-          </div>
+          <ul class="user-menu" *ngIf="userDropdownOpen" role="menu">
+            <li class="user-menu-header">
+              <strong>{{ currentUser?.firstName }} {{ currentUser?.lastName }}</strong>
+              <span class="text-muted small">{{ currentUser?.email }}</span>
+            </li>
+            <li role="separator"><hr class="dropdown-divider" /></li>
+            <li role="menuitem">
+              <a href="#" class="user-menu-item">
+                <i class="bi bi-person"></i> Mon Profil
+              </a>
+            </li>
+            <li role="menuitem">
+              <a href="#" class="user-menu-item">
+                <i class="bi bi-gear"></i> Paramètres
+              </a>
+            </li>
+            <li role="menuitem">
+              <a href="#" class="user-menu-item">
+                <i class="bi bi-question-circle"></i> Aide &amp; Support
+              </a>
+            </li>
+            <li role="separator"><hr class="dropdown-divider" /></li>
+            <li role="menuitem">
+              <button class="user-menu-item danger w-100 text-start" (click)="logout()">
+                <i class="bi bi-box-arrow-right"></i> Déconnexion
+              </button>
+            </li>
+          </ul>
         </div>
       </div>
     </header>
 
-    <!-- PAGE CONTENT -->
-    <div class="page-content">
+    <!-- Contenu de la page -->
+    <main class="bo-content" id="main-content">
       <router-outlet></router-outlet>
-    </div>
-  </main>
+    </main>
+  </div>
 </div>

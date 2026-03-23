@@ -1,3 +1,7 @@
+/**
+ * @file admin-settings.component.ts
+ * @description Paramètres généraux de la plateforme MediCare.
+ */
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -9,16 +13,17 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './admin-settings.component.html',
 })
 export class AdminSettingsComponent {
-  settings = {
-    platformName: 'MediCare AI',
-    supportEmail: 'support@medicare-ai.com',
-    maintenanceMode: false,
-    maxConsultationDuration: 60,
-    platformFeePercentage: 10,
-    autoVerifyDoctors: false,
-  };
+  platformName = 'MediCare AI';
+  supportEmail = 'support@medicare-ai.dz';
+  maintenanceMode = false;
+  maxAppointmentsPerDay = 50;
+  allowRegistrations = true;
 
-  saveSettings() {
-    alert('Settings saved successfully.');
+  saved = false;
+
+  saveSettings(): void {
+    // TODO : persister via un service API
+    this.saved = true;
+    setTimeout(() => (this.saved = false), 3000);
   }
 }

@@ -1,106 +1,82 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+/**
+ * @file layout.component.ts
+ * @description Composant de mise en page principal du backoffice.
+ * Fournit la barre latérale, la navigation par rôle, le menu utilisateur et les notifications.
+ */
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterModule, Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { NavigationService, UserRole } from '../../services/navigation.service';
-import { AuthService } from '../../services/auth.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { NavigationService } from '../../services/navigation.service';
+import { AuthService } from '../../services/auth.service';
 
-interface NavItem {
+/** Représente un élément de navigation dans la barre latérale */
+export interface NavItem {
   label: string;
   route: string;
   icon: string;
   badge?: number;
 }
 
-interface NavSection {
+/** Représente une section de navigation groupée */
+export interface NavSection {
   title: string;
   items: NavItem[];
 }
 
-interface Notification {
+/** Représente une notification utilisateur */
+export interface AppNotification {
   id: string;
   title: string;
   time: string;
   type: 'success' | 'warning' | 'error' | 'info';
   icon: string;
+  read: boolean;
+}
+
+/** Représente l'utilisateur courant */
+export interface CurrentUser {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: string;
 }
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterModule, FormsModule],
+  imports: [CommonModule, RouterOutlet, RouterModule],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',
 })
 export class LayoutComponent implements OnInit, OnDestroy {
-  // UI State
+  // ─── UI State ────────────────────────────────────────────────────────────────
   sidebarCollapsed = false;
   notificationOpen = false;
   userDropdownOpen = false;
+  mobileMenuOpen = false;
+
+  // ─── Data ─────────────────────────────────────────────────────────────────────
+  currentUser: CurrentUser | null = null;
   pageTitle = 'Tableau de Bord';
-
-  // User Data
-  currentUser: any;
-  selectedRole: UserRole = 'patient';
-
-  // Navigation Items by Role
-  private patientNavItems: NavItem[] = [
-    { label: 'Tableau de Bord', route: '/dashboard/patient/home', icon: 'bi-house-door' },
-    { label: 'Rendez-vous', route: '/dashboard/patient/appointments', icon: 'bi-calendar3', badge: 2 },
-    { label: 'Dossier Médical', route: '/dashboard/patient/records', icon: 'bi-file-medical' },
-    { label: 'Ordonnances', route: '/dashboard/patient/prescriptions', icon: 'bi-capsule', badge: 5 },
-    { label: 'Assistant IA', route: '/dashboard/patient/ai-chat', icon: 'bi-robot' },
-    { label: 'Santé Mentale', route: '/dashboard/patient/mental-health', icon: 'bi-heart-pulse' },
-    { label: 'Pharmacie', route: '/dashboard/patient/pharmacy', icon: 'bi-shop' },
-    { label: 'Facturation', route: '/dashboard/patient/billing', icon: 'bi-receipt' },
-  ];
-
-  private doctorNavItems: NavItem[] = [
-    { label: 'Tableau de Bord', route: '/dashboard/doctor/home', icon: 'bi-house-door' },
-    { label: 'Mes Patients', route: '/dashboard/doctor/patients', icon: 'bi-people' },
-    { label: 'Planning', route: '/dashboard/doctor/appointments', icon: 'bi-calendar2-week' },
-    { label: 'Consultations', route: '/dashboard/doctor/consultations', icon: 'bi-chat-dots' },
-    { label: 'Finances', route: '/dashboard/doctor/financial', icon: 'bi-graph-up' },
-  ];
-
-  private labNavItems: NavItem[] = [
-    { label: 'Tableau de Bord', route: '/dashboard/lab/home', icon: 'bi-house-door' },
-    { label: 'Saisie Résultats', route: '/dashboard/lab/results', icon: 'bi-clipboard-data' },
-    { label: 'Paie', route: '/dashboard/lab/payroll', icon: 'bi-wallet2' },
-  ];
-
-  private pharmacyNavItems: NavItem[] = [
-    { label: 'Tableau de Bord', route: '/dashboard/pharmacy/home', icon: 'bi-house-door' },
-    { label: 'Livraisons', route: '/dashboard/pharmacy/delivery', icon: 'bi-truck' },
-    { label: 'Portefeuille', route: '/dashboard/pharmacy/wallet', icon: 'bi-wallet2' },
-  ];
-
-  private adminNavItems: NavItem[] = [
-    { label: 'Tableau de Bord', route: '/dashboard/admin/home', icon: 'bi-house-door' },
-    { label: 'Utilisateurs', route: '/dashboard/admin/users', icon: 'bi-people' },
-    { label: 'Vérifications', route: '/dashboard/admin/verifications', icon: 'bi-check-circle' },
-    { label: 'Finances', route: '/dashboard/admin/financials', icon: 'bi-graph-up' },
-    { label: 'Paie', route: '/dashboard/admin/payroll', icon: 'bi-wallet2' },
-    { label: 'Paramètres', route: '/dashboard/admin/settings', icon: 'bi-gear' },
-  ];
-
-  // Notifications
-  notifications: Notification[] = [
+  notifications: AppNotification[] = [
     {
       id: '1',
       title: 'Nouveau rendez-vous demain',
       time: 'Il y a 5 minutes',
       type: 'info',
       icon: 'bi-calendar-event',
+      read: false,
     },
     {
       id: '2',
-      title: 'Résultats d\'analyse disponibles',
+      title: "Résultats d'analyse disponibles",
       time: 'Il y a 2 heures',
       type: 'success',
       icon: 'bi-file-medical',
+      read: false,
     },
     {
       id: '3',
@@ -108,39 +84,114 @@ export class LayoutComponent implements OnInit, OnDestroy {
       time: 'Hier',
       type: 'warning',
       icon: 'bi-arrow-up-circle',
+      read: true,
     },
   ];
 
   private destroy$ = new Subject<void>();
 
+  // ─── Navigation Maps ──────────────────────────────────────────────────────────
+
+  /** Éléments de navigation du patient */
+  private readonly patientNav: NavSection[] = [
+    {
+      title: 'MENU PRINCIPAL',
+      items: [
+        { label: 'Tableau de Bord', route: '/dashboard/patient/home', icon: 'bi-house-door' },
+        { label: 'Rendez-vous', route: '/dashboard/patient/appointments', icon: 'bi-calendar3', badge: 2 },
+        { label: 'Dossier Médical', route: '/dashboard/patient/records', icon: 'bi-file-medical' },
+      ],
+    },
+    {
+      title: 'SERVICES',
+      items: [
+        { label: 'Ordonnances', route: '/dashboard/patient/prescriptions', icon: 'bi-capsule', badge: 5 },
+        { label: 'Assistant IA', route: '/dashboard/patient/ai-chat', icon: 'bi-robot' },
+        { label: 'Santé Mentale', route: '/dashboard/patient/mental-health', icon: 'bi-heart-pulse' },
+        { label: 'Pharmacie', route: '/dashboard/patient/pharmacy', icon: 'bi-shop' },
+        { label: 'Facturation', route: '/dashboard/patient/billing', icon: 'bi-receipt' },
+      ],
+    },
+  ];
+
+  /** Éléments de navigation du médecin */
+  private readonly doctorNav: NavSection[] = [
+    {
+      title: 'MENU PRINCIPAL',
+      items: [
+        { label: 'Tableau de Bord', route: '/dashboard/doctor/home', icon: 'bi-house-door' },
+        { label: 'Mes Patients', route: '/dashboard/doctor/patients', icon: 'bi-people' },
+        { label: 'Planning', route: '/dashboard/doctor/appointments', icon: 'bi-calendar2-week' },
+      ],
+    },
+    {
+      title: 'ACTIVITÉ',
+      items: [
+        { label: 'Consultations', route: '/dashboard/doctor/consultations', icon: 'bi-chat-dots' },
+        { label: 'Finances', route: '/dashboard/doctor/financial', icon: 'bi-graph-up' },
+      ],
+    },
+  ];
+
+  /** Éléments de navigation du laboratoire */
+  private readonly labNav: NavSection[] = [
+    {
+      title: 'MENU PRINCIPAL',
+      items: [
+        { label: 'Tableau de Bord', route: '/dashboard/lab/home', icon: 'bi-house-door' },
+        { label: 'Saisie Résultats', route: '/dashboard/lab/results', icon: 'bi-clipboard-data' },
+        { label: 'Paie', route: '/dashboard/lab/payroll', icon: 'bi-wallet2' },
+      ],
+    },
+  ];
+
+  /** Éléments de navigation de la pharmacie */
+  private readonly pharmacyNav: NavSection[] = [
+    {
+      title: 'MENU PRINCIPAL',
+      items: [
+        { label: 'Tableau de Bord', route: '/dashboard/pharmacy/home', icon: 'bi-house-door' },
+        { label: 'Livraisons', route: '/dashboard/pharmacy/delivery', icon: 'bi-truck' },
+        { label: 'Portefeuille', route: '/dashboard/pharmacy/wallet', icon: 'bi-wallet2' },
+      ],
+    },
+  ];
+
+  /** Éléments de navigation de l'administrateur */
+  private readonly adminNav: NavSection[] = [
+    {
+      title: 'MENU PRINCIPAL',
+      items: [
+        { label: 'Tableau de Bord', route: '/dashboard/admin/home', icon: 'bi-house-door' },
+        { label: 'Utilisateurs', route: '/dashboard/admin/users', icon: 'bi-people' },
+        { label: 'Vérifications', route: '/dashboard/admin/verifications', icon: 'bi-patch-check' },
+      ],
+    },
+    {
+      title: 'ADMINISTRATION',
+      items: [
+        { label: 'Finances', route: '/dashboard/admin/financials', icon: 'bi-graph-up' },
+        { label: 'Paie', route: '/dashboard/admin/payroll', icon: 'bi-wallet2' },
+        { label: 'Paramètres', route: '/dashboard/admin/settings', icon: 'bi-gear' },
+      ],
+    },
+  ];
+
   constructor(
     private router: Router,
     private navService: NavigationService,
-    private authService: AuthService
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
-    // Get current user
-    this.currentUser = this.authService.getCurrentUser();
+    // Récupérer l'utilisateur courant
+    this.currentUser = this.authService.getCurrentUser() as CurrentUser | null;
 
-    // Initialize selectedRole from AuthService (handles page refresh correctly)
-    if (this.currentUser?.role) {
-      this.selectedRole = this.currentUser.role as UserRole;
-    }
-
-    // Subscribe to role changes (handles role switch at runtime)
-    this.navService.userRole$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((role) => {
-        if (role) {
-          this.selectedRole = role;
-        }
-      });
-
-    // Update page title based on route
+    // Écouter les changements de route pour mettre à jour le titre
     this.router.events.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.updatePageTitle();
     });
+    this.updatePageTitle();
   }
 
   ngOnDestroy(): void {
@@ -148,89 +199,129 @@ export class LayoutComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  // ─── Navigation ──────────────────────────────────────────────────────────────
+
   /**
-   * Get navigation sections based on role
+   * Retourne les sections de navigation selon le rôle de l'utilisateur courant.
    */
   getNavSections(): NavSection[] {
-    const roleNavMap: Record<UserRole, NavItem[]> = {
-      patient: this.patientNavItems,
-      doctor: this.doctorNavItems,
-      lab: this.labNavItems,
-      pharmacy: this.pharmacyNavItems,
-      admin: this.adminNavItems,
+    const role = this.currentUser?.role;
+    const navMap: Record<string, NavSection[]> = {
+      patient: this.patientNav,
+      doctor: this.doctorNav,
+      lab: this.labNav,
+      pharmacy: this.pharmacyNav,
+      admin: this.adminNav,
     };
-
-    const items = roleNavMap[this.selectedRole] || [];
-
-    // Group items into sections
-    const mainSection: NavSection = {
-      title: 'MENU PRINCIPAL',
-      items: items.slice(0, 3),
-    };
-
-    const otherSection: NavSection = {
-      title: 'AUTRES',
-      items: items.slice(3),
-    };
-
-    return [mainSection, otherSection].filter((s) => s.items.length > 0);
+    return navMap[role ?? ''] ?? this.patientNav;
   }
 
-  /**
-   * Toggle sidebar collapse state
-   */
+  // ─── UI Actions ──────────────────────────────────────────────────────────────
+
+  /** Bascule l'état replié/déplié de la barre latérale */
   toggleSidebar(): void {
     this.sidebarCollapsed = !this.sidebarCollapsed;
+    this.mobileMenuOpen = false;
   }
 
-  /**
-   * Toggle notifications panel
-   */
+  /** Bascule le menu mobile */
+  toggleMobileMenu(): void {
+    this.mobileMenuOpen = !this.mobileMenuOpen;
+  }
+
+  /** Bascule le panneau de notifications */
   toggleNotifications(): void {
     this.notificationOpen = !this.notificationOpen;
     this.userDropdownOpen = false;
   }
 
-  /**
-   * Toggle user dropdown menu
-   */
+  /** Bascule le menu déroulant utilisateur */
   toggleUserDropdown(): void {
     this.userDropdownOpen = !this.userDropdownOpen;
     this.notificationOpen = false;
   }
 
-  /**
-   * Open quick action menu
-   */
-  openQuickAction(): void {
-    if (this.selectedRole === 'patient') {
-      this.router.navigate(['/dashboard/patient/appointments']);
-    } else if (this.selectedRole === 'doctor') {
-      this.router.navigate(['/dashboard/doctor/consultations']);
+  /** Ferme tous les panneaux lors d'un clic à l'extérieur */
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.notification-dropdown') && !target.closest('.user-dropdown')) {
+      this.notificationOpen = false;
+      this.userDropdownOpen = false;
     }
   }
 
-  /**
-   * Update page title based on current route
-   */
-  private updatePageTitle(): void {
-    const titleMap: Record<string, string> = {
-      '/dashboard/patient/home': 'Tableau de Bord Patient',
-      '/dashboard/patient/appointments': 'Rendez-vous',
-      '/dashboard/patient/records': 'Dossier Médical',
-      '/dashboard/doctor/home': 'Tableau de Bord Médecin',
-      '/dashboard/admin/home': 'Tableau de Bord Admin',
-    };
-
-    this.pageTitle = titleMap[this.router.url] || 'Tableau de Bord';
+  /** Compte des notifications non lues */
+  get unreadCount(): number {
+    return this.notifications.filter(n => !n.read).length;
   }
 
-  /**
-   * Logout user
-   */
+  /** Marque toutes les notifications comme lues */
+  markAllRead(): void {
+    this.notifications.forEach(n => (n.read = true));
+  }
+
+  /** Supprime une notification */
+  dismissNotification(id: string): void {
+    this.notifications = this.notifications.filter(n => n.id !== id);
+  }
+
+  /** Déconnecte l'utilisateur et redirige vers la page de connexion */
   logout(): void {
     this.authService.logout();
     this.navService.clearUserData();
     this.router.navigate(['/login']);
+  }
+
+  // ─── Helpers ─────────────────────────────────────────────────────────────────
+
+  /** Retourne l'URL de l'avatar dicebear basé sur l'email */
+  getAvatarUrl(): string {
+    const seed = this.currentUser?.email ?? 'user';
+    return `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(seed)}`;
+  }
+
+  /** Retourne le libellé du rôle en français */
+  getRoleLabel(): string {
+    const labels: Record<string, string> = {
+      patient: 'Patient',
+      doctor: 'Médecin',
+      lab: 'Technicien Labo',
+      pharmacy: 'Pharmacien',
+      admin: 'Administrateur',
+    };
+    return labels[this.currentUser?.role ?? ''] ?? 'Utilisateur';
+  }
+
+  /** Met à jour le titre de la page selon l'URL courante */
+  private updatePageTitle(): void {
+    const titleMap: Record<string, string> = {
+      '/dashboard/patient/home': 'Tableau de Bord Patient',
+      '/dashboard/patient/appointments': 'Mes Rendez-vous',
+      '/dashboard/patient/records': 'Dossier Médical',
+      '/dashboard/patient/prescriptions': 'Ordonnances',
+      '/dashboard/patient/ai-chat': 'Assistant IA',
+      '/dashboard/patient/mental-health': 'Santé Mentale',
+      '/dashboard/patient/pharmacy': 'Pharmacie en Ligne',
+      '/dashboard/patient/billing': 'Facturation',
+      '/dashboard/doctor/home': 'Tableau de Bord Médecin',
+      '/dashboard/doctor/patients': 'Mes Patients',
+      '/dashboard/doctor/appointments': 'Mon Planning',
+      '/dashboard/doctor/consultations': 'Consultations',
+      '/dashboard/doctor/financial': 'Finances',
+      '/dashboard/lab/home': 'Tableau de Bord Laboratoire',
+      '/dashboard/lab/results': 'Saisie des Résultats',
+      '/dashboard/lab/payroll': 'Paie',
+      '/dashboard/pharmacy/home': 'Tableau de Bord Pharmacie',
+      '/dashboard/pharmacy/delivery': 'Gestion des Livraisons',
+      '/dashboard/pharmacy/wallet': 'Portefeuille',
+      '/dashboard/admin/home': 'Tableau de Bord Administrateur',
+      '/dashboard/admin/users': 'Gestion des Utilisateurs',
+      '/dashboard/admin/verifications': 'Vérifications Médecins',
+      '/dashboard/admin/financials': 'Finances',
+      '/dashboard/admin/payroll': 'Gestion de la Paie',
+      '/dashboard/admin/settings': 'Paramètres',
+    };
+    this.pageTitle = titleMap[this.router.url] ?? 'Tableau de Bord';
   }
 }
