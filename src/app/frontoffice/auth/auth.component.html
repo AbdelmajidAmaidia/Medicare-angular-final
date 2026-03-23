@@ -1,62 +1,363 @@
-<main>
-  <h2>MediCare AI</h2>
-  <nav>
-    <button type="button" (click)="activeTab = 'login'">Sign In</button>
-    <button type="button" (click)="activeTab = 'register'">Register</button>
-  </nav>
+<div class="auth-page">
+  <!-- Background -->
+  <div class="auth-bg">
+    <div class="auth-orb auth-orb--1"></div>
+    <div class="auth-orb auth-orb--2"></div>
+  </div>
 
-  <form *ngIf="activeTab === 'login'" [formGroup]="loginForm" (ngSubmit)="onLogin()">
-    <h3>Sign In</h3>
-    <div>
-      <label>Email</label>
-      <input type="email" formControlName="email" placeholder="you@example.com">
-    </div>
-    <div>
-      <label>Password</label>
-      <input type="password" formControlName="password">
-    </div>
-    <div>
-      <label>Role</label>
-      <select formControlName="role">
-        <option value="patient">Patient</option>
-        <option value="doctor">Doctor</option>
-        <option value="lab">Lab Technician</option>
-        <option value="pharmacy">Pharmacist</option>
-        <option value="admin">Admin</option>
-      </select>
-    </div>
-    <button type="submit" [disabled]="loginForm.invalid">Sign In</button>
-  </form>
+  <div class="auth-container">
+    <!-- Left Section -->
+    <div class="auth-left">
+      <div class="auth-left__content">
+        <a routerLink="/" class="auth-brand">
+          <span class="auth-brand__icon">
+            <i class="fas fa-heartbeat"></i>
+          </span>
+          <span class="auth-brand__text">Medi<strong>Care</strong> <em>AI</em></span>
+        </a>
 
-  <form *ngIf="activeTab === 'register'" [formGroup]="registerForm" (ngSubmit)="onRegister()">
-    <h3>Create Account</h3>
-    <div>
-      <label>First Name</label>
-      <input type="text" formControlName="firstName">
-    </div>
-    <div>
-      <label>Last Name</label>
-      <input type="text" formControlName="lastName">
-    </div>
-    <div>
-      <label>Email</label>
-      <input type="email" formControlName="email">
-    </div>
-    <div>
-      <label>Password</label>
-      <input type="password" formControlName="password">
-    </div>
-    <div>
-      <label>I am a</label>
-      <select formControlName="role">
-        <option value="patient">Patient</option>
-        <option value="doctor">Doctor</option>
-        <option value="lab">Lab Technician</option>
-        <option value="pharmacy">Pharmacist</option>
-      </select>
-    </div>
-    <button type="submit" [disabled]="registerForm.invalid">Create Account</button>
-  </form>
+        <h1 class="auth-headline">
+          Votre santé,<br>
+          <span>notre priorité</span>
+        </h1>
 
-  <a routerLink="/landing">← Back to Home</a>
-</main>
+        <p class="auth-description">
+          Rejoignez des milliers de patients et professionnels de santé qui transforment leur approche médicale avec MediCare AI.
+        </p>
+
+        <ul class="auth-benefits">
+          <li><i class="fas fa-check-circle"></i> <span><strong>98.4%</strong> de précision diagnostique</span></li>
+          <li><i class="fas fa-check-circle"></i> <span>Dossier médical <strong>100% sécurisé</strong></span></li>
+          <li><i class="fas fa-check-circle"></i> <span>Support <strong>24/7</strong> en français</span></li>
+        </ul>
+
+        <div class="auth-testimonial">
+          <div class="auth-testimonial__stars">
+            <i *ngFor="let s of [1,2,3,4,5]" class="fas fa-star"></i>
+          </div>
+          <p class="auth-testimonial__text">
+            "MediCare AI m'a permis de recevoir un diagnostic en moins de 24h. Incroyable!"
+          </p>
+          <span class="auth-testimonial__author">— Dr. Amani T., Cardiologue</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Section -->
+    <div class="auth-right">
+      <div class="auth-tabs">
+        <button type="button"
+                class="auth-tab"
+                [class.auth-tab--active]="activeTab === 'login'"
+                (click)="switchTab('login')"
+                aria-label="Onglet connexion">
+          <span>Se connecter</span>
+          <i class="fas fa-sign-in-alt"></i>
+        </button>
+
+        <button type="button"
+                class="auth-tab"
+                [class.auth-tab--active]="activeTab === 'register'"
+                (click)="switchTab('register')"
+                aria-label="Onglet inscription">
+          <span>S'inscrire</span>
+          <i class="fas fa-user-plus"></i>
+        </button>
+      </div>
+
+      <!-- Login Form -->
+      <form *ngIf="activeTab === 'login'"
+            [formGroup]="loginForm"
+            (ngSubmit)="onLogin()"
+            class="auth-form animate-fade-in"
+            [attr.aria-label]="'Formulaire de connexion'">
+
+        <h2 class="auth-form__title">Bienvenue</h2>
+        <p class="auth-form__subtitle">Connectez-vous à votre compte MediCare</p>
+
+        <!-- Error Message -->
+        <div *ngIf="loginError" class="auth-error-banner">
+          <i class="fas fa-exclamation-circle"></i>
+          <span>{{ loginError }}</span>
+        </div>
+
+        <!-- Email Field -->
+        <div class="auth-form__group">
+          <label class="auth-label">
+            <i class="fas fa-envelope"></i>
+            Email
+          </label>
+          <div class="auth-input-wrapper">
+            <input type="email" 
+                   formControlName="email" 
+                   class="auth-input"
+                   placeholder="vous@example.com"
+                   [attr.aria-invalid]="isFieldInvalid('loginForm', 'email')">
+            <i class="fas fa-check-circle" *ngIf="loginForm.get('email')?.valid && loginForm.get('email')?.touched"></i>
+          </div>
+          <div *ngIf="isFieldInvalid('loginForm', 'email')" class="auth-error">
+            <i class="fas fa-exclamation-circle"></i>
+            <span>{{ getErrorMessage(loginForm.get('email')) }}</span>
+          </div>
+        </div>
+
+        <!-- Role Selection -->
+        <div class="auth-form__group">
+          <label class="auth-label">
+            <i class="fas fa-user-circle"></i>
+            Rôle
+          </label>
+          <div class="auth-select-wrapper">
+            <i class="fas fa-chevron-down"></i>
+            <select formControlName="role" class="auth-select">
+              <option value="" disabled>Sélectionnez votre rôle</option>
+              <option *ngFor="let role of roles" [value]="role.value">
+                {{ role.label }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Password Field -->
+        <div class="auth-form__group">
+          <label class="auth-label">
+            <i class="fas fa-lock"></i>
+            Mot de passe
+          </label>
+          <div class="auth-input-wrapper auth-input-wrapper--password">
+            <input [type]="showPassword ? 'text' : 'password'"
+                   formControlName="password"
+                   class="auth-input"
+                   placeholder="••••••••"
+                   [attr.aria-invalid]="isFieldInvalid('loginForm', 'password')">
+            <button type="button"
+                    class="auth-input__toggle"
+                    (click)="togglePasswordVisibility()"
+                    [attr.aria-label]="showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'">
+              <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+            </button>
+          </div>
+          <div *ngIf="isFieldInvalid('loginForm', 'password')" class="auth-error">
+            <i class="fas fa-exclamation-circle"></i>
+            <span>{{ getErrorMessage(loginForm.get('password')) }}</span>
+          </div>
+        </div>
+
+        <!-- Remember Me & Forgot Password -->
+        <div class="auth-form__checkbox">
+          <input type="checkbox" 
+                 id="rememberMe" 
+                 formControlName="rememberMe" 
+                 class="auth-checkbox">
+          <label for="rememberMe" class="auth-checkbox__label">
+            Se souvenir de moi
+          </label>
+          <a href="#" class="auth-forgot">Mot de passe oublié ?</a>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit"
+                class="auth-btn auth-btn--primary"
+                [disabled]="loginForm.invalid || isLoading"
+                [attr.aria-busy]="isLoading">
+          <i *ngIf="!isLoading" class="fas fa-sign-in-alt"></i>
+          <i *ngIf="isLoading" class="fas fa-spinner fa-spin"></i>
+          {{ isLoading ? 'Connexion en cours...' : 'Se connecter' }}
+        </button>
+
+        <!-- Sign Up Link -->
+        <div class="auth-form__footer">
+          <span>Pas encore de compte ?</span>
+          <a class="auth-link" (click)="switchTab('register')">S'inscrire</a>
+        </div>
+      </form>
+
+      <!-- Register Form -->
+      <form *ngIf="activeTab === 'register'"
+            [formGroup]="registerForm"
+            (ngSubmit)="onRegister()"
+            class="auth-form animate-fade-in"
+            [attr.aria-label]="'Formulaire d\'inscription'">
+
+        <h2 class="auth-form__title">Créer un compte</h2>
+        <p class="auth-form__subtitle">Rejoignez MediCare en quelques étapes</p>
+
+        <!-- Error Message -->
+        <div *ngIf="registerError" class="auth-error-banner">
+          <i class="fas fa-exclamation-circle"></i>
+          <span>{{ registerError }}</span>
+        </div>
+
+        <!-- Name Fields Row -->
+        <div class="auth-form__row">
+          <div class="auth-form__group">
+            <label class="auth-label">
+              <i class="fas fa-user"></i>
+              Prénom
+            </label>
+            <input type="text" 
+                   formControlName="firstName" 
+                   class="auth-input"
+                   placeholder="Jean"
+                   [attr.aria-invalid]="isFieldInvalid('registerForm', 'firstName')">
+            <div *ngIf="isFieldInvalid('registerForm', 'firstName')" class="auth-error">
+              <i class="fas fa-exclamation-circle"></i>
+              <span>Le prénom est requis</span>
+            </div>
+          </div>
+
+          <div class="auth-form__group">
+            <label class="auth-label">
+              <i class="fas fa-user"></i>
+              Nom
+            </label>
+            <input type="text" 
+                   formControlName="lastName" 
+                   class="auth-input"
+                   placeholder="Dupont"
+                   [attr.aria-invalid]="isFieldInvalid('registerForm', 'lastName')">
+            <div *ngIf="isFieldInvalid('registerForm', 'lastName')" class="auth-error">
+              <i class="fas fa-exclamation-circle"></i>
+              <span>Le nom est requis</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Email Field -->
+        <div class="auth-form__group">
+          <label class="auth-label">
+            <i class="fas fa-envelope"></i>
+            Email
+          </label>
+          <div class="auth-input-wrapper">
+            <input type="email" 
+                   formControlName="email" 
+                   class="auth-input"
+                   placeholder="vous@example.com"
+                   [attr.aria-invalid]="isFieldInvalid('registerForm', 'email')">
+            <i class="fas fa-check-circle" *ngIf="registerForm.get('email')?.valid && registerForm.get('email')?.touched"></i>
+          </div>
+          <div *ngIf="isFieldInvalid('registerForm', 'email')" class="auth-error">
+            <i class="fas fa-exclamation-circle"></i>
+            <span>{{ getErrorMessage(registerForm.get('email')) }}</span>
+          </div>
+        </div>
+
+        <!-- Role Selection -->
+        <div class="auth-form__group">
+          <label class="auth-label">
+            <i class="fas fa-user-circle"></i>
+            Rôle
+          </label>
+          <div class="auth-select-wrapper">
+            <i class="fas fa-chevron-down"></i>
+            <select formControlName="role" class="auth-select">
+              <option value="" disabled>Sélectionnez votre rôle</option>
+              <option *ngFor="let role of roles" [value]="role.value">
+                {{ role.label }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Password Field -->
+        <div class="auth-form__group">
+          <label class="auth-label">
+            <i class="fas fa-lock"></i>
+            Mot de passe
+          </label>
+          <div class="auth-input-wrapper auth-input-wrapper--password">
+            <input [type]="showPassword ? 'text' : 'password'"
+                   formControlName="password"
+                   class="auth-input"
+                   placeholder="••••••••"
+                   (input)="checkPasswordStrength()"
+                   [attr.aria-invalid]="isFieldInvalid('registerForm', 'password')">
+            <button type="button"
+                    class="auth-input__toggle"
+                    (click)="togglePasswordVisibility()"
+                    [attr.aria-label]="showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'">
+              <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+            </button>
+          </div>
+          
+          <!-- Password Strength Indicator -->
+          <div class="password-strength" *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.value">
+            <div class="password-strength__bar">
+              <div class="password-strength__fill" 
+                   [class]="'password-strength__fill--' + passwordStrength"
+                   [style.width.%]="getPasswordStrengthPercent()"></div>
+            </div>
+            <span class="password-strength__text" [class]="'password-strength__text--' + passwordStrength">
+              {{ getPasswordStrengthLabel() }}
+            </span>
+          </div>
+
+          <div *ngIf="isFieldInvalid('registerForm', 'password')" class="auth-error">
+            <i class="fas fa-exclamation-circle"></i>
+            <span>{{ getErrorMessage(registerForm.get('password')) }}</span>
+          </div>
+        </div>
+
+        <!-- Confirm Password Field -->
+        <div class="auth-form__group">
+          <label class="auth-label">
+            <i class="fas fa-lock"></i>
+            Confirmer le mot de passe
+          </label>
+          <div class="auth-input-wrapper auth-input-wrapper--password">
+            <input [type]="showConfirmPassword ? 'text' : 'password'"
+                   formControlName="confirmPassword"
+                   class="auth-input"
+                   placeholder="••••••••"
+                   [attr.aria-invalid]="isFieldInvalid('registerForm', 'confirmPassword')">
+            <button type="button"
+                    class="auth-input__toggle"
+                    (click)="toggleConfirmPasswordVisibility()"
+                    [attr.aria-label]="showConfirmPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'">
+              <i [class]="showConfirmPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+            </button>
+          </div>
+          <div *ngIf="passwordMismatch && registerForm.get('confirmPassword')?.touched" class="auth-error">
+            <i class="fas fa-exclamation-circle"></i>
+            <span>Les mots de passe ne correspondent pas</span>
+          </div>
+        </div>
+
+        <!-- Terms & Conditions -->
+        <div class="auth-form__checkbox">
+          <input type="checkbox" 
+                 id="agreeTerms" 
+                 formControlName="agreeTerms" 
+                 class="auth-checkbox"
+                 [attr.aria-invalid]="isFieldInvalid('registerForm', 'agreeTerms')">
+          <label for="agreeTerms" class="auth-checkbox__label">
+            J'accepte les <a href="#" target="_blank">conditions d'utilisation</a> et la <a href="#" target="_blank">politique de confidentialité</a>
+          </label>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit"
+                class="auth-btn auth-btn--primary"
+                [disabled]="registerForm.invalid || passwordMismatch || isLoading"
+                [attr.aria-busy]="isLoading">
+          <i *ngIf="!isLoading" class="fas fa-user-plus"></i>
+          <i *ngIf="isLoading" class="fas fa-spinner fa-spin"></i>
+          {{ isLoading ? 'Création en cours...' : 'Créer un compte' }}
+        </button>
+
+        <!-- Login Link -->
+        <div class="auth-form__footer">
+          <span>Déjà inscrit ?</span>
+          <a class="auth-link" (click)="switchTab('login')">Se connecter</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Back Button -->
+  <a routerLink="/" class="auth-back" aria-label="Retour à l'accueil">
+    <i class="fas fa-arrow-left"></i>
+    Retour
+  </a>
+</div>

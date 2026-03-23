@@ -1,12 +1,102 @@
-<div>
-  <h2>System Overview</h2>
-  <ul>
-    <li *ngFor="let s of stats"><strong>{{ s.value }}</strong> {{ s.label }}</li>
-  </ul>
-  <h3>Recent Alerts</h3>
-  <ul>
-    <li *ngFor="let a of recentAlerts">
-      <strong>[{{ a.type | uppercase }}]</strong> {{ a.message }} – {{ a.time }}
-    </li>
-  </ul>
+<div class="admin-dashboard">
+  <!-- Header -->
+  <div class="dashboard-header">
+    <div class="header-content">
+      <h1>Tableau de Bord Administrateur</h1>
+      <p class="subtitle">Vue d'ensemble du système</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-secondary" (click)="refreshData()">
+        <i class="fas fa-sync-alt"></i> Actualiser
+      </button>
+    </div>
+  </div>
+
+  <!-- Stats Grid -->
+  <div class="stats-grid">
+    <div *ngFor="let stat of stats" class="stat-card" [ngClass]="'stat-' + stat.icon">
+      <div class="stat-icon">
+        <i [class]="'fas ' + stat.icon"></i>
+      </div>
+      <div class="stat-content">
+        <p class="stat-label">{{ stat.label }}</p>
+        <h3 class="stat-value">{{ stat.value }}</h3>
+        <span class="stat-change" [ngClass]="stat.changeClass">
+          <i class="fas" [ngClass]="stat.changeIcon"></i>
+          {{ stat.change }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="dashboard-content">
+    <!-- Recent Alerts -->
+    <div class="card alerts-card">
+      <div class="card-header">
+        <h2>Alertes Récentes</h2>
+        <a href="#" class="link-secondary">Voir tout</a>
+      </div>
+      <div class="alerts-list">
+        <div *ngFor="let alert of recentAlerts" class="alert-item" [ngClass]="'alert-' + alert.type">
+          <div class="alert-badge" [ngClass]="'badge-' + alert.type">
+            <i [class]="'fas ' + getAlertIcon(alert.type)"></i>
+          </div>
+          <div class="alert-content">
+            <p class="alert-message">{{ alert.message }}</p>
+            <span class="alert-time">
+              <i class="fas fa-clock"></i> {{ alert.time }}
+            </span>
+          </div>
+          <button class="btn-close" (click)="closeAlert(alert)">×</button>
+        </div>
+
+        <div *ngIf="recentAlerts.length === 0" class="empty-state">
+          <i class="fas fa-check-circle"></i>
+          <p>Aucune alerte – Tout fonctionne correctement</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- System Health -->
+    <div class="card health-card">
+      <div class="card-header">
+        <h2>État du Système</h2>
+      </div>
+      <div class="health-items">
+        <div class="health-item">
+          <div class="health-label">
+            <span>API Server</span>
+            <span class="badge badge-success">En ligne</span>
+          </div>
+          <div class="health-bar">
+            <div class="health-fill" style="width: 92%"></div>
+          </div>
+          <p class="health-value">92% CPU</p>
+        </div>
+
+        <div class="health-item">
+          <div class="health-label">
+            <span>Database</span>
+            <span class="badge badge-success">En ligne</span>
+          </div>
+          <div class="health-bar">
+            <div class="health-fill" style="width: 65%"></div>
+          </div>
+          <p class="health-value">65% Utilisation</p>
+        </div>
+
+        <div class="health-item">
+          <div class="health-label">
+            <span>Storage</span>
+            <span class="badge badge-warning">Attention</span>
+          </div>
+          <div class="health-bar">
+            <div class="health-fill health-warning" style="width: 82%"></div>
+          </div>
+          <p class="health-value">82% Utilisé</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

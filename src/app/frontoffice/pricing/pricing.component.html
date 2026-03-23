@@ -1,15 +1,293 @@
-<header><nav><a routerLink="/">MediCare AI</a></nav></header>
-<main>
-  <h1>Pricing Plans</h1>
-  <ul>
-    <li *ngFor="let p of plans">
-      <h3>{{ p.name }}</h3>
-      <p>{{ p.price }}</p>
-      <ul>
-        <li *ngFor="let f of p.features">{{ f }}</li>
-      </ul>
-      <a routerLink="/login">Get Started</a>
-    </li>
-  </ul>
-</main>
-<footer><p>© 2024 MediCare AI</p></footer>
+<div class="landing-page">
+
+  <!-- ══════════════════════════════════════
+       NAVBAR
+  ══════════════════════════════════════ -->
+ <nav class="lp-navbar">
+  <div class="lp-navbar__inner">
+    <a class="lp-navbar__brand" routerLink="/">
+      <span class="lp-navbar__brand-icon">
+        <i class="fas fa-heartbeat"></i>
+      </span>
+      <span class="lp-navbar__brand-text">Medi<strong>Care</strong> <em>AI</em></span>
+    </a>
+    
+    <ul class="lp-navbar__links">
+      <li>
+        <a routerLink="/landing" 
+           routerLinkActive="active" 
+           [routerLinkActiveOptions]="{exact: true}">
+          Accueil
+        </a>
+      </li>
+      <li>
+        <a routerLink="/about" 
+           routerLinkActive="active">
+          À propos
+        </a>
+      </li>
+      <li>
+        <a routerLink="/services" 
+           routerLinkActive="active">
+          Services
+        </a>
+      </li>
+      <li>
+        <a routerLink="/blog" 
+           routerLinkActive="active">
+          Blog
+        </a>
+      </li>
+      <li>
+        <a routerLink="/pricing" 
+           routerLinkActive="active">
+          Tarifs
+        </a>
+      </li>
+    </ul>
+    
+    <div class="lp-navbar__actions">
+      <a routerLink="/login" class="lp-btn lp-btn--ghost">Connexion</a>
+      <a routerLink="/login" class="lp-btn lp-btn--primary">Commencer</a>
+    </div>
+  </div>
+</nav>
+
+  <!-- ══════════════════════════════════════
+       PRICING HERO
+  ══════════════════════════════════════ -->
+  <section class="lp-pricing-hero">
+    <div class="lp-pricing-hero__bg">
+      <div class="lp-pricing-hero__orb lp-pricing-hero__orb--1"></div>
+      <div class="lp-pricing-hero__orb lp-pricing-hero__orb--2"></div>
+    </div>
+
+    <div class="lp-container">
+      <div class="lp-pricing-hero__content">
+        <span class="lp-section__eyebrow animate-fade-in-up animate-delay-1">
+          Tarification Transparente
+        </span>
+
+        <h1 class="lp-pricing-hero__title animate-fade-in-up animate-delay-2">
+          Des forfaits pour<br>
+          <span>chaque budget</span>
+        </h1>
+
+        <p class="lp-pricing-hero__subtitle animate-fade-in-up animate-delay-3">
+          Pas de frais cachés. Pas de surprises. Changez de forfait à tout moment.
+        </p>
+
+        <div class="lp-pricing-toggle animate-fade-in-up animate-delay-4">
+          <span class="lp-pricing-toggle__label">Facturation annuelle</span>
+          <button
+            type="button"
+            class="lp-pricing-toggle__switch"
+            (click)="billingCycle = billingCycle === 'monthly' ? 'yearly' : 'monthly'"
+            [class.lp-pricing-toggle__switch--active]="billingCycle === 'yearly'">
+            <span class="lp-pricing-toggle__dot"></span>
+          </button>
+          <span class="lp-pricing-toggle__badge">Économisez 20%</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       PRICING CARDS
+  ══════════════════════════════════════ -->
+  <section class="lp-section lp-section--light">
+    <div class="lp-container">
+      <div class="lp-pricing-grid">
+        <div
+          *ngFor="let plan of plans"
+          class="lp-pricing-card"
+          [class.lp-pricing-card--popular]="plan.popular"
+          [ngClass]="'lp-pricing-card--' + plan.color">
+
+          <!-- Popular Badge -->
+          <div *ngIf="plan.popular" class="lp-pricing-card__badge">
+            <i class="fas fa-star"></i>
+            <span>Le plus populaire</span>
+          </div>
+
+          <!-- Card Top -->
+          <div class="lp-pricing-card__top">
+            <div class="lp-pricing-card__icon" [ngClass]="'lp-pricing-card__icon--' + plan.color">
+              <i [class]="'fas ' + plan.icon"></i>
+            </div>
+            <h3 class="lp-pricing-card__name">{{ plan.name }}</h3>
+            <p class="lp-pricing-card__desc">{{ plan.description }}</p>
+          </div>
+
+          <!-- Pricing -->
+          <div class="lp-pricing-card__price">
+            <span class="lp-pricing-card__currency">{{ plan.priceCurrency }}</span>
+            <span class="lp-pricing-card__amount">{{ plan.price }}</span>
+            <span class="lp-pricing-card__period">{{ plan.period }}</span>
+          </div>
+
+          <!-- CTA -->
+          <a routerLink="/auth/register" class="lp-pricing-card__cta" [class.lp-pricing-card__cta--secondary]="plan.ctaSecondary">
+            <i class="fas fa-rocket"></i>
+            {{ plan.cta }}
+          </a>
+
+          <!-- Features -->
+          <ul class="lp-pricing-card__features">
+            <li *ngFor="let feature of plan.features" [class.lp-pricing-card__feature--disabled]="!feature.included">
+              <i [class]="feature.included ? 'fas fa-check-circle' : 'fas fa-times-circle'"></i>
+              <span>{{ feature.text }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Comparison Note -->
+      <div class="lp-pricing-note">
+        <i class="fas fa-info-circle"></i>
+        <span>Tous les forfaits incluent le support client et les mises à jour gratuites. Essai gratuit de 7 jours pour les forfaits Plus et Premium.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       BENEFITS
+  ══════════════════════════════════════ -->
+  <section class="lp-section lp-section--white">
+    <div class="lp-container">
+      <div class="lp-section__head">
+        <span class="lp-section__eyebrow">Pourquoi nous choisir</span>
+        <h2 class="lp-section__title">Avantages inclus dans tous les forfaits</h2>
+      </div>
+
+      <div class="lp-benefits-grid">
+        <div class="lp-benefit-card">
+          <div class="lp-benefit-card__icon">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h3 class="lp-benefit-card__title">100% Sécurisé</h3>
+          <p class="lp-benefit-card__desc">Chiffrement de bout en bout. Certifié HDS. Conforme RGPD.</p>
+        </div>
+
+        <div class="lp-benefit-card">
+          <div class="lp-benefit-card__icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <h3 class="lp-benefit-card__title">Support 24/7</h3>
+          <p class="lp-benefit-card__desc">Équipe disponible en français pour vous aider à tout moment.</p>
+        </div>
+
+        <div class="lp-benefit-card">
+          <div class="lp-benefit-card__icon">
+            <i class="fas fa-sync-alt"></i>
+          </div>
+          <h3 class="lp-benefit-card__title">Changement facile</h3>
+          <p class="lp-benefit-card__desc">Changez de forfait à tout moment. Pas de contrat d'engagement.</p>
+        </div>
+
+        <div class="lp-benefit-card">
+          <div class="lp-benefit-card__icon">
+            <i class="fas fa-undo"></i>
+          </div>
+          <h3 class="lp-benefit-card__title">Garantie 30 jours</h3>
+          <p class="lp-benefit-card__desc">Remboursement complet si vous n'êtes pas satisfait.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       FAQ
+  ══════════════════════════════════════ -->
+  <section class="lp-section lp-section--light">
+    <div class="lp-container lp-container--narrow">
+      <div class="lp-section__head">
+        <span class="lp-section__eyebrow">Questions Fréquentes</span>
+        <h2 class="lp-section__title">Tout ce que vous devez savoir</h2>
+      </div>
+
+      <div class="lp-pricing-faq">
+        <div *ngFor="let item of faqs; let i = index" class="lp-pricing-faq__item">
+          <button
+            type="button"
+            class="lp-pricing-faq__question"
+            (click)="item.open = !item.open">
+            <span>{{ item.q }}</span>
+            <i [class]="item.open ? 'fas fa-minus' : 'fas fa-plus'"></i>
+          </button>
+          <div *ngIf="item.open" class="lp-pricing-faq__answer">
+            <p>{{ item.a }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       CTA FINAL
+  ══════════════════════════════════════ -->
+  <section class="lp-cta">
+    <div class="lp-cta__bg">
+      <div class="lp-cta__orb lp-cta__orb--1"></div>
+      <div class="lp-cta__orb lp-cta__orb--2"></div>
+    </div>
+    <div class="lp-container">
+      <div class="lp-cta__content">
+        <span class="lp-section__eyebrow lp-section__eyebrow--light">Prêt à commencer?</span>
+        <h2 class="lp-cta__title">Rejoignez des milliers<br>de patients satisfaits</h2>
+        <p class="lp-cta__sub">Choisissez votre forfait et commencez votre parcours de santé dès aujourd'hui. C'est gratuit pour les 7 premiers jours!</p>
+        <div class="lp-cta__actions">
+          <a routerLink="/auth/register" class="lp-btn lp-btn--white lp-btn--lg">
+            <i class="fas fa-rocket"></i>
+            Démarrer gratuitement
+          </a>
+          <a routerLink="/about" class="lp-btn lp-btn--ghost lp-btn--lg">
+            En savoir plus <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+        <p class="lp-cta__note">
+          <i class="fas fa-shield-alt me-1"></i>
+          Aucune carte bancaire requise · Annulation à tout moment
+        </p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ══════════════════════════════════════
+     FOOTER
+══════════════════════════════════════ -->
+<footer class="lp-footer">
+  <div class="lp-container">
+    <div class="lp-footer__grid">
+      <div class="lp-footer__brand">
+        <span class="lp-navbar__brand-icon"><i class="fas fa-heartbeat"></i></span>
+        <span class="lp-navbar__brand-text">Medi<strong>Care</strong> <em>AI</em></span>
+        <p>La plateforme médicale IA de nouvelle génération. Votre santé, notre priorité.</p>
+      </div>
+      <div class="lp-footer__col">
+        <h5>Produit</h5>
+        <a routerLink="/">Accueil</a>
+        <a routerLink="/pricing">Tarifs</a>
+        <a routerLink="/about">À propos</a>
+      </div>
+      <div class="lp-footer__col">
+        <h5>Légal</h5>
+        <a href="#">Confidentialité</a>
+        <a href="#">CGU</a>
+        <a href="#">Mentions légales</a>
+      </div>
+      <div class="lp-footer__col">
+        <h5>Contact</h5>
+        <a href="mailto:contact@medicare-ai.tn">contact&#64;medicare-ai.tn</a>
+        <a href="tel:+21698000000">+216 98 000 000</a>
+        <a href="#">Tunis, Tunisie</a>
+      </div>
+    </div>
+    <div class="lp-footer__bottom">
+      <span>© {{ currentYear }} MediCare AI. Tous droits réservés.</span>
+      <span>Fait avec <i class="fas fa-heart text-danger"></i> en Tunisie</span>
+    </div>
+  </div>
+</footer>

@@ -1,32 +1,301 @@
 <!-- src/app/frontoffice/landing/landing.component.html -->
 <div class="landing-page">
-  <!-- Hero Section -->
-  <section class="hero-section bg-gradient-primary text-white py-5">
-    <div class="container">
-      <div class="row align-items-center min-vh-75">
-        <div class="col-lg-6">
-          <h1 class="display-4 fw-bold mb-4">
-            L'avenir des soins de santé est <span class="text-warning">intelligent</span>
-          </h1>
-          <p class="lead mb-4">
-            MediCare AI révolutionne les soins médicaux avec l'intelligence artificielle, 
-            offrant des diagnostics précis et un suivi personnalisé.
-          </p>
-          <div class="d-flex flex-wrap gap-3">
-            <a routerLink="/auth" class="btn btn-warning btn-lg px-4">
-              <i class="bi bi-rocket-takeoff me-2"></i>Commencer
-            </a>
-            <a href="#services" class="btn btn-outline-light btn-lg px-4">
-              <i class="bi bi-play-circle me-2"></i>Voir Démo
-            </a>
+
+  <!-- ══════════════════════════════════════
+       NAVBAR
+  ══════════════════════════════════════ -->
+ <nav class="lp-navbar">
+  <div class="lp-navbar__inner">
+    <a class="lp-navbar__brand" routerLink="/">
+      <span class="lp-navbar__brand-icon">
+        <i class="fas fa-heartbeat"></i>
+      </span>
+      <span class="lp-navbar__brand-text">Medi<strong>Care</strong> <em>AI</em></span>
+    </a>
+    
+    <ul class="lp-navbar__links">
+      <li>
+        <a routerLink="/landing" 
+           routerLinkActive="active" 
+           [routerLinkActiveOptions]="{exact: true}">
+          Accueil
+        </a>
+      </li>
+      <li>
+        <a routerLink="/about" 
+           routerLinkActive="active">
+          À propos
+        </a>
+      </li>
+      <li>
+        <a routerLink="/services" 
+           routerLinkActive="active">
+          Services
+        </a>
+      </li>
+      <li>
+        <a routerLink="/blog" 
+           routerLinkActive="active">
+          Blog
+        </a>
+      </li>
+      <li>
+        <a routerLink="/pricing" 
+           routerLinkActive="active">
+          Tarifs
+        </a>
+      </li>
+    </ul>
+    
+    <div class="lp-navbar__actions">
+      <a routerLink="/login" class="lp-btn lp-btn--ghost">Connexion</a>
+      <a routerLink="/login" class="lp-btn lp-btn--primary">Commencer</a>
+    </div>
+  </div>
+</nav>
+  <!-- ══════════════════════════════════════
+       HERO
+  ══════════════════════════════════════ -->
+  <section class="lp-hero">
+    <!-- Background mesh -->
+    <div class="lp-hero__bg">
+      <div class="lp-hero__orb lp-hero__orb--1"></div>
+      <div class="lp-hero__orb lp-hero__orb--2"></div>
+      <div class="lp-hero__orb lp-hero__orb--3"></div>
+      <div class="lp-hero__grid"></div>
+    </div>
+
+    <div class="lp-container">
+      <div class="lp-hero__content">
+
+        <!-- Badge -->
+        <div class="lp-hero__badge animate-fade-in-up animate-delay-1">
+          <span class="lp-pulse"></span>
+          <span>Plateforme Médicale IA — Nouvelle génération</span>
+        </div>
+
+        <!-- Headline -->
+        <h1 class="lp-hero__title animate-fade-in-up animate-delay-2">
+          La médecine du futur,<br>
+          <span class="lp-hero__title-accent">disponible aujourd'hui</span>
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="lp-hero__subtitle animate-fade-in-up animate-delay-3">
+          MediCare AI combine intelligence artificielle et expertise médicale pour offrir des diagnostics précis, un suivi de santé mental en temps réel et une gestion optimisée des soins.
+        </p>
+
+        <!-- CTAs -->
+        <div class="lp-hero__ctas animate-fade-in-up animate-delay-4">
+          <a routerLink="/auth/register" class="lp-btn lp-btn--primary lp-btn--lg">
+            <i class="fas fa-rocket me-2"></i>Démarrer gratuitement
+          </a>
+          <a href="#services" class="lp-btn lp-btn--ghost-dark lp-btn--lg">
+            <i class="fas fa-play-circle me-2"></i>Voir la démo
+          </a>
+        </div>
+
+        <!-- Trust bar -->
+        <div class="lp-hero__trust animate-fade-in-up animate-delay-5">
+          <div class="lp-hero__trust-item">
+            <i class="fas fa-shield-alt"></i>
+            <span>Certifié HDS</span>
+          </div>
+          <div class="lp-hero__trust-sep"></div>
+          <div class="lp-hero__trust-item">
+            <i class="fas fa-lock"></i>
+            <span>RGPD Conforme</span>
+          </div>
+          <div class="lp-hero__trust-sep"></div>
+          <div class="lp-hero__trust-item">
+            <i class="fas fa-star"></i>
+            <span>4.9/5 — 2 400 avis</span>
           </div>
         </div>
-        <div class="col-lg-6">
-          <div class="hero-image text-center">
-            <i class="bi bi-cpu-fill display-1 text-warning opacity-75"></i>
-            <div class="mt-3">
-              <span class="badge bg-success fs-6 me-2">IA Médicale</span>
-              <span class="badge bg-info fs-6">24/7 Disponible</span>
+      </div>
+
+      <!-- Hero visual -->
+      <div class="lp-hero__visual animate-fade-in animate-delay-3">
+        <div class="lp-dashboard-preview">
+          <!-- Header bar -->
+          <div class="ldp-header">
+            <div class="ldp-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <span class="ldp-title">MediCare AI — Dashboard</span>
+          </div>
+
+          <!-- Vitals row -->
+          <div class="ldp-body">
+            <div class="ldp-vitals">
+              <div class="ldp-vital ldp-vital--ok">
+                <i class="fas fa-heart-pulse"></i>
+                <div>
+                  <strong>72</strong>
+                  <small>BPM</small>
+                </div>
+                <span class="ldp-badge ldp-badge--green">Normal</span>
+              </div>
+              <div class="ldp-vital ldp-vital--warn">
+                <i class="fas fa-lungs"></i>
+                <div>
+                  <strong>98%</strong>
+                  <small>SpO2</small>
+                </div>
+                <span class="ldp-badge ldp-badge--green">Optimal</span>
+              </div>
+              <div class="ldp-vital ldp-vital--info">
+                <i class="fas fa-thermometer-half"></i>
+                <div>
+                  <strong>37.1°</strong>
+                  <small>Temp</small>
+                </div>
+                <span class="ldp-badge ldp-badge--blue">Stable</span>
+              </div>
+            </div>
+
+            <!-- AI Analysis card -->
+            <div class="ldp-ai-card">
+              <div class="ldp-ai-header">
+                <span class="ldp-ai-dot"></span>
+                <span>Analyse IA en cours…</span>
+              </div>
+              <div class="ldp-ai-bars">
+                <div class="ldp-bar">
+                  <span>Stress</span>
+                  <div class="ldp-bar-track"><div class="ldp-bar-fill" style="width:28%"></div></div>
+                  <span>28%</span>
+                </div>
+                <div class="ldp-bar">
+                  <span>Fatigue</span>
+                  <div class="ldp-bar-track"><div class="ldp-bar-fill ldp-bar-fill--warn" style="width:54%"></div></div>
+                  <span>54%</span>
+                </div>
+                <div class="ldp-bar">
+                  <span>Bien-être</span>
+                  <div class="ldp-bar-track"><div class="ldp-bar-fill ldp-bar-fill--green" style="width:81%"></div></div>
+                  <span>81%</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Next appointment -->
+            <div class="ldp-appt">
+              <i class="fas fa-calendar-check"></i>
+              <div>
+                <strong>Dr. Amani Trabelsi</strong>
+                <small>Cardiologue · Demain 14h30</small>
+              </div>
+              <span class="ldp-badge ldp-badge--blue">Confirmé</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating cards -->
+        <div class="lp-float lp-float--1 animate-fade-in-up animate-delay-5">
+          <i class="fas fa-brain text-primary"></i>
+          <span>IA Prédictive</span>
+        </div>
+        <div class="lp-float lp-float--2 animate-fade-in-up animate-delay-6">
+          <i class="fas fa-check-circle text-success"></i>
+          <span>+1 200 diagnostics / jour</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       STATS BAND
+  ══════════════════════════════════════ -->
+  <section id="stats" class="lp-stats">
+    <div class="lp-container">
+      <div class="lp-stats__grid">
+        <div *ngFor="let stat of stats" class="lp-stats__item">
+          <span class="lp-stats__num">{{ stat.value }}</span>
+          <span class="lp-stats__label">{{ stat.label }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       SERVICES
+  ══════════════════════════════════════ -->
+  <section id="services" class="lp-section lp-section--light">
+    <div class="lp-container">
+      <div class="lp-section__head">
+        <span class="lp-section__eyebrow">Nos Services</span>
+        <h2 class="lp-section__title">Une plateforme complète<br>pour chaque besoin médical</h2>
+        <p class="lp-section__sub">De la prévention au suivi post-consultation, MediCare AI couvre tout le parcours de soin.</p>
+      </div>
+
+      <div class="lp-features">
+        <div *ngFor="let f of features; let i = index"
+             class="lp-feature-card"
+             [class.lp-feature-card--accent]="i === 1">
+          <div class="lp-feature-card__icon" [ngClass]="'lp-feature-card__icon--' + f.color">
+            <i [class]="'fas ' + f.icon"></i>
+          </div>
+          <h3 class="lp-feature-card__title">{{ f.title }}</h3>
+          <p class="lp-feature-card__desc">{{ f.desc }}</p>
+          <ul class="lp-feature-card__list">
+            <li *ngFor="let point of f.points">
+              <i class="fas fa-check"></i> {{ point }}
+            </li>
+          </ul>
+          <a [routerLink]="['/auth']" class="lp-feature-card__link">
+            En savoir plus <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       HOW IT WORKS
+  ══════════════════════════════════════ -->
+  <section class="lp-section lp-section--white">
+    <div class="lp-container">
+      <div class="lp-section__head">
+        <span class="lp-section__eyebrow">Comment ça marche</span>
+        <h2 class="lp-section__title">En 3 étapes simples</h2>
+      </div>
+
+      <div class="lp-steps">
+        <div *ngFor="let step of steps; let i = index" class="lp-step">
+          <div class="lp-step__num">{{ i + 1 }}</div>
+          <div class="lp-step__connector" *ngIf="i < steps.length - 1"></div>
+          <div class="lp-step__icon">
+            <i [class]="'fas ' + step.icon"></i>
+          </div>
+          <h4 class="lp-step__title">{{ step.title }}</h4>
+          <p class="lp-step__desc">{{ step.desc }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       TESTIMONIALS
+  ══════════════════════════════════════ -->
+  <section id="testimonials" class="lp-section lp-section--dark">
+    <div class="lp-container">
+      <div class="lp-section__head lp-section__head--light">
+        <span class="lp-section__eyebrow lp-section__eyebrow--light">Témoignages</span>
+        <h2 class="lp-section__title lp-section__title--light">Ce que disent nos utilisateurs</h2>
+      </div>
+
+      <div class="lp-testimonials">
+        <div *ngFor="let t of testimonials" class="lp-testimonial">
+          <div class="lp-testimonial__stars">
+            <i *ngFor="let s of [1,2,3,4,5]" class="fas fa-star"></i>
+          </div>
+          <p class="lp-testimonial__text">"{{ t.text }}"</p>
+          <div class="lp-testimonial__author">
+            <div class="lp-testimonial__avatar">{{ t.initials }}</div>
+            <div>
+              <strong>{{ t.name }}</strong>
+              <small>{{ t.role }}</small>
             </div>
           </div>
         </div>
@@ -34,62 +303,99 @@
     </div>
   </section>
 
-  <!-- Features Section -->
-  <section id="services" class="py-5 bg-light">
-    <div class="container">
-      <div class="text-center mb-5">
-        <h2 class="display-5 fw-bold text-primary">Nos Services Intelligents</h2>
-        <p class="lead text-secondary">Découvrez comment l'IA transforme vos soins</p>
+  <!-- ══════════════════════════════════════
+       FAQ
+  ══════════════════════════════════════ -->
+  <section id="faq" class="lp-section lp-section--light">
+    <div class="lp-container lp-container--narrow">
+      <div class="lp-section__head">
+        <span class="lp-section__eyebrow">FAQ</span>
+        <h2 class="lp-section__title">Questions fréquentes</h2>
       </div>
-      
-      <div class="row g-4">
-        <div class="col-md-6 col-lg-4">
-          <div class="card h-100 shadow-sm border-0 hover-lift">
-            <div class="card-body text-center p-4">
-              <div class="feature-icon bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                <i class="bi bi-robot text-primary fs-2"></i>
-              </div>
-              <h4 class="card-title text-primary">IA Diagnostique</h4>
-              <p class="card-text text-secondary">Diagnostic automatisé et précis grâce à l'intelligence artificielle avancée.</p>
-            </div>
+
+      <div class="lp-faq">
+        <div *ngFor="let item of faqItems; let i = index"
+             class="lp-faq__item"
+             [class.lp-faq__item--open]="openFaq === i"
+             (click)="toggleFaq(i)">
+          <div class="lp-faq__question">
+            <span>{{ item.q }}</span>
+            <i class="fas" [class.fa-plus]="openFaq !== i" [class.fa-minus]="openFaq === i"></i>
           </div>
-        </div>
-        
-        <div class="col-md-6 col-lg-4">
-          <div class="card h-100 shadow-sm border-0 hover-lift">
-            <div class="card-body text-center p-4">
-              <div class="feature-icon bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                <i class="bi bi-heart-pulse text-success fs-2"></i>
-              </div>
-              <h4 class="card-title text-success">Suivi Mental</h4>
-              <p class="card-text text-secondary">Analyse du stress et prévention du burnout via reconnaissance faciale.</p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="col-md-6 col-lg-4">
-          <div class="card h-100 shadow-sm border-0 hover-lift">
-            <div class="card-body text-center p-4">
-              <div class="feature-icon bg-info bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                <i class="bi bi-calendar2-check text-info fs-2"></i>
-              </div>
-              <h4 class="card-title text-info">Rendez-vous Smart</h4>
-              <p class="card-text text-secondary">Système de réservation intelligent avec confirmation automatique.</p>
-            </div>
+          <div class="lp-faq__answer" *ngIf="openFaq === i">
+            <p>{{ item.a }}</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CTA Section -->
-  <section class="cta-section py-5 bg-primary text-white">
-    <div class="container text-center">
-      <h2 class="display-6 fw-bold mb-3">Prêt à révolutionner vos soins ?</h2>
-      <p class="lead mb-4">Rejoignez des milliers de patients qui font confiance à MediCare AI</p>
-      <a routerLink="/auth" class="btn btn-warning btn-lg px-5">
-        <i class="bi bi-person-plus me-2"></i>S'inscrire Gratuitement
-      </a>
+  <!-- ══════════════════════════════════════
+       CTA FINAL
+  ══════════════════════════════════════ -->
+  <section class="lp-cta">
+    <div class="lp-cta__bg">
+      <div class="lp-cta__orb lp-cta__orb--1"></div>
+      <div class="lp-cta__orb lp-cta__orb--2"></div>
+    </div>
+    <div class="lp-container">
+      <div class="lp-cta__content">
+        <span class="lp-section__eyebrow lp-section__eyebrow--light">Rejoignez-nous</span>
+        <h2 class="lp-cta__title">Prêt à transformer<br>votre santé ?</h2>
+        <p class="lp-cta__sub">Inscrivez-vous gratuitement et accédez à toute la puissance de l'IA médicale en moins de 2 minutes.</p>
+        <div class="lp-cta__actions">
+          <a routerLink="/auth/register" class="lp-btn lp-btn--white lp-btn--lg">
+            <i class="fas fa-user-plus me-2"></i>Créer un compte gratuit
+          </a>
+          <a routerLink="/auth" class="lp-btn lp-btn--ghost lp-btn--lg">
+            Déjà inscrit ? Se connecter
+          </a>
+        </div>
+        <p class="lp-cta__note">
+          <i class="fas fa-shield-alt me-1"></i>
+          Aucune carte bancaire requise · Annulation à tout moment
+        </p>
+      </div>
     </div>
   </section>
+
+  <!-- ══════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════ -->
+  <footer class="lp-footer">
+    <div class="lp-container">
+      <div class="lp-footer__grid">
+        <div class="lp-footer__brand">
+          <span class="lp-navbar__brand-icon"><i class="fas fa-heartbeat"></i></span>
+          <span class="lp-navbar__brand-text">Medi<strong>Care</strong> <em>AI</em></span>
+          <p>La plateforme médicale IA de nouvelle génération. Votre santé, notre priorité.</p>
+        </div>
+        <div class="lp-footer__col">
+          <h5>Produit</h5>
+          <a href="#services">Services</a>
+          <a href="#stats">Résultats</a>
+          <a href="#faq">FAQ</a>
+          <a routerLink="/auth">Connexion</a>
+        </div>
+        <div class="lp-footer__col">
+          <h5>Légal</h5>
+          <a href="#">Confidentialité</a>
+          <a href="#">CGU</a>
+          <a href="#">Mentions légales</a>
+          <a href="#">RGPD</a>
+        </div>
+        <div class="lp-footer__col">
+          <h5>Contact</h5>
+          <a href="mailto:contact@medicare-ai.tn">contact&#64;medicare-ai.tn</a>
+          <a href="tel:+21698000000">+216 98 000 000</a>
+          <a href="#">Tunis, Tunisie</a>
+        </div>
+      </div>
+      <div class="lp-footer__bottom">
+        <span>© {{ currentYear }} MediCare AI. Tous droits réservés.</span>
+        <span>Fait avec <i class="fas fa-heart text-danger"></i> en Tunisie</span>
+      </div>
+    </div>
+  </footer>
+
 </div>

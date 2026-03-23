@@ -1,93 +1,273 @@
 <!-- src/app/backoffice/layout/layout.component.html -->
-<div class="backoffice-wrapper d-flex">
-  <!-- Sidebar -->
-  <nav class="sidebar bg-white shadow-sm" [class.collapsed]="sidebarCollapsed">
-    <div class="sidebar-header p-3 border-bottom">
-      <div class="d-flex align-items-center">
-        <i class="bi bi-heart-pulse-fill text-primary fs-3 me-2"></i>
-        <span class="sidebar-title fw-bold text-primary" [class.d-none]="sidebarCollapsed">MediCare AI</span>
-      </div>
-    </div>
-    
-    <div class="sidebar-body p-3">
-      <!-- User Info -->
-      <div class="user-info mb-4" [class.text-center]="sidebarCollapsed">
-        <div class="avatar bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 48px; height: 48px;">
-          <i class="bi bi-person-fill fs-5"></i>
+<div class="dashboard-wrapper">
+  <!-- SIDEBAR PROFESSIONNEL -->
+  <aside class="sidebar" [class.collapsed]="sidebarCollapsed">
+    <!-- LOGO SECTION -->
+    <div class="sidebar-header">
+      <div class="logo-container">
+        <div class="logo-icon">
+          <i class="bi bi-hospital"></i>
         </div>
-        <div *ngIf="!sidebarCollapsed">
-          <div class="fw-semibold">Dr. {{ userName }}</div>
-          <small class="text-secondary">{{ userRole | titlecase }}</small>
+        <div class="logo-text-container" [class.hidden]="sidebarCollapsed">
+          <div class="logo-main">MediCare</div>
+          <div class="logo-sub">AI</div>
         </div>
       </div>
-      
-      <!-- Navigation Menu -->
-      <ul class="nav nav-pills flex-column">
-        <li class="nav-item mb-1" *ngFor="let item of navigationItems">
-          <a [routerLink]="item.route" 
-             class="nav-link d-flex align-items-center text-dark"
-             routerLinkActive="active bg-primary text-white"
-             [title]="sidebarCollapsed ? item.label : ''">
-            <i [class]="item.icon" class="me-3"></i>
-            <span [class.d-none]="sidebarCollapsed">{{ item.label }}</span>
-          </a>
-        </li>
-      </ul>
-    </div>
-    
-    <!-- Sidebar Footer -->
-    <div class="sidebar-footer p-3 border-top mt-auto">
-      <button class="btn btn-outline-primary w-100 d-flex align-items-center justify-content-center" 
-              (click)="logout()"
-              [title]="sidebarCollapsed ? 'Déconnexion' : ''">
-        <i class="bi bi-box-arrow-right me-2" [class.me-0]="sidebarCollapsed"></i>
-        <span [class.d-none]="sidebarCollapsed">Déconnexion</span>
+      <button class="toggle-btn" (click)="toggleSidebar()" [title]="sidebarCollapsed ? 'Ouvrir' : 'Fermer'">
+        <i class="bi" [ngClass]="sidebarCollapsed ? 'bi-chevron-right' : 'bi-chevron-left'"></i>
       </button>
     </div>
-  </nav>
-  
-  <!-- Main Content -->
-  <main class="main-content flex-grow-1 d-flex flex-column">
-    <!-- Top Header -->
-    <header class="top-header bg-white shadow-sm p-3 d-flex align-items-center justify-content-between">
-      <div class="d-flex align-items-center">
-        <button class="btn btn-outline-primary me-3" (click)="toggleSidebar()">
+
+    <!-- USER PROFILE CARD PREMIUM -->
+    <div class="user-profile-card">
+      <div class="user-avatar-wrapper">
+        <img [src]="'https://api.dicebear.com/7.x/avataaars/svg?seed=' + (currentUser?.email || 'user')" 
+             alt="Avatar" class="user-avatar">
+        <div class="user-status online"></div>
+      </div>
+      <div class="user-details" [class.hidden]="sidebarCollapsed">
+        <div class="user-name">{{ currentUser?.firstName }} {{ currentUser?.lastName }}</div>
+        <div class="user-role">{{ currentUser?.role | titlecase }}</div>
+      </div>
+    </div>
+
+    <!-- NAVIGATION MENU -->
+    <nav class="sidebar-nav">
+      <!-- MENU PRINCIPAL -->
+      <div class="nav-section">
+        <div class="nav-section-title" [class.hidden]="sidebarCollapsed">
+          📌 MENU PRINCIPAL
+        </div>
+
+        <a [routerLink]="'/dashboard/patient/home'"
+           routerLinkActive="active"
+           [routerLinkActiveOptions]="{exact: true}"
+           class="nav-item">
+          <div class="nav-icon-wrapper">
+            <i class="bi bi-house-door"></i>
+          </div>
+          <span class="nav-label" [class.hidden]="sidebarCollapsed">Tableau de Bord</span>
+          <div class="nav-hover-indicator"></div>
+        </a>
+
+        <a [routerLink]="'/dashboard/patient/appointments'"
+           routerLinkActive="active"
+           class="nav-item">
+          <div class="nav-icon-wrapper">
+            <i class="bi bi-calendar3"></i>
+          </div>
+          <span class="nav-label" [class.hidden]="sidebarCollapsed">Rendez-vous</span>
+          <span class="badge" *ngIf="!sidebarCollapsed">2</span>
+          <div class="nav-hover-indicator"></div>
+        </a>
+
+        <a [routerLink]="'/dashboard/patient/records'"
+           routerLinkActive="active"
+           class="nav-item">
+          <div class="nav-icon-wrapper">
+            <i class="bi bi-file-medical"></i>
+          </div>
+          <span class="nav-label" [class.hidden]="sidebarCollapsed">Dossier Médical</span>
+          <div class="nav-hover-indicator"></div>
+        </a>
+      </div>
+
+      <!-- SANTÉ & BIEN-ÊTRE -->
+      <div class="nav-section">
+        <div class="nav-section-title" [class.hidden]="sidebarCollapsed">
+          💚 SANTÉ & BIEN-ÊTRE
+        </div>
+
+        <a [routerLink]="'/dashboard/patient/prescriptions'"
+           routerLinkActive="active"
+           class="nav-item">
+          <div class="nav-icon-wrapper">
+            <i class="bi bi-capsule"></i>
+          </div>
+          <span class="nav-label" [class.hidden]="sidebarCollapsed">Ordonnances</span>
+          <span class="badge danger" *ngIf="!sidebarCollapsed">5</span>
+          <div class="nav-hover-indicator"></div>
+        </a>
+
+        <a [routerLink]="'/dashboard/patient/ai-chat'"
+           routerLinkActive="active"
+           class="nav-item">
+          <div class="nav-icon-wrapper">
+            <i class="bi bi-robot"></i>
+          </div>
+          <span class="nav-label" [class.hidden]="sidebarCollapsed">Assistant IA</span>
+          <div class="nav-hover-indicator"></div>
+        </a>
+
+        <a [routerLink]="'/dashboard/patient/mental-health'"
+           routerLinkActive="active"
+           class="nav-item">
+          <div class="nav-icon-wrapper">
+            <i class="bi bi-heart-pulse"></i>
+          </div>
+          <span class="nav-label" [class.hidden]="sidebarCollapsed">Santé Mentale</span>
+          <div class="nav-hover-indicator"></div>
+        </a>
+
+        <a [routerLink]="'/dashboard/patient/pharmacy'"
+           routerLinkActive="active"
+           class="nav-item">
+          <div class="nav-icon-wrapper">
+            <i class="bi bi-shop"></i>
+          </div>
+          <span class="nav-label" [class.hidden]="sidebarCollapsed">Pharmacie</span>
+          <div class="nav-hover-indicator"></div>
+        </a>
+      </div>
+
+      <!-- PARAMÈTRES -->
+      <div class="nav-section">
+        <div class="nav-section-title" [class.hidden]="sidebarCollapsed">
+          ⚙️ PARAMÈTRES
+        </div>
+
+        <a [routerLink]="'/dashboard/patient/billing'"
+           routerLinkActive="active"
+           class="nav-item">
+          <div class="nav-icon-wrapper">
+            <i class="bi bi-receipt"></i>
+          </div>
+          <span class="nav-label" [class.hidden]="sidebarCollapsed">Facturation</span>
+          <div class="nav-hover-indicator"></div>
+        </a>
+
+        <a href="#"
+           class="nav-item">
+          <div class="nav-icon-wrapper">
+            <i class="bi bi-gear"></i>
+          </div>
+          <span class="nav-label" [class.hidden]="sidebarCollapsed">Paramètres</span>
+          <div class="nav-hover-indicator"></div>
+        </a>
+
+        <a href="#"
+           class="nav-item">
+          <div class="nav-icon-wrapper">
+            <i class="bi bi-question-circle"></i>
+          </div>
+          <span class="nav-label" [class.hidden]="sidebarCollapsed">Aide & Support</span>
+          <div class="nav-hover-indicator"></div>
+        </a>
+      </div>
+    </nav>
+
+    <!-- SIDEBAR FOOTER -->
+    <div class="sidebar-footer">
+      <div class="upgrade-card" *ngIf="!sidebarCollapsed">
+        <div class="upgrade-icon">
+          <i class="bi bi-star-fill"></i>
+        </div>
+        <div class="upgrade-text">
+          <div class="upgrade-title">Version Pro</div>
+          <div class="upgrade-desc">Débloquez plus de fonctionnalités</div>
+        </div>
+      </div>
+
+      <button class="logout-btn" (click)="logout()" [title]="sidebarCollapsed ? 'Déconnexion' : ''">
+        <i class="bi bi-box-arrow-right"></i>
+        <span [class.hidden]="sidebarCollapsed">Déconnexion</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT AREA -->
+  <main class="main-content">
+    <!-- TOP HEADER -->
+    <header class="top-header">
+      <div class="header-left">
+        <button class="menu-toggle" (click)="toggleSidebar()">
           <i class="bi bi-list"></i>
         </button>
-        <h1 class="h4 mb-0 text-primary">{{ pageTitle }}</h1>
+        <div class="breadcrumb">
+          <span>{{ pageTitle }}</span>
+        </div>
       </div>
-      
-      <div class="d-flex align-items-center gap-3">
-        <!-- Notifications -->
-        <div class="dropdown">
-          <button class="btn btn-outline-primary position-relative" data-bs-toggle="dropdown">
+
+      <div class="header-right">
+        <!-- SEARCH BAR -->
+        <div class="search-container">
+          <input type="text" placeholder="Rechercher..." class="search-input">
+          <i class="bi bi-search"></i>
+        </div>
+
+        <!-- NOTIFICATIONS -->
+        <div class="notification-dropdown" [class.open]="notificationOpen">
+          <button class="notification-btn" (click)="toggleNotifications()">
             <i class="bi bi-bell"></i>
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-              3
+            <span class="notification-badge" *ngIf="notifications.length > 0">
+              {{ notifications.length }}
             </span>
           </button>
-          <div class="dropdown-menu dropdown-menu-end">
-            <h6 class="dropdown-header">Notifications</h6>
-            <a class="dropdown-item" href="#">
-              <i class="bi bi-calendar-event text-info me-2"></i>
-              Nouveau rendez-vous demain
+
+          <div class="notification-panel" *ngIf="notificationOpen">
+            <div class="notification-header">
+              <h5>Notifications</h5>
+              <button class="close-btn" (click)="toggleNotifications()">
+                <i class="bi bi-x"></i>
+              </button>
+            </div>
+            <div class="notification-list">
+              <div *ngIf="notifications.length > 0">
+                <div class="notification-item" *ngFor="let notif of notifications" [ngClass]="'notif-' + notif.type">
+                  <i [class]="'bi ' + notif.icon"></i>
+                  <div class="notif-content">
+                    <div class="notif-title">{{ notif.title }}</div>
+                    <div class="notif-time">{{ notif.time }}</div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="notifications.length === 0" class="empty-state">
+                <i class="bi bi-inbox"></i>
+                <p>Aucune notification</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- QUICK ACTION BUTTON -->
+        <button class="btn-primary" (click)="openQuickAction()">
+          <i class="bi bi-plus-lg"></i>
+          <span>Nouveau</span>
+        </button>
+
+        <!-- USER DROPDOWN -->
+        <div class="user-dropdown" [class.open]="userDropdownOpen">
+          <button class="user-dropdown-btn" (click)="toggleUserDropdown()">
+            <img [src]="'https://api.dicebear.com/7.x/avataaars/svg?seed=' + (currentUser?.email || 'user')" 
+                 alt="Profile" class="avatar-img">
+            <i class="bi bi-chevron-down"></i>
+          </button>
+
+          <div class="dropdown-menu" *ngIf="userDropdownOpen">
+            <a href="#" class="dropdown-item">
+              <i class="bi bi-person"></i>
+              <span>Mon Profil</span>
             </a>
-            <a class="dropdown-item" href="#">
-              <i class="bi bi-file-medical text-success me-2"></i>
-              Résultats d'analyse disponibles
+            <a href="#" class="dropdown-item">
+              <i class="bi bi-gear"></i>
+              <span>Paramètres</span>
+            </a>
+            <a href="#" class="dropdown-item">
+              <i class="bi bi-question-circle"></i>
+              <span>Aide</span>
+            </a>
+            <hr>
+            <a href="#" class="dropdown-item danger" (click)="logout()">
+              <i class="bi bi-box-arrow-right"></i>
+              <span>Déconnexion</span>
             </a>
           </div>
         </div>
-        
-        <!-- Quick Actions -->
-        <button class="btn btn-primary">
-          <i class="bi bi-plus-lg me-1"></i>Nouveau
-        </button>
       </div>
     </header>
-    
-    <!-- Page Content -->
-    <div class="page-content flex-grow-1 p-4 bg-light">
+
+    <!-- PAGE CONTENT -->
+    <div class="page-content">
       <router-outlet></router-outlet>
     </div>
   </main>

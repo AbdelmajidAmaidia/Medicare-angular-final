@@ -1,0 +1,490 @@
+.patient-dashboard {
+  padding: 2rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+
+  // ─── Header ───────────────────────────
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #1a202c;
+      margin: 0;
+    }
+
+    .text-muted {
+      color: #718096;
+      margin: 0;
+    }
+
+    .header-date {
+      font-size: 0.95rem;
+      color: #4a5568;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
+
+  // ─── Stats Grid ───────────────────────
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+
+    .stat-card {
+      background: white;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+      }
+
+      .stat-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+
+        &.icon-primary {
+          background: rgba(37, 99, 235, 0.1);
+          color: #2563eb;
+        }
+
+        &.icon-success {
+          background: rgba(34, 197, 94, 0.1);
+          color: #22c55e;
+        }
+
+        &.icon-warning {
+          background: rgba(234, 179, 8, 0.1);
+          color: #eab308;
+        }
+
+        &.icon-info {
+          background: rgba(59, 130, 246, 0.1);
+          color: #3b82f6;
+        }
+      }
+
+      .stat-content {
+        .stat-label {
+          font-size: 0.85rem;
+          color: #718096;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+          font-size: 1.75rem;
+          font-weight: 700;
+          color: #1a202c;
+        }
+      }
+    }
+  }
+
+  // ─── Content Grid ─────────────────────
+  .content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+
+    @media (max-width: 1024px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .content-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  // ─── Card Section ─────────────────────
+  .card-section {
+    background: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem;
+      border-bottom: 1px solid #e5e7eb;
+
+      h2 {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #1f2937;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        i {
+          font-size: 1.25rem;
+        }
+      }
+
+      .btn-link {
+        color: #2563eb;
+        text-decoration: none;
+        font-size: 0.875rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        transition: color 0.2s ease;
+
+        &:hover {
+          color: #1d4ed8;
+        }
+      }
+    }
+  }
+
+  // ─── Appointments ─────────────────────
+  .appointments-list {
+    padding: 1rem;
+
+    .appointment-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+      transition: all 0.2s ease;
+
+      &:hover {
+        border-color: #2563eb;
+        background: rgba(37, 99, 235, 0.02);
+      }
+
+      .appointment-date {
+        text-align: center;
+        min-width: 60px;
+        padding: 0.5rem;
+        background: #f3f4f6;
+        border-radius: 0.5rem;
+
+        .date-day {
+          font-size: 1.25rem;
+          font-weight: 700;
+          color: #2563eb;
+          margin: 0;
+        }
+
+        .date-month {
+          color: #6b7280;
+          text-transform: uppercase;
+          margin: 0;
+        }
+      }
+
+      .appointment-info {
+        flex: 1;
+
+        .appointment-doctor {
+          font-weight: 600;
+          color: #1f2937;
+          margin-bottom: 0.25rem;
+        }
+
+        .appointment-type {
+          font-size: 0.875rem;
+          color: #6b7280;
+          margin-bottom: 0.5rem;
+        }
+
+        .appointment-time {
+          font-size: 0.875rem;
+          color: #2563eb;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+      }
+
+      .appointment-status {
+        padding: 0.5rem 1rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+
+        &.status-confirmed {
+          background: rgba(34, 197, 94, 0.1);
+          color: #16a34a;
+        }
+
+        &.status-pending {
+          background: rgba(234, 179, 8, 0.1);
+          color: #b45309;
+        }
+
+        &.status-cancelled {
+          background: rgba(239, 68, 68, 0.1);
+          color: #dc2626;
+        }
+      }
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: #6b7280;
+
+      i {
+        font-size: 2.5rem;
+        color: #d1d5db;
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+
+      p {
+        margin-bottom: 1rem;
+      }
+
+      .btn-primary {
+        display: inline-block;
+        padding: 0.5rem 1.5rem;
+        background: #2563eb;
+        color: white;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        font-weight: 500;
+        transition: background 0.2s ease;
+
+        &:hover {
+          background: #1d4ed8;
+        }
+      }
+    }
+  }
+
+  // ─── Quick Actions ────────────────────
+  .actions-grid {
+    padding: 1.5rem;
+    display: grid;
+    gap: 1rem;
+
+    .action-btn {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: 2px solid transparent;
+
+      &.primary {
+        background: rgba(37, 99, 235, 0.1);
+        border-color: #2563eb;
+        color: #2563eb;
+
+        &:hover {
+          background: #2563eb;
+          color: white;
+        }
+      }
+
+      &.success {
+        background: rgba(34, 197, 94, 0.1);
+        border-color: #22c55e;
+        color: #22c55e;
+
+        &:hover {
+          background: #22c55e;
+          color: white;
+        }
+      }
+
+      &.warning {
+        background: rgba(234, 179, 8, 0.1);
+        border-color: #eab308;
+        color: #eab308;
+
+        &:hover {
+          background: #eab308;
+          color: white;
+        }
+      }
+
+      &.info {
+        background: rgba(59, 130, 246, 0.1);
+        border-color: #3b82f6;
+        color: #3b82f6;
+
+        &:hover {
+          background: #3b82f6;
+          color: white;
+        }
+      }
+
+      .action-icon {
+        font-size: 1.5rem;
+        flex-shrink: 0;
+      }
+
+      .action-text {
+        flex: 1;
+        text-align: left;
+
+        .action-title {
+          font-weight: 600;
+          font-size: 0.95rem;
+          margin-bottom: 0.25rem;
+        }
+
+        .action-desc {
+          font-size: 0.8rem;
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+
+  // ─── Results List ─────────────────────
+  .results-list {
+    padding: 1rem;
+
+    .result-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      border-bottom: 1px solid #e5e7eb;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .result-info {
+        .result-name {
+          font-weight: 500;
+          color: #1f2937;
+          margin-bottom: 0.25rem;
+        }
+
+        .result-date {
+          font-size: 0.8rem;
+          color: #9ca3af;
+        }
+      }
+
+      .result-status {
+        padding: 0.4rem 0.8rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+
+        &.status-normal {
+          background: rgba(34, 197, 94, 0.1);
+          color: #16a34a;
+        }
+
+        &.status-abnormal {
+          background: rgba(239, 68, 68, 0.1);
+          color: #dc2626;
+        }
+
+        &.status-pending {
+          background: rgba(234, 179, 8, 0.1);
+          color: #b45309;
+        }
+      }
+    }
+  }
+
+  // ─── Activity List ────────────────────
+  .activity-list {
+    padding: 1rem;
+
+    .activity-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid #e5e7eb;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .activity-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        flex-shrink: 0;
+
+        &.icon-success {
+          background: rgba(34, 197, 94, 0.1);
+          color: #22c55e;
+        }
+
+        &.icon-primary {
+          background: rgba(37, 99, 235, 0.1);
+          color: #2563eb;
+        }
+
+        &.icon-warning {
+          background: rgba(234, 179, 8, 0.1);
+          color: #eab308;
+        }
+
+        &.icon-info {
+          background: rgba(59, 130, 246, 0.1);
+          color: #3b82f6;
+        }
+      }
+
+      .activity-info {
+        flex: 1;
+
+        .activity-title {
+          font-weight: 500;
+          color: #1f2937;
+          margin-bottom: 0.25rem;
+        }
+
+        .activity-time {
+          font-size: 0.8rem;
+          color: #9ca3af;
+        }
+      }
+    }
+  }
+}
