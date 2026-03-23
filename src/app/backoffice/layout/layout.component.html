@@ -33,108 +33,33 @@
 
     <!-- NAVIGATION MENU -->
     <nav class="sidebar-nav">
-      <!-- MENU PRINCIPAL -->
+      <!-- SECTIONS DYNAMIQUES PAR RÔLE -->
+      <ng-container *ngFor="let section of getNavSections()">
+        <div class="nav-section">
+          <div class="nav-section-title" [class.hidden]="sidebarCollapsed">
+            {{ section.title }}
+          </div>
+
+          <a *ngFor="let item of section.items"
+             [routerLink]="item.route"
+             routerLinkActive="active"
+             [routerLinkActiveOptions]="{exact: true}"
+             class="nav-item">
+            <div class="nav-icon-wrapper">
+              <i [class]="'bi ' + item.icon"></i>
+            </div>
+            <span class="nav-label" [class.hidden]="sidebarCollapsed">{{ item.label }}</span>
+            <span class="badge" *ngIf="item.badge && !sidebarCollapsed">{{ item.badge }}</span>
+            <div class="nav-hover-indicator"></div>
+          </a>
+        </div>
+      </ng-container>
+
+      <!-- SECTION GÉNÉRALE (commune à tous les rôles) -->
       <div class="nav-section">
         <div class="nav-section-title" [class.hidden]="sidebarCollapsed">
-          📌 MENU PRINCIPAL
+          ⚙️ GÉNÉRAL
         </div>
-
-        <a [routerLink]="'/dashboard/patient/home'"
-           routerLinkActive="active"
-           [routerLinkActiveOptions]="{exact: true}"
-           class="nav-item">
-          <div class="nav-icon-wrapper">
-            <i class="bi bi-house-door"></i>
-          </div>
-          <span class="nav-label" [class.hidden]="sidebarCollapsed">Tableau de Bord</span>
-          <div class="nav-hover-indicator"></div>
-        </a>
-
-        <a [routerLink]="'/dashboard/patient/appointments'"
-           routerLinkActive="active"
-           class="nav-item">
-          <div class="nav-icon-wrapper">
-            <i class="bi bi-calendar3"></i>
-          </div>
-          <span class="nav-label" [class.hidden]="sidebarCollapsed">Rendez-vous</span>
-          <span class="badge" *ngIf="!sidebarCollapsed">2</span>
-          <div class="nav-hover-indicator"></div>
-        </a>
-
-        <a [routerLink]="'/dashboard/patient/records'"
-           routerLinkActive="active"
-           class="nav-item">
-          <div class="nav-icon-wrapper">
-            <i class="bi bi-file-medical"></i>
-          </div>
-          <span class="nav-label" [class.hidden]="sidebarCollapsed">Dossier Médical</span>
-          <div class="nav-hover-indicator"></div>
-        </a>
-      </div>
-
-      <!-- SANTÉ & BIEN-ÊTRE -->
-      <div class="nav-section">
-        <div class="nav-section-title" [class.hidden]="sidebarCollapsed">
-          💚 SANTÉ & BIEN-ÊTRE
-        </div>
-
-        <a [routerLink]="'/dashboard/patient/prescriptions'"
-           routerLinkActive="active"
-           class="nav-item">
-          <div class="nav-icon-wrapper">
-            <i class="bi bi-capsule"></i>
-          </div>
-          <span class="nav-label" [class.hidden]="sidebarCollapsed">Ordonnances</span>
-          <span class="badge danger" *ngIf="!sidebarCollapsed">5</span>
-          <div class="nav-hover-indicator"></div>
-        </a>
-
-        <a [routerLink]="'/dashboard/patient/ai-chat'"
-           routerLinkActive="active"
-           class="nav-item">
-          <div class="nav-icon-wrapper">
-            <i class="bi bi-robot"></i>
-          </div>
-          <span class="nav-label" [class.hidden]="sidebarCollapsed">Assistant IA</span>
-          <div class="nav-hover-indicator"></div>
-        </a>
-
-        <a [routerLink]="'/dashboard/patient/mental-health'"
-           routerLinkActive="active"
-           class="nav-item">
-          <div class="nav-icon-wrapper">
-            <i class="bi bi-heart-pulse"></i>
-          </div>
-          <span class="nav-label" [class.hidden]="sidebarCollapsed">Santé Mentale</span>
-          <div class="nav-hover-indicator"></div>
-        </a>
-
-        <a [routerLink]="'/dashboard/patient/pharmacy'"
-           routerLinkActive="active"
-           class="nav-item">
-          <div class="nav-icon-wrapper">
-            <i class="bi bi-shop"></i>
-          </div>
-          <span class="nav-label" [class.hidden]="sidebarCollapsed">Pharmacie</span>
-          <div class="nav-hover-indicator"></div>
-        </a>
-      </div>
-
-      <!-- PARAMÈTRES -->
-      <div class="nav-section">
-        <div class="nav-section-title" [class.hidden]="sidebarCollapsed">
-          ⚙️ PARAMÈTRES
-        </div>
-
-        <a [routerLink]="'/dashboard/patient/billing'"
-           routerLinkActive="active"
-           class="nav-item">
-          <div class="nav-icon-wrapper">
-            <i class="bi bi-receipt"></i>
-          </div>
-          <span class="nav-label" [class.hidden]="sidebarCollapsed">Facturation</span>
-          <div class="nav-hover-indicator"></div>
-        </a>
 
         <a href="#"
            class="nav-item">

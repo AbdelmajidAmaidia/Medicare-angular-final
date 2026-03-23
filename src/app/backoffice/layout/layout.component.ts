@@ -123,7 +123,12 @@ export class LayoutComponent implements OnInit, OnDestroy {
     // Get current user
     this.currentUser = this.authService.getCurrentUser();
 
-    // Subscribe to role changes
+    // Initialize selectedRole from AuthService (handles page refresh correctly)
+    if (this.currentUser?.role) {
+      this.selectedRole = this.currentUser.role as UserRole;
+    }
+
+    // Subscribe to role changes (handles role switch at runtime)
     this.navService.userRole$
       .pipe(takeUntil(this.destroy$))
       .subscribe((role) => {

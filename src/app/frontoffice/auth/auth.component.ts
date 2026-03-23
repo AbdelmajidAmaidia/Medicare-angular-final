@@ -129,8 +129,8 @@ export class AuthComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response: any) => {
           this.isLoading = false;
+          // setRole() already navigates to the role-specific home page
           this.navService.setRole(role as UserRole);
-          this.router.navigate(['/dashboard']);
         },
         error: (error: any) => {
           this.isLoading = false;
@@ -163,8 +163,8 @@ export class AuthComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response: any) => {
           this.isLoading = false;
+          // setRole() already navigates to the role-specific home page
           this.navService.setRole(role as UserRole);
-          this.router.navigate(['/dashboard']);
         },
         error: (error: any) => {
           this.isLoading = false;
