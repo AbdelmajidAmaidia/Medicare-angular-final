@@ -1,175 +1,76 @@
+<!-- src/app/backoffice/patient/dashboard/patient-dashboard.component.html -->
 <div class="patient-dashboard">
-  <!-- Header -->
-  <div class="dashboard-header mb-4">
+
+  <div class="page-header">
     <div>
-      <h1 class="mb-1">Bienvenue, {{ currentUser?.firstName }}!</h1>
-      <p class="text-muted">Gérez votre santé en un seul endroit</p>
-    </div>
-    <div class="header-date">
-      <i class="bi bi-calendar3"></i>
-      {{ currentDate | date:'EEEE d MMMM yyyy':'':'fr' }}
+      <h1 class="page-title">Mon Espace Santé</h1>
+      <p class="page-subtitle">{{ currentDate | date:"EEEE d MMMM yyyy" : '' : 'fr' }}</p>
     </div>
   </div>
 
-  <!-- Stats Cards Row -->
-  <div class="stats-grid mb-4">
-    <div class="stat-card" *ngFor="let stat of stats">
-      <div class="stat-icon" [ngClass]="'icon-' + stat.color">
-        <i [class]="'bi ' + stat.icon"></i>
+  <!-- Métriques de santé -->
+  <div class="metrics-grid">
+    <div *ngFor="let m of metrics" class="metric-card" [ngClass]="getMetricClass(m.status)">
+      <div class="metric-icon">
+        <i [class]="'bi ' + m.icon"></i>
       </div>
-      <div class="stat-content">
-        <div class="stat-label">{{ stat.label }}</div>
-        <div class="stat-value">{{ stat.value }}</div>
+      <div class="metric-body">
+        <p class="metric-label">{{ m.label }}</p>
+        <p class="metric-value">{{ m.value }} <span class="metric-unit">{{ m.unit }}</span></p>
       </div>
     </div>
   </div>
 
-  <!-- Main Content Grid -->
-  <div class="content-grid">
-    <!-- Prochains Rendez-vous -->
-    <div class="card-section appointments-section">
-      <div class="card-header">
-        <h2>
-          <i class="bi bi-calendar-event"></i>
-          Prochains Rendez-vous
+  <div class="dashboard-grid">
+    <!-- Prochains rendez-vous -->
+    <section class="panel">
+      <div class="panel-header">
+        <h2 class="panel-title">
+          <i class="bi bi-calendar-event"></i> Prochains Rendez-vous
         </h2>
-        <a routerLink="/dashboard/patient/appointments" class="btn-link">
-          Voir tout <i class="bi bi-chevron-right"></i>
-        </a>
+        <a href="#" class="panel-link">Voir tout</a>
       </div>
-
-      <div class="appointments-list">
-        <div *ngIf="appointments.length > 0; else noAppointments">
-          <div class="appointment-item" *ngFor="let apt of appointments.slice(0, 3)">
-            <div class="appointment-date">
-              <div class="date-day">{{ apt.date | date:'d' }}</div>
-              <div class="date-month">{{ apt.date | date:'MMM':'':'fr' }}</div>
-            </div>
-
-            <div class="appointment-info">
-              <div class="appointment-doctor">{{ apt.doctor }}</div>
-              <div class="appointment-type">{{ apt.specialty }}</div>
-              <div class="appointment-time">
-                <i class="bi bi-clock"></i>
-                {{ apt.time }}
-              </div>
-            </div>
-
-            <div class="appointment-status" [ngClass]="'status-' + apt.status.toLowerCase()">
-              {{ apt.status }}
+      <div class="appt-list" *ngIf="upcomingAppointments.length > 0; else noAppt">
+        <div *ngFor="let a of upcomingAppointments" class="appt-item">
+          <div class="appt-icon">
+            <i [class]="a.type === 'Téléconsultation' ? 'bi bi-camera-video' : 'bi bi-hospital'"></i>
+          </div>
+          <div class="appt-body">
+            <p class="appt-doctor">{{ a.doctor }}</p>
+            <p class="appt-specialty text-muted small">{{ a.specialty }}</p>
+            <div class="appt-meta">
+              <span><i class="bi bi-calendar3"></i> {{ a.date }}</span>
+              <span><i class="bi bi-clock"></i> {{ a.time }}</span>
+              <span class="appt-type-badge">{{ a.type }}</span>
             </div>
           </div>
-        </div>
-
-        <ng-template #noAppointments>
-          <div class="empty-state">
-            <i class="bi bi-calendar-x"></i>
-            <p>Aucun rendez-vous programmé</p>
-            <a routerLink="/dashboard/patient/appointments" class="btn-primary">
-              Réserver maintenant
-            </a>
-          </div>
-        </ng-template>
-      </div>
-    </div>
-
-    <!-- Actions Rapides -->
-    <div class="card-section quick-actions">
-      <div class="card-header">
-        <h2>
-          <i class="bi bi-lightning-fill"></i>
-          Actions Rapides
-        </h2>
-      </div>
-
-      <div class="actions-grid">
-        <a routerLink="/dashboard/patient/appointments" class="action-btn primary">
-          <div class="action-icon">
-            <i class="bi bi-calendar-plus"></i>
-          </div>
-          <div class="action-text">
-            <div class="action-title">Nouveau RDV</div>
-            <div class="action-desc">Réserver maintenant</div>
-          </div>
-        </a>
-
-        <a routerLink="/dashboard/patient/records" class="action-btn info">
-          <div class="action-icon">
-            <i class="bi bi-file-medical"></i>
-          </div>
-          <div class="action-text">
-            <div class="action-title">Dossier Médical</div>
-            <div class="action-desc">Consulter l'historique</div>
-          </div>
-        </a>
-
-        <a routerLink="/dashboard/patient/prescriptions" class="action-btn warning">
-          <div class="action-icon">
-            <i class="bi bi-capsule"></i>
-          </div>
-          <div class="action-text">
-            <div class="action-title">Ordonnances</div>
-            <div class="action-desc">5 actives</div>
-          </div>
-        </a>
-
-        <a routerLink="/dashboard/patient/ai-chat" class="action-btn success">
-          <div class="action-icon">
-            <i class="bi bi-robot"></i>
-          </div>
-          <div class="action-text">
-            <div class="action-title">Assistant IA</div>
-            <div class="action-desc">Poser une question</div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Bottom Row -->
-  <div class="content-grid-2">
-    <!-- Résultats Analyses -->
-    <div class="card-section">
-      <div class="card-header">
-        <h2>
-          <i class="bi bi-graph-up"></i>
-          Résultats Récents
-        </h2>
-      </div>
-
-      <div class="results-list">
-        <div class="result-item" *ngFor="let result of labResults">
-          <div class="result-info">
-            <div class="result-name">{{ result.name }}</div>
-            <div class="result-date">{{ result.date | date:'d MMM yyyy':'':'fr' }}</div>
-          </div>
-          <div class="result-status" [ngClass]="'status-' + result.status.toLowerCase()">
-            {{ result.status }}
-          </div>
+          <button class="btn btn-outline-primary btn-sm">Rejoindre</button>
         </div>
       </div>
-    </div>
+      <ng-template #noAppt>
+        <div class="empty-state"><i class="bi bi-calendar-x"></i><p>Aucun rendez-vous prévu.</p></div>
+      </ng-template>
+    </section>
 
-    <!-- Activité Récente -->
-    <div class="card-section">
-      <div class="card-header">
-        <h2>
-          <i class="bi bi-activity"></i>
-          Activité Récente
+    <!-- Activités récentes -->
+    <section class="panel">
+      <div class="panel-header">
+        <h2 class="panel-title">
+          <i class="bi bi-clock-history"></i> Activités Récentes
         </h2>
       </div>
-
-      <div class="activity-list">
-        <div class="activity-item" *ngFor="let activity of recentActivities">
-          <div class="activity-icon" [ngClass]="'icon-' + activity.type">
-            <i [class]="'bi ' + activity.icon"></i>
+      <ul class="activity-list">
+        <li *ngFor="let act of recentActivities" class="activity-item">
+          <div class="activity-icon">
+            <i [class]="'bi ' + act.icon"></i>
           </div>
-          <div class="activity-info">
-            <div class="activity-title">{{ activity.title }}</div>
-            <div class="activity-time">{{ activity.time }}</div>
+          <div class="activity-body">
+            <span class="activity-type">{{ act.type }}</span>
+            <span class="activity-desc">{{ act.desc }}</span>
           </div>
-        </div>
-      </div>
-    </div>
+          <span class="activity-date text-muted small">{{ act.date }}</span>
+        </li>
+      </ul>
+    </section>
   </div>
 </div>

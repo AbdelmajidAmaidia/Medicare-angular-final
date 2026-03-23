@@ -1,463 +1,322 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Subject } from 'rxjs';
+/* admin-dashboard.component.scss */
 
-interface StatCard {
-  label: string;
-  value: string;
-  change: string;
-  changeClass: string;
-  changeIcon: string;
-  icon: string;
+.admin-dashboard {
+  max-width: 1400px;
 }
 
-interface Alert {
-  id: string;
-  type: 'error' | 'warning' | 'success' | 'info';
-  message: string;
-  time: string;
+// ─── En-tête ───────────────────────────────────────────────────────────────────
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+
+  .page-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+  }
+
+  .page-subtitle {
+    font-size: 0.875rem;
+    color: #64748b;
+    margin: 0.25rem 0 0;
+    text-transform: capitalize;
+  }
 }
 
-@Component({
-  selector: 'app-admin-dashboard',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './admin-dashboard.component.html',
-  styles: [`
-    .admin-dashboard {
-      padding: 2rem;
-      background-color: #f5f7fa;
-      min-height: 100vh;
-    }
+.btn-refresh {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
 
-    .dashboard-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2rem;
-    }
-
-    .dashboard-header h1 {
-      font-size: 1.75rem;
-      font-weight: 700;
-      color: #1a202c;
-      margin: 0 0 0.25rem 0;
-    }
-
-    .subtitle {
-      color: #718096;
-      font-size: 0.95rem;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
-
-    .stat-card {
-      background: white;
-      border-radius: 0.75rem;
-      padding: 1.5rem;
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-      border-left: 4px solid #ddd;
-      transition: all 0.3s ease;
-    }
-
-    .stat-card:hover {
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      transform: translateY(-2px);
-    }
-
-    .stat-card.stat-fa-users {
-      border-left-color: #3b82f6;
-    }
-
-    .stat-card.stat-fa-user-md {
-      border-left-color: #10b981;
-    }
-
-    .stat-card.stat-fa-calendar-alt {
-      border-left-color: #f59e0b;
-    }
-
-    .stat-card.stat-fa-dollar-sign {
-      border-left-color: #8b5cf6;
-    }
-
-    .stat-icon {
-      font-size: 1.75rem;
-      width: 50px;
-      height: 50px;
-      border-radius: 0.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #f3f4f6;
-    }
-
-    .stat-content {
-      flex: 1;
-    }
-
-    .stat-label {
-      font-size: 0.85rem;
-      color: #6b7280;
-      margin: 0 0 0.5rem 0;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .stat-value {
-      font-size: 1.75rem;
-      font-weight: 700;
-      color: #1f2937;
-      margin: 0 0 0.5rem 0;
-    }
-
-    .stat-change {
-      font-size: 0.8rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-      color: #10b981;
-    }
-
-    .dashboard-content {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 1.5rem;
-    }
-
-    @media (max-width: 1024px) {
-      .dashboard-content {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .card {
-      background: white;
-      border-radius: 0.75rem;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.5rem;
-      border-bottom: 1px solid #e5e7eb;
-    }
-
-    .card-header h2 {
-      font-size: 1.125rem;
-      font-weight: 600;
-      color: #1f2937;
-      margin: 0;
-    }
-
-    .alerts-list {
-      padding: 1rem 0;
-    }
-
-    .alert-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      padding: 1rem 1.5rem;
-      border-left: 3px solid #ddd;
-      transition: background-color 0.2s ease;
-    }
-
-    .alert-item:hover {
-      background-color: #f9fafb;
-    }
-
-    .alert-item.alert-error {
-      border-left-color: #ef4444;
-    }
-
-    .alert-item.alert-warning {
-      border-left-color: #f59e0b;
-    }
-
-    .alert-item.alert-success {
-      border-left-color: #10b981;
-    }
-
-    .alert-item.alert-info {
-      border-left-color: #3b82f6;
-    }
-
-    .alert-badge {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      flex-shrink: 0;
-    }
-
-    .badge-error {
-      background-color: #fee2e2;
-      color: #991b1b;
-    }
-
-    .badge-warning {
-      background-color: #fef3c7;
-      color: #92400e;
-    }
-
-    .badge-success {
-      background-color: #d1fae5;
-      color: #065f46;
-    }
-
-    .badge-info {
-      background-color: #dbeafe;
-      color: #1e40af;
-    }
-
-    .alert-content {
-      flex: 1;
-    }
-
-    .alert-message {
-      font-size: 0.95rem;
-      color: #1f2937;
-      margin: 0 0 0.5rem 0;
-      font-weight: 500;
-    }
-
-    .alert-time {
-      font-size: 0.8rem;
-      color: #9ca3af;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .btn-close {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      color: #d1d5db;
-      cursor: pointer;
-      padding: 0;
-    }
-
-    .btn-close:hover {
-      color: #6b7280;
-    }
-
-    .health-items {
-      padding: 1.5rem;
-    }
-
-    .health-item {
-      margin-bottom: 1.5rem;
-    }
-
-    .health-label {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.75rem;
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: #1f2937;
-    }
-
-    .badge {
-      padding: 0.25rem 0.75rem;
-      border-radius: 9999px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .badge-success {
-      background-color: #d1fae5;
-      color: #065f46;
-    }
-
-    .badge-warning {
-      background-color: #fef3c7;
-      color: #92400e;
-    }
-
-    .health-bar {
-      height: 6px;
-      background-color: #e5e7eb;
-      border-radius: 3px;
-      overflow: hidden;
-      margin-bottom: 0.5rem;
-    }
-
-    .health-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #10b981, #059669);
-      transition: width 0.3s ease;
-    }
-
-    .health-fill.health-warning {
-      background: linear-gradient(90deg, #f59e0b, #d97706);
-    }
-
-    .health-value {
-      font-size: 0.75rem;
-      color: #6b7280;
-      margin: 0;
-      text-align: right;
-    }
-
-    .btn {
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 0.5rem;
-      font-size: 0.875rem;
-      font-weight: 500;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: all 0.2s ease;
-    }
-
-    .btn-secondary {
-      background-color: #f3f4f6;
-      color: #1f2937;
-    }
-
-    .btn-secondary:hover {
-      background-color: #e5e7eb;
-    }
-
-    .empty-state {
-      padding: 2rem 1.5rem;
-      text-align: center;
-      color: #6b7280;
-    }
-
-    .empty-state i {
-      font-size: 2rem;
-      color: #10b981;
-      margin-bottom: 0.5rem;
-      display: block;
-    }
-
-    .empty-state p {
-      margin: 0;
-      font-size: 0.95rem;
-    }
-  `],
-})
-export class AdminDashboardComponent implements OnInit, OnDestroy {
-  private destroy$ = new Subject<void>();
-
-  stats: StatCard[] = [
-    {
-      label: 'Utilisateurs Totaux',
-      value: '12,450',
-      change: '+245 ce mois',
-      changeClass: 'text-success',
-      changeIcon: 'fa-arrow-up',
-      icon: 'fa-users',
-    },
-    {
-      label: 'Médecins Actifs',
-      value: '280',
-      change: '+18 cette semaine',
-      changeClass: 'text-success',
-      changeIcon: 'fa-arrow-up',
-      icon: 'fa-user-md',
-    },
-    {
-      label: 'Rendez-vous Aujourd\'hui',
-      value: '1,240',
-      change: '+12% vs hier',
-      changeClass: 'text-success',
-      changeIcon: 'fa-arrow-up',
-      icon: 'fa-calendar-alt',
-    },
-    {
-      label: 'Revenu Mensuel',
-      value: '$284,500',
-      change: '+8.5% vs mois dernier',
-      changeClass: 'text-success',
-      changeIcon: 'fa-arrow-up',
-      icon: 'fa-dollar-sign',
-    },
-  ];
-
-  recentAlerts: Alert[] = [
-    {
-      id: '1',
-      type: 'error',
-      message: 'Charge serveur à 85%',
-      time: 'Il y a 5 minutes',
-    },
-    {
-      id: '2',
-      type: 'warning',
-      message: '12 vérifications de médecins en attente',
-      time: 'Il y a 1 heure',
-    },
-    {
-      id: '3',
-      type: 'success',
-      message: 'Sauvegarde quotidienne terminée',
-      time: 'Il y a 2 heures',
-    },
-    {
-      id: '4',
-      type: 'info',
-      message: 'Nouvelle version de plateforme disponible',
-      time: 'Il y a 3 heures',
-    },
-  ];
-
-  constructor() {}
-
-  ngOnInit(): void {
-    this.initializeData();
+  &:hover {
+    background: #f8fafc;
+    border-color: #3b82f6;
+    color: #3b82f6;
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+  i {
+    font-size: 0.875rem;
   }
+}
 
-  private initializeData(): void {
-    // TODO: Appeler les services pour récupérer les données réelles
-  }
+// ─── Grille des stats ──────────────────────────────────────────────────────────
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
 
-  refreshData(): void {
-    console.log('Actualisation des données...');
-  }
+.stat-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.25rem;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.2s;
 
-  getAlertIcon(type: string): string {
-    const icons: { [key: string]: string } = {
-      error: 'fa-exclamation-circle',
-      warning: 'fa-exclamation-triangle',
-      success: 'fa-check-circle',
-      info: 'fa-info-circle',
-    };
-    return icons[type] || 'fa-bell';
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
+}
 
-  closeAlert(alert: Alert): void {
-    const index = this.recentAlerts.findIndex(a => a.id === alert.id);
-    if (index > -1) {
-      this.recentAlerts.splice(index, 1);
-    }
+.stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+
+  .stat-card--primary &  { background: #dbeafe; color: #3b82f6; }
+  .stat-card--success &  { background: #dcfce7; color: #22c55e; }
+  .stat-card--info &     { background: #e0f2fe; color: #0ea5e9; }
+  .stat-card--warning &  { background: #fef3c7; color: #f59e0b; }
+}
+
+.stat-body {
+  min-width: 0;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin: 0 0 0.25rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 0.25rem;
+  line-height: 1.2;
+}
+
+.stat-change {
+  font-size: 0.75rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.125rem;
+
+  &.positive { color: #22c55e; }
+  &.negative { color: #ef4444; }
+
+  i { font-size: 1rem; }
+}
+
+// ─── Grille principale ─────────────────────────────────────────────────────────
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+
+  @media (max-width: 991.98px) {
+    grid-template-columns: 1fr;
   }
+}
+
+.panel {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.panel-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  i { color: #3b82f6; }
+}
+
+.panel-link {
+  font-size: 0.8rem;
+  color: #3b82f6;
+  text-decoration: none;
+
+  &:hover { text-decoration: underline; }
+}
+
+// ─── Alertes ──────────────────────────────────────────────────────────────────
+.alerts-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.alert-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.875rem 1.25rem;
+  border-bottom: 1px solid #f8fafc;
+  transition: background 0.15s;
+
+  &:last-child { border-bottom: none; }
+  &:hover { background: #fafafa; }
+}
+
+.alert-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  flex-shrink: 0;
+
+  .alert-item--error &   { background: #fee2e2; color: #ef4444; }
+  .alert-item--warning & { background: #fef3c7; color: #f59e0b; }
+  .alert-item--success & { background: #dcfce7; color: #22c55e; }
+  .alert-item--info &    { background: #dbeafe; color: #3b82f6; }
+}
+
+.alert-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.alert-msg {
+  font-size: 0.875rem;
+  color: #1e293b;
+  font-weight: 500;
+}
+
+.alert-time {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  margin-top: 0.125rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.btn-close-sm {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #94a3b8;
+  padding: 0.125rem;
+  border-radius: 4px;
+  line-height: 1;
+  font-size: 1rem;
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s;
+
+  &:hover { background: #f1f5f9; color: #374151; }
+}
+
+.empty-state {
+  padding: 3rem;
+  text-align: center;
+  color: #94a3b8;
+
+  i { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
+  p { margin: 0; font-size: 0.875rem; }
+}
+
+// ─── État du système ───────────────────────────────────────────────────────────
+.health-list {
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.health-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  gap: 0.375rem 0.5rem;
+  align-items: center;
+}
+
+.health-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  grid-column: 1 / -1;
+}
+
+.health-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.health-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: 20px;
+
+  &.badge--online   { background: #dcfce7; color: #16a34a; }
+  &.badge--warning  { background: #fef3c7; color: #d97706; }
+  &.badge--critical { background: #fee2e2; color: #dc2626; }
+}
+
+.health-bar-wrap {
+  grid-column: 1 / 2;
+  height: 6px;
+  background: #f1f5f9;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.health-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.5s ease;
+
+  &.fill--online   { background: #22c55e; }
+  &.fill--warning  { background: #f59e0b; }
+  &.fill--critical { background: #ef4444; }
+}
+
+.health-pct {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 600;
+  text-align: right;
+  white-space: nowrap;
 }

@@ -1,15 +1,99 @@
-<div>
-  <h2>User Management</h2>
-  <div>
-    <label>Search</label>
-    <input type="text" [(ngModel)]="searchTerm" placeholder="Search users...">
+<!-- src/app/backoffice/admin/users/user-management.component.html -->
+<div class="user-management">
+
+  <!-- ─── En-tête ──────────────────────────────────────────────────── -->
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Gestion des Utilisateurs</h1>
+      <p class="page-subtitle">{{ filteredUsers.length }} utilisateur(s) trouvé(s)</p>
+    </div>
+    <button class="btn-primary">
+      <i class="bi bi-person-plus"></i>
+      Ajouter un Utilisateur
+    </button>
   </div>
-  <table>
-    <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Joined</th><th>Status</th></tr></thead>
-    <tbody>
-      <tr *ngFor="let u of filteredUsers">
-        <td>{{ u.id }}</td><td>{{ u.name }}</td><td>{{ u.email }}</td><td>{{ u.role }}</td><td>{{ u.joined }}</td><td>{{ u.status }}</td>
-      </tr>
-    </tbody>
-  </table>
+
+  <!-- ─── Barre de filtres ──────────────────────────────────────────── -->
+  <div class="filter-bar">
+    <div class="search-wrap">
+      <i class="bi bi-search search-icon"></i>
+      <input
+        type="search"
+        class="search-input"
+        [(ngModel)]="searchTerm"
+        placeholder="Rechercher par nom ou email…"
+        aria-label="Rechercher un utilisateur"
+      />
+    </div>
+    <div class="role-filter">
+      <select [(ngModel)]="selectedRole" class="form-select" aria-label="Filtrer par rôle">
+        <option value="">Tous les rôles</option>
+        <option *ngFor="let r of roles" [value]="r">{{ r }}</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- ─── Tableau ──────────────────────────────────────────────────── -->
+  <div class="table-card">
+    <div class="table-responsive">
+      <table class="users-table" aria-label="Liste des utilisateurs">
+        <thead>
+          <tr>
+            <th>Utilisateur</th>
+            <th>Rôle</th>
+            <th>Inscription</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of filteredUsers">
+            <td>
+              <div class="user-cell">
+                <div class="user-avatar-placeholder" [attr.data-initial]="user.firstName.charAt(0)">
+                  {{ user.firstName.charAt(0) }}{{ user.lastName.charAt(0) }}
+                </div>
+                <div class="user-info">
+                  <span class="user-name">{{ user.firstName }} {{ user.lastName }}</span>
+                  <span class="user-email">{{ user.email }}</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="role-chip">{{ user.role }}</span>
+            </td>
+            <td class="text-muted small">{{ user.joined }}</td>
+            <td>
+              <span class="status-badge" [ngClass]="getStatusClass(user.status)">
+                {{ user.status }}
+              </span>
+            </td>
+            <td>
+              <div class="actions-cell">
+                <button class="btn-action" title="Modifier" (click)="editUser(user)">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button
+                  class="btn-action"
+                  [title]="user.status === 'Actif' ? 'Suspendre' : 'Activer'"
+                  (click)="toggleStatus(user)"
+                >
+                  <i class="bi" [ngClass]="user.status === 'Actif' ? 'bi-pause-circle' : 'bi-play-circle'"></i>
+                </button>
+                <button class="btn-action btn-action--danger" title="Supprimer" (click)="deleteUser(user)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- État vide -->
+    <div class="empty-state" *ngIf="filteredUsers.length === 0">
+      <i class="bi bi-people"></i>
+      <p>Aucun utilisateur ne correspond à votre recherche.</p>
+    </div>
+  </div>
 </div>

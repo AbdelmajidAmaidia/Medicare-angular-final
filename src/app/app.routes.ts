@@ -95,7 +95,7 @@ export const routes: Routes = [
         canActivate: [roleGuard],
         data: { roles: ['patient'] },
         loadComponent: () =>
-          import('./backoffice/patient/appointments/appointment-booking.component').then(m => m.AppointmentBookingComponent),
+          import('./backoffice/patient/appointments/patient-appointments.component').then(m => m.PatientAppointmentsComponent),
       },
       {
         path: 'patient/records',
@@ -119,7 +119,7 @@ export const routes: Routes = [
         canActivate: [roleGuard],
         data: { roles: ['patient'] },
         loadComponent: () =>
-          import('./backoffice/patient/billing/billing-history.component').then(m => m.BillingHistoryComponent),
+          import('./backoffice/patient/billing/patient-billing.component').then(m => m.PatientBillingComponent),
       },
       {
         path: 'patient/pharmacy',
@@ -127,7 +127,7 @@ export const routes: Routes = [
         canActivate: [roleGuard],
         data: { roles: ['patient'] },
         loadComponent: () =>
-          import('./backoffice/patient/pharmacy/pharmacy-orders.component').then(m => m.PharmacyOrdersComponent),
+          import('./backoffice/patient/pharmacy/patient-pharmacy.component').then(m => m.PatientPharmacyComponent),
       },
       {
         path: 'patient/prescriptions',
@@ -135,7 +135,7 @@ export const routes: Routes = [
         canActivate: [roleGuard],
         data: { roles: ['patient'] },
         loadComponent: () =>
-          import('./backoffice/patient/prescriptions/prescription-flow.component').then(m => m.PrescriptionFlowComponent),
+          import('./backoffice/patient/prescriptions/prescriptions.component').then(m => m.PrescriptionsComponent),
       },
       {
         path: 'patient/mental-health',
@@ -177,7 +177,7 @@ export const routes: Routes = [
         canActivate: [roleGuard],
         data: { roles: ['doctor'] },
         loadComponent: () =>
-          import('./backoffice/doctor/appointments/doctor-scheduler.component').then(m => m.DoctorSchedulerComponent),
+          import('./backoffice/doctor/appointments/appointment-planning.component').then(m => m.AppointmentPlanningComponent),
       },
       {
         path: 'doctor/consultations',
@@ -185,7 +185,7 @@ export const routes: Routes = [
         canActivate: [roleGuard],
         data: { roles: ['doctor'] },
         loadComponent: () =>
-          import('./backoffice/doctor/consultations/consultation.component').then(m => m.ConsultationComponent),
+          import('./backoffice/doctor/consultations/consultation-history.component').then(m => m.ConsultationHistoryComponent),
       },
       {
         path: 'doctor/financial',
@@ -211,7 +211,7 @@ export const routes: Routes = [
         canActivate: [roleGuard],
         data: { roles: ['lab'] },
         loadComponent: () =>
-          import('./backoffice/lab/results/lab-result-entry.component').then(m => m.LabResultEntryComponent),
+          import('./backoffice/lab/results/lab-results.component').then(m => m.LabResultsComponent),
       },
       {
         path: 'lab/payroll',

@@ -1,16 +1,64 @@
-<div>
-  <h2>Doctor Verifications</h2>
-  <table>
-    <thead><tr><th>ID</th><th>Name</th><th>Specialty</th><th>License</th><th>Submitted</th><th>Status</th><th>Actions</th></tr></thead>
-    <tbody>
-      <tr *ngFor="let v of verifications">
-        <td>{{ v.id }}</td><td>{{ v.name }}</td><td>{{ v.specialty }}</td><td>{{ v.license }}</td>
-        <td>{{ v.submittedDate }}</td><td>{{ v.status }}</td>
-        <td>
-          <button type="button" (click)="approve(v.id)" *ngIf="v.status === 'Pending' || v.status === 'Under Review'">Approve</button>
-          <button type="button" (click)="reject(v.id)" *ngIf="v.status === 'Pending' || v.status === 'Under Review'">Reject</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<!-- src/app/backoffice/admin/verifications/doctor-verification.component.html -->
+<div class="page-container">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Vérifications Médecins</h1>
+      <p class="page-subtitle">
+        <span class="badge bg-warning text-dark">{{ pendingCount }}</span>
+        demande(s) en attente
+      </p>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <div class="table-responsive">
+      <table class="data-table" aria-label="Demandes de vérification">
+        <thead>
+          <tr>
+            <th>Médecin</th>
+            <th>Spécialité</th>
+            <th>Soumis le</th>
+            <th>Documents</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let req of requests">
+            <td class="fw-semibold">{{ req.name }}</td>
+            <td>{{ req.specialty }}</td>
+            <td class="text-muted small">{{ req.submittedAt }}</td>
+            <td>
+              <div class="doc-list">
+                <span *ngFor="let doc of req.documents" class="doc-chip">
+                  <i class="bi bi-file-earmark-pdf"></i> {{ doc }}
+                </span>
+              </div>
+            </td>
+            <td>
+              <span
+                class="status-badge"
+                [class.status--pending]="req.status === 'En attente'"
+                [class.status--active]="req.status === 'Approuvé'"
+                [class.status--suspended]="req.status === 'Rejeté'"
+              >
+                {{ req.status }}
+              </span>
+            </td>
+            <td>
+              <div class="d-flex gap-2" *ngIf="req.status === 'En attente'">
+                <button class="btn btn-success btn-sm" (click)="approve(req.id)">
+                  <i class="bi bi-check-lg"></i> Approuver
+                </button>
+                <button class="btn btn-danger btn-sm" (click)="reject(req.id)">
+                  <i class="bi bi-x-lg"></i> Rejeter
+                </button>
+              </div>
+              <span *ngIf="req.status !== 'En attente'" class="text-muted small">—</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

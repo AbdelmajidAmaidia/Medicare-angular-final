@@ -1,13 +1,18 @@
+/**
+ * @file financial-admin.component.ts
+ * @description Tableau financier de la plateforme pour l'administrateur.
+ */
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-interface FinancialTransaction {
-  date: string;
-  type: string;
-  from?: string;
-  to?: string;
+/** Transaction financière */
+export interface FinancialTransaction {
+  id: string;
+  type: 'Paiement' | 'Remboursement' | 'Commission';
+  description: string;
   amount: number;
-  status: string;
+  date: string;
+  status: 'Validé' | 'En cours' | 'Annulé';
 }
 
 @Component({
@@ -17,16 +22,24 @@ interface FinancialTransaction {
   templateUrl: './financial-admin.component.html',
 })
 export class FinancialAdminComponent {
-  summary = { totalRevenue: 284500, platformFees: 28450, doctorPayouts: 198150, labPayouts: 34200, pharmacyPayouts: 23700 };
+  totalRevenue = 284500;
+  totalPending = 12340;
+  totalRefunds = 3200;
 
   transactions: FinancialTransaction[] = [
-    { date: 'Dec 15', type: 'Platform Fee', from: 'Dr. Michael Chen', amount: 25, status: 'Processed' },
-    { date: 'Dec 15', type: 'Doctor Payout', to: 'Dr. Sarah Williams', amount: 3200, status: 'Processed' },
-    { date: 'Dec 14', type: 'Lab Payout', to: 'City Lab Center', amount: 1800, status: 'Processing' },
-    { date: 'Dec 14', type: 'Platform Fee', from: 'Dr. Robert Johnson', amount: 18, status: 'Processed' },
+    { id: 'TXN-001', type: 'Paiement', description: 'Consultation Dr. Chen - Patient #4512', amount: 75, date: '22 Mar 2026', status: 'Validé' },
+    { id: 'TXN-002', type: 'Commission', description: 'Commission pharmacie AbouYacer', amount: 45, date: '21 Mar 2026', status: 'Validé' },
+    { id: 'TXN-003', type: 'Remboursement', description: 'Annulation rdv - Patient #3210', amount: -50, date: '20 Mar 2026', status: 'En cours' },
+    { id: 'TXN-004', type: 'Paiement', description: 'Analyse Labo - Patient #6788', amount: 120, date: '19 Mar 2026', status: 'Validé' },
+    { id: 'TXN-005', type: 'Remboursement', description: 'Erreur facturation - Patient #2201', amount: -30, date: '18 Mar 2026', status: 'Annulé' },
   ];
 
-  getParty(t: FinancialTransaction): string {
-    return t.from ?? t.to ?? '';
+  getStatusClass(status: string): string {
+    const map: Record<string, string> = {
+      'Validé': 'status--active',
+      'En cours': 'status--pending',
+      'Annulé': 'status--suspended',
+    };
+    return map[status] ?? '';
   }
 }
