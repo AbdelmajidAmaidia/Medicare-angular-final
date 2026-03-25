@@ -1,0 +1,128 @@
+<!-- src/app/backoffice/admin/shared/layouts/admin-layout.component.html -->
+<div class="admin-wrapper" [class.sidebar-collapsed]="sidebarCollapsed">
+
+  <!-- ═══════════════════════ BARRE LATÉRALE ═══════════════════════ -->
+  <aside class="admin-sidebar">
+
+    <!-- En-tête -->
+    <div class="admin-sidebar__header">
+      <a routerLink="/" class="admin-sidebar__brand">
+        <i class="bi bi-hospital brand-icon"></i>
+        <span class="brand-text">MediCare <span class="brand-ai">AI</span></span>
+      </a>
+      <button
+        class="admin-sidebar__toggle"
+        (click)="toggleSidebar()"
+        [title]="sidebarCollapsed ? 'Développer' : 'Réduire'"
+        aria-label="Basculer la barre latérale"
+      >
+        <i class="bi" [ngClass]="sidebarCollapsed ? 'bi-chevron-double-right' : 'bi-chevron-double-left'"></i>
+      </button>
+    </div>
+
+    <!-- Navigation principale -->
+    <nav class="admin-sidebar__nav" aria-label="Navigation administrateur">
+
+      <div class="nav-section">
+        <span class="nav-section__label">MENU PRINCIPAL</span>
+        <a
+          *ngFor="let item of mainNavItems"
+          [routerLink]="item.route"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="nav-link"
+          [title]="sidebarCollapsed ? item.label : ''"
+        >
+          <i [class]="'bi ' + item.icon + ' nav-icon'"></i>
+          <span class="nav-label">{{ item.label }}</span>
+        </a>
+      </div>
+
+      <div class="nav-section">
+        <span class="nav-section__label">ADMINISTRATION</span>
+        <a
+          *ngFor="let item of adminNavItems"
+          [routerLink]="item.route"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="nav-link"
+          [title]="sidebarCollapsed ? item.label : ''"
+        >
+          <i [class]="'bi ' + item.icon + ' nav-icon'"></i>
+          <span class="nav-label">{{ item.label }}</span>
+        </a>
+      </div>
+
+    </nav>
+
+    <!-- Pied de barre latérale -->
+    <div class="admin-sidebar__footer">
+      <button class="btn-logout" (click)="logout()" title="Déconnexion">
+        <i class="bi bi-box-arrow-right nav-icon"></i>
+        <span class="nav-label">Déconnexion</span>
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- ═══════════════════════ ZONE PRINCIPALE ═══════════════════════ -->
+  <div class="admin-main">
+
+    <!-- Barre de navigation supérieure -->
+    <header class="admin-topbar">
+      <div class="admin-topbar__left">
+        <button
+          class="btn-icon"
+          (click)="toggleSidebar()"
+          aria-label="Basculer la barre latérale"
+        >
+          <i class="bi bi-layout-sidebar"></i>
+        </button>
+        <span class="admin-topbar__title">Panneau d'Administration</span>
+      </div>
+
+      <div class="admin-topbar__right">
+        <!-- Menu utilisateur -->
+        <div class="admin-user-dropdown" [class.open]="userDropdownOpen">
+          <button
+            class="btn-user"
+            (click)="toggleUserDropdown()"
+            [attr.aria-expanded]="userDropdownOpen"
+            aria-label="Menu utilisateur"
+          >
+            <img [src]="getAvatarUrl()" alt="Avatar administrateur" class="user-avatar-sm" />
+            <span class="user-display-name d-none d-md-inline">
+              {{ currentUser?.firstName }}
+            </span>
+            <i class="bi bi-chevron-down chevron"></i>
+          </button>
+
+          <ul class="user-menu" *ngIf="userDropdownOpen" role="menu">
+            <li class="user-menu__header">
+              <strong>{{ currentUser?.firstName }} {{ currentUser?.lastName }}</strong>
+              <span class="text-muted small">{{ currentUser?.email }}</span>
+            </li>
+            <li role="separator"><hr class="dropdown-divider" /></li>
+            <li role="menuitem">
+              <a routerLink="/dashboard/admin/settings" class="user-menu__item" (click)="userDropdownOpen = false">
+                <i class="bi bi-gear"></i> Paramètres
+              </a>
+            </li>
+            <li role="separator"><hr class="dropdown-divider" /></li>
+            <li role="menuitem">
+              <button class="user-menu__item danger" (click)="logout()">
+                <i class="bi bi-box-arrow-right"></i> Déconnexion
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- Contenu de la page -->
+    <main class="admin-content" id="admin-main-content">
+      <router-outlet></router-outlet>
+    </main>
+
+  </div>
+</div>
