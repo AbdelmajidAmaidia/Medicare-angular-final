@@ -8,20 +8,10 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterModule, Router } from '@angular/router';
 import { NavigationService } from '../../services/navigation.service';
 import { AuthService } from '../../services/auth.service';
+import { LayoutNavigationService, NavItem, NavSection } from './navigation.service';
 
-/** Représente un élément de navigation dans la barre latérale */
-export interface NavItem {
-  label: string;
-  route: string;
-  icon: string;
-  badge?: number;
-}
-
-/** Représente une section de navigation groupée */
-export interface NavSection {
-  title: string;
-  items: NavItem[];
-}
+// Re-export so existing consumers can still import from this file.
+export type { NavItem, NavSection };
 
 /** Représente une notification utilisateur */
 export interface AppNotification {
@@ -84,97 +74,11 @@ export class LayoutComponent implements OnInit {
     },
   ];
 
-  // ─── Navigation Maps ──────────────────────────────────────────────────────────
-
-  /** Éléments de navigation du patient */
-  private readonly patientNav: NavSection[] = [
-    {
-      title: 'MENU PRINCIPAL',
-      items: [
-        { label: 'Tableau de Bord', route: '/dashboard/patient/home', icon: 'bi-house-door' },
-        { label: 'Rendez-vous', route: '/dashboard/patient/appointments', icon: 'bi-calendar3', badge: 2 },
-        { label: 'Dossier Médical', route: '/dashboard/patient/records', icon: 'bi-file-medical' },
-      ],
-    },
-    {
-      title: 'SERVICES',
-      items: [
-        { label: 'Ordonnances', route: '/dashboard/patient/prescriptions', icon: 'bi-capsule', badge: 5 },
-        { label: 'Assistant IA', route: '/dashboard/patient/ai-chat', icon: 'bi-robot' },
-        { label: 'Santé Mentale', route: '/dashboard/patient/mental-health', icon: 'bi-heart-pulse' },
-        { label: 'Pharmacie', route: '/dashboard/patient/pharmacy', icon: 'bi-shop' },
-        { label: 'Facturation', route: '/dashboard/patient/billing', icon: 'bi-receipt' },
-      ],
-    },
-  ];
-
-  /** Éléments de navigation du médecin */
-  private readonly doctorNav: NavSection[] = [
-    {
-      title: 'MENU PRINCIPAL',
-      items: [
-        { label: 'Tableau de Bord', route: '/dashboard/doctor/home', icon: 'bi-house-door' },
-        { label: 'Mes Patients', route: '/dashboard/doctor/patients', icon: 'bi-people' },
-        { label: 'Planning', route: '/dashboard/doctor/appointments', icon: 'bi-calendar2-week' },
-      ],
-    },
-    {
-      title: 'ACTIVITÉ',
-      items: [
-        { label: 'Consultations', route: '/dashboard/doctor/consultations', icon: 'bi-chat-dots' },
-        { label: 'Finances', route: '/dashboard/doctor/financial', icon: 'bi-graph-up' },
-      ],
-    },
-  ];
-
-  /** Éléments de navigation du laboratoire */
-  private readonly labNav: NavSection[] = [
-    {
-      title: 'MENU PRINCIPAL',
-      items: [
-        { label: 'Tableau de Bord', route: '/dashboard/lab/home', icon: 'bi-house-door' },
-        { label: 'Saisie Résultats', route: '/dashboard/lab/results', icon: 'bi-clipboard-data' },
-        { label: 'Paie', route: '/dashboard/lab/payroll', icon: 'bi-wallet2' },
-      ],
-    },
-  ];
-
-  /** Éléments de navigation de la pharmacie */
-  private readonly pharmacyNav: NavSection[] = [
-    {
-      title: 'MENU PRINCIPAL',
-      items: [
-        { label: 'Tableau de Bord', route: '/dashboard/pharmacy/home', icon: 'bi-house-door' },
-        { label: 'Livraisons', route: '/dashboard/pharmacy/delivery', icon: 'bi-truck' },
-        { label: 'Portefeuille', route: '/dashboard/pharmacy/wallet', icon: 'bi-wallet2' },
-      ],
-    },
-  ];
-
-  /** Éléments de navigation de l'administrateur */
-  private readonly adminNav: NavSection[] = [
-    {
-      title: 'MENU PRINCIPAL',
-      items: [
-        { label: 'Tableau de Bord', route: '/dashboard/admin/home', icon: 'bi-house-door' },
-        { label: 'Utilisateurs', route: '/dashboard/admin/users', icon: 'bi-people' },
-        { label: 'Vérifications', route: '/dashboard/admin/verifications', icon: 'bi-patch-check' },
-      ],
-    },
-    {
-      title: 'ADMINISTRATION',
-      items: [
-        { label: 'Finances', route: '/dashboard/admin/financials', icon: 'bi-graph-up' },
-        { label: 'Paie', route: '/dashboard/admin/payroll', icon: 'bi-wallet2' },
-        { label: 'Paramètres', route: '/dashboard/admin/settings', icon: 'bi-gear' },
-      ],
-    },
-  ];
-
   constructor(
     private router: Router,
     private navService: NavigationService,
     private authService: AuthService,
+    private layoutNavService: LayoutNavigationService,
   ) {}
 
   ngOnInit(): void {
@@ -184,18 +88,17 @@ export class LayoutComponent implements OnInit {
   // ─── Navigation ──────────────────────────────────────────────────────────────
 
   /**
-   * Retourne les sections de navigation selon le rôle de l'utilisateur courant.
+   * Retourne les éléments de navigation plats pour la navbar horizontale.
+   */
+  getNavItems(): NavItem[] {
+    return this.layoutNavService.getNavItems(this.currentUser?.role ?? '');
+  }
+
+  /**
+   * Retourne les sections de navigation selon le rôle (utilisé dans le menu mobile).
    */
   getNavSections(): NavSection[] {
-    const role = this.currentUser?.role;
-    const navMap: Record<string, NavSection[]> = {
-      patient: this.patientNav,
-      doctor: this.doctorNav,
-      lab: this.labNav,
-      pharmacy: this.pharmacyNav,
-      admin: this.adminNav,
-    };
-    return navMap[role ?? ''] ?? this.patientNav;
+    return this.layoutNavService.getNavSections(this.currentUser?.role ?? '');
   }
 
   // ─── UI Actions ──────────────────────────────────────────────────────────────

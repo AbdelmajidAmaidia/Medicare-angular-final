@@ -13,21 +13,19 @@
 
       <!-- Liens de navigation (desktop) -->
       <ul class="navbar-nav" role="menubar">
-        <ng-container *ngFor="let section of getNavSections()">
-          <li *ngFor="let item of section.items" class="nav-item" role="none">
-            <a
-              [routerLink]="item.route"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-              class="nav-link"
-              role="menuitem"
-            >
-              <i [class]="'bi ' + item.icon + ' nav-icon'"></i>
-              <span class="nav-label">{{ item.label }}</span>
-              <span class="nav-badge" *ngIf="item.badge">{{ item.badge }}</span>
-            </a>
-          </li>
-        </ng-container>
+        <li *ngFor="let item of getNavItems()" class="nav-item" role="none">
+          <a
+            [routerLink]="item.route"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="nav-link"
+            role="menuitem"
+          >
+            <i [class]="'bi ' + item.icon + ' nav-icon'"></i>
+            <span class="nav-label">{{ item.label }}</span>
+            <span class="nav-badge" *ngIf="item.badge">{{ item.badge }}</span>
+          </a>
+        </li>
       </ul>
 
       <!-- Actions à droite: recherche, notifications, utilisateur, hamburger -->
