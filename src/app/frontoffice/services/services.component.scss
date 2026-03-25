@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 // =====================================================================
 //  MEDICARE AI — Services Page Styles
 //  Design : Modern & Professional
@@ -384,17 +386,17 @@ $lp-font-mono: 'JetBrains Mono', monospace;
 
   &--orange {
     --color-primary: #{$lp-orange};
-    --color-light: #{lighten($lp-orange, 15%)};
+    --color-light: #{color.adjust($lp-orange, $lightness: 15%)};
   }
 
   &--purple {
     --color-primary: #{$lp-purple};
-    --color-light: #{lighten($lp-purple, 15%)};
+    --color-light: #{color.adjust($lp-purple, $lightness: 15%)};
   }
 
   &--red {
     --color-primary: #{$lp-red};
-    --color-light: #{lighten($lp-red, 15%)};
+    --color-light: #{color.adjust($lp-red, $lightness: 15%)};
   }
 
   &__icon {
