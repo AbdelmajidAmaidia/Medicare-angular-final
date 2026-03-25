@@ -301,5 +301,15 @@ export const routes: Routes = [
     ],
   },
 
+  // ─────────────────────────────────────────
+  // Admin backoffice (layout spécialisé)
+  // ─────────────────────────────────────────
+  {
+    path: 'backoffice/admin',
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['admin'] },
+    loadChildren: () =>
+      import('./backoffice/admin/admin.module').then(m => m.AdminModule),
+  },
 
 ];
