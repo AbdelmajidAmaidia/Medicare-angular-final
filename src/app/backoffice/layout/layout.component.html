@@ -1,96 +1,39 @@
 <!-- src/app/backoffice/layout/layout.component.html -->
-<div class="bo-wrapper" [class.sidebar-collapsed]="sidebarCollapsed">
+<div class="bo-wrapper">
 
-  <!-- ═══════════════════════ BARRE LATÉRALE ═══════════════════════ -->
-  <aside class="bo-sidebar" [class.mobile-open]="mobileMenuOpen">
+  <!-- ═══════════════════════ BARRE DE NAVIGATION SUPÉRIEURE ═══════════════════════ -->
+  <nav class="bo-navbar" aria-label="Navigation principale">
+    <div class="navbar-inner">
 
-    <!-- En-tête logo -->
-    <div class="sidebar-header">
-      <a routerLink="/" class="sidebar-brand">
+      <!-- Logo / Marque -->
+      <a routerLink="/dashboard" class="navbar-brand">
         <i class="bi bi-hospital brand-icon"></i>
         <span class="brand-text">MediCare <span class="brand-ai">AI</span></span>
       </a>
-      <button class="sidebar-toggle" (click)="toggleSidebar()" [title]="sidebarCollapsed ? 'Développer' : 'Réduire'">
-        <i class="bi" [ngClass]="sidebarCollapsed ? 'bi-chevron-double-right' : 'bi-chevron-double-left'"></i>
-      </button>
-    </div>
 
-    <!-- Carte profil utilisateur -->
-    <div class="sidebar-profile">
-      <div class="profile-avatar">
-        <img [src]="getAvatarUrl()" alt="Avatar utilisateur" />
-        <span class="status-dot online" title="En ligne"></span>
-      </div>
-      <div class="profile-info">
-        <p class="profile-name">{{ currentUser?.firstName }} {{ currentUser?.lastName }}</p>
-        <span class="profile-role badge">{{ getRoleLabel() }}</span>
-      </div>
-    </div>
+      <!-- Liens de navigation (desktop) -->
+      <ul class="navbar-nav" role="menubar">
+        <ng-container *ngFor="let section of getNavSections()">
+          <li *ngFor="let item of section.items" class="nav-item" role="none">
+            <a
+              [routerLink]="item.route"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="nav-link"
+              role="menuitem"
+            >
+              <i [class]="'bi ' + item.icon + ' nav-icon'"></i>
+              <span class="nav-label">{{ item.label }}</span>
+              <span class="nav-badge" *ngIf="item.badge">{{ item.badge }}</span>
+            </a>
+          </li>
+        </ng-container>
+      </ul>
 
-    <!-- Navigation par rôle -->
-    <nav class="sidebar-nav" aria-label="Navigation principale">
-      <ng-container *ngFor="let section of getNavSections()">
-        <div class="nav-section">
-          <span class="nav-section-label">{{ section.title }}</span>
-          <a
-            *ngFor="let item of section.items"
-            [routerLink]="item.route"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
-            class="nav-link"
-            [title]="sidebarCollapsed ? item.label : ''"
-          >
-            <i [class]="'bi ' + item.icon + ' nav-icon'"></i>
-            <span class="nav-label">{{ item.label }}</span>
-            <span class="nav-badge" *ngIf="item.badge">{{ item.badge }}</span>
-          </a>
-        </div>
-      </ng-container>
-    </nav>
+      <!-- Actions à droite: recherche, notifications, utilisateur, hamburger -->
+      <div class="navbar-actions">
 
-    <!-- Pied de barre latérale -->
-    <div class="sidebar-footer">
-      <button class="btn-logout" (click)="logout()" title="Déconnexion">
-        <i class="bi bi-box-arrow-right nav-icon"></i>
-        <span class="nav-label">Déconnexion</span>
-      </button>
-    </div>
-  </aside>
-
-  <!-- Fond semi-transparent pour mobile -->
-  <div
-    class="sidebar-overlay"
-    *ngIf="mobileMenuOpen"
-    (click)="toggleMobileMenu()"
-    aria-hidden="true"
-  ></div>
-
-  <!-- ═══════════════════════ ZONE PRINCIPALE ═══════════════════════ -->
-  <div class="bo-main">
-
-    <!-- En-tête supérieur -->
-    <header class="bo-topbar">
-      <div class="topbar-left">
-        <!-- Bouton menu burger mobile -->
-        <button class="btn-icon d-lg-none" (click)="toggleMobileMenu()" aria-label="Ouvrir le menu">
-          <i class="bi bi-list"></i>
-        </button>
-        <!-- Bouton replier/déplier sidebar sur desktop -->
-        <button class="btn-icon d-none d-lg-flex" (click)="toggleSidebar()" aria-label="Basculer la barre latérale">
-          <i class="bi bi-layout-sidebar"></i>
-        </button>
-        <nav aria-label="Fil d'Ariane">
-          <ol class="breadcrumb mb-0">
-            <li class="breadcrumb-item">
-              <a routerLink="/dashboard"><i class="bi bi-house-door"></i></a>
-            </li>
-            <li class="breadcrumb-item active" aria-current="page">{{ pageTitle }}</li>
-          </ol>
-        </nav>
-      </div>
-
-      <div class="topbar-right">
-        <!-- Barre de recherche -->
+        <!-- Barre de recherche (masquée sur xs) -->
         <div class="topbar-search">
           <i class="bi bi-search search-icon"></i>
           <input type="search" class="search-input" placeholder="Rechercher…" aria-label="Recherche" />
@@ -149,9 +92,7 @@
             aria-label="Menu utilisateur"
           >
             <img [src]="getAvatarUrl()" alt="Avatar" class="user-avatar-sm" />
-            <span class="user-display-name d-none d-md-inline">
-              {{ currentUser?.firstName }}
-            </span>
+            <span class="user-display-name d-none d-md-inline">{{ currentUser?.firstName }}</span>
             <i class="bi bi-chevron-down chevron"></i>
           </button>
 
@@ -184,12 +125,54 @@
             </li>
           </ul>
         </div>
-      </div>
-    </header>
 
-    <!-- Contenu de la page -->
-    <main class="bo-content" id="main-content">
-      <router-outlet></router-outlet>
-    </main>
-  </div>
+        <!-- Bouton hamburger (mobile uniquement) -->
+        <button
+          class="navbar-toggler"
+          (click)="toggleMobileMenu()"
+          [attr.aria-expanded]="mobileMenuOpen"
+          aria-label="Basculer le menu"
+        >
+          <i class="bi" [ngClass]="mobileMenuOpen ? 'bi-x-lg' : 'bi-list'"></i>
+        </button>
+
+      </div><!-- /.navbar-actions -->
+    </div><!-- /.navbar-inner -->
+
+    <!-- Menu déroulant mobile -->
+    <div class="navbar-mobile-menu" *ngIf="mobileMenuOpen" role="navigation" aria-label="Menu mobile">
+      <ul class="mobile-nav-list">
+        <ng-container *ngFor="let section of getNavSections()">
+          <li class="mobile-nav-section-label">{{ section.title }}</li>
+          <li *ngFor="let item of section.items" class="mobile-nav-item">
+            <a
+              [routerLink]="item.route"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="mobile-nav-link"
+              (click)="closeMobileMenu()"
+            >
+              <i [class]="'bi ' + item.icon + ' nav-icon'"></i>
+              <span>{{ item.label }}</span>
+              <span class="nav-badge" *ngIf="item.badge">{{ item.badge }}</span>
+            </a>
+          </li>
+        </ng-container>
+        <li class="mobile-nav-divider"></li>
+        <li class="mobile-nav-item">
+          <button class="mobile-btn-logout" (click)="logout()">
+            <i class="bi bi-box-arrow-right nav-icon"></i>
+            <span>Déconnexion</span>
+          </button>
+        </li>
+      </ul>
+    </div><!-- /.navbar-mobile-menu -->
+
+  </nav><!-- /.bo-navbar -->
+
+  <!-- ═══════════════════════ CONTENU PRINCIPAL ═══════════════════════ -->
+  <main class="bo-content" id="main-content">
+    <router-outlet></router-outlet>
+  </main>
+
 </div>

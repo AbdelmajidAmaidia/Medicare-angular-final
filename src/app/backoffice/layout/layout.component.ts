@@ -1,13 +1,11 @@
 /**
  * @file layout.component.ts
  * @description Composant de mise en page principal du backoffice.
- * Fournit la barre latérale, la navigation par rôle, le menu utilisateur et les notifications.
+ * Fournit la barre de navigation supérieure, la navigation par rôle, le menu utilisateur et les notifications.
  */
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterModule, Router } from '@angular/router';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { NavigationService } from '../../services/navigation.service';
 import { AuthService } from '../../services/auth.service';
 
@@ -51,16 +49,14 @@ export interface CurrentUser {
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',
 })
-export class LayoutComponent implements OnInit, OnDestroy {
+export class LayoutComponent implements OnInit {
   // ─── UI State ────────────────────────────────────────────────────────────────
-  sidebarCollapsed = false;
   notificationOpen = false;
   userDropdownOpen = false;
   mobileMenuOpen = false;
 
   // ─── Data ─────────────────────────────────────────────────────────────────────
   currentUser: CurrentUser | null = null;
-  pageTitle = 'Tableau de Bord';
   notifications: AppNotification[] = [
     {
       id: '1',
@@ -87,8 +83,6 @@ export class LayoutComponent implements OnInit, OnDestroy {
       read: true,
     },
   ];
-
-  private destroy$ = new Subject<void>();
 
   // ─── Navigation Maps ──────────────────────────────────────────────────────────
 
@@ -184,19 +178,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // Récupérer l'utilisateur courant
     this.currentUser = this.authService.getCurrentUser() as CurrentUser | null;
-
-    // Écouter les changements de route pour mettre à jour le titre
-    this.router.events.pipe(takeUntil(this.destroy$)).subscribe(() => {
-      this.updatePageTitle();
-    });
-    this.updatePageTitle();
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   // ─── Navigation ──────────────────────────────────────────────────────────────
@@ -218,15 +200,14 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
   // ─── UI Actions ──────────────────────────────────────────────────────────────
 
-  /** Bascule l'état replié/déplié de la barre latérale */
-  toggleSidebar(): void {
-    this.sidebarCollapsed = !this.sidebarCollapsed;
-    this.mobileMenuOpen = false;
-  }
-
   /** Bascule le menu mobile */
   toggleMobileMenu(): void {
     this.mobileMenuOpen = !this.mobileMenuOpen;
+  }
+
+  /** Ferme le menu mobile */
+  closeMobileMenu(): void {
+    this.mobileMenuOpen = false;
   }
 
   /** Bascule le panneau de notifications */
@@ -291,37 +272,5 @@ export class LayoutComponent implements OnInit, OnDestroy {
       admin: 'Administrateur',
     };
     return labels[this.currentUser?.role ?? ''] ?? 'Utilisateur';
-  }
-
-  /** Met à jour le titre de la page selon l'URL courante */
-  private updatePageTitle(): void {
-    const titleMap: Record<string, string> = {
-      '/dashboard/patient/home': 'Tableau de Bord Patient',
-      '/dashboard/patient/appointments': 'Mes Rendez-vous',
-      '/dashboard/patient/records': 'Dossier Médical',
-      '/dashboard/patient/prescriptions': 'Ordonnances',
-      '/dashboard/patient/ai-chat': 'Assistant IA',
-      '/dashboard/patient/mental-health': 'Santé Mentale',
-      '/dashboard/patient/pharmacy': 'Pharmacie en Ligne',
-      '/dashboard/patient/billing': 'Facturation',
-      '/dashboard/doctor/home': 'Tableau de Bord Médecin',
-      '/dashboard/doctor/patients': 'Mes Patients',
-      '/dashboard/doctor/appointments': 'Mon Planning',
-      '/dashboard/doctor/consultations': 'Consultations',
-      '/dashboard/doctor/financial': 'Finances',
-      '/dashboard/lab/home': 'Tableau de Bord Laboratoire',
-      '/dashboard/lab/results': 'Saisie des Résultats',
-      '/dashboard/lab/payroll': 'Paie',
-      '/dashboard/pharmacy/home': 'Tableau de Bord Pharmacie',
-      '/dashboard/pharmacy/delivery': 'Gestion des Livraisons',
-      '/dashboard/pharmacy/wallet': 'Portefeuille',
-      '/dashboard/admin/home': 'Tableau de Bord Administrateur',
-      '/dashboard/admin/users': 'Gestion des Utilisateurs',
-      '/dashboard/admin/verifications': 'Vérifications Médecins',
-      '/dashboard/admin/financials': 'Finances',
-      '/dashboard/admin/payroll': 'Gestion de la Paie',
-      '/dashboard/admin/settings': 'Paramètres',
-    };
-    this.pageTitle = titleMap[this.router.url] ?? 'Tableau de Bord';
   }
 }
