@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 // src/app/frontoffice/landing/landing.component.scss
 // =====================================================================
 //  MEDICARE AI — Landing Page Styles
@@ -517,9 +519,9 @@ $lp-font-mono: 'JetBrains Mono', monospace;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 
-  &--green { background: rgba($lp-green,0.15); color: lighten($lp-green, 30%); }
-  &--blue  { background: rgba($lp-cyan,0.15);  color: lighten($lp-cyan, 20%); }
-  &--warn  { background: rgba($lp-orange,0.15);color: lighten($lp-orange, 20%); }
+  &--green { background: rgba($lp-green,0.15); color: color.adjust($lp-green, $lightness: 30%); }
+  &--blue  { background: rgba($lp-cyan,0.15);  color: color.adjust($lp-cyan, $lightness: 20%); }
+  &--warn  { background: rgba($lp-orange,0.15);color: color.adjust($lp-orange, $lightness: 20%); }
 }
 
 .ldp-ai-card {
@@ -578,7 +580,7 @@ $lp-font-mono: 'JetBrains Mono', monospace;
   border-radius: 2px;
   transition: width 0.8s ease;
 
-  &--warn  { background: linear-gradient(90deg, $lp-orange, lighten($lp-orange, 15%)); }
+  &--warn  { background: linear-gradient(90deg, $lp-orange, color.adjust($lp-orange, $lightness: 15%)); }
   &--green { background: linear-gradient(90deg, $lp-green, $lp-cyan); }
 }
 

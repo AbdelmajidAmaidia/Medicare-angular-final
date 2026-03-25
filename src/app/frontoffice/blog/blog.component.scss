@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 // src/app/frontoffice/blog/blog.component.scss
 // =====================================================================
 //  MEDICARE AI — Blog Page Styles
@@ -524,8 +526,8 @@ $lp-font: 'DM Sans', system-ui, sans-serif;
 
   &--blue   { background: rgba($lp-primary, 0.1);  color: $lp-primary; }
   &--green  { background: rgba($lp-green, 0.1);    color: $lp-green; }
-  &--cyan   { background: rgba($lp-cyan, 0.1);     color: darken($lp-cyan, 10%); }
-  &--orange { background: rgba($lp-orange, 0.1);   color: darken($lp-orange, 15%); }
+  &--cyan   { background: rgba($lp-cyan, 0.1);     color: color.adjust($lp-cyan, $lightness: -10%); }
+  &--orange { background: rgba($lp-orange, 0.1);   color: color.adjust($lp-orange, $lightness: -15%); }
   &--purple { background: rgba($lp-purple, 0.1);   color: $lp-purple; }
   &--red    { background: rgba($lp-red, 0.1);      color: $lp-red; }
 

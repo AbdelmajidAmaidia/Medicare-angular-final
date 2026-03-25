@@ -4,6 +4,8 @@
  * Fournit une barre latérale rétractable et une barre de navigation supérieure.
  */
 import { Component, OnInit, HostListener } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../services/auth.service';
 import { NavigationService } from '../../../../services/navigation.service';
@@ -16,6 +18,8 @@ export interface AdminNavItem {
 }
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   selector: 'app-admin-layout',
   templateUrl: './admin-layout.component.html',
   styleUrls: ['./admin-layout.component.scss'],

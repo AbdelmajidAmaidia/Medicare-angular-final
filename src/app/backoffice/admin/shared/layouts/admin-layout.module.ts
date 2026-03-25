@@ -5,10 +5,10 @@ import { RouterModule } from '@angular/router';
 import { AdminLayoutComponent } from './admin-layout.component';
 
 @NgModule({
-  declarations: [AdminLayoutComponent],
   imports: [
     CommonModule,
     RouterModule,
+    AdminLayoutComponent,
   ],
   exports: [AdminLayoutComponent],
 })

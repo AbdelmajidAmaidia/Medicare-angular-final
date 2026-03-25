@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 /* =====================================================================
    MEDICARE — styles.scss
    Fichier principal d'entrée Angular
@@ -102,7 +104,7 @@ $body-color: $gray-900;
 
 // ── Liens ─────────────────────────────────────────────────────────────
 $link-color:            $primary;
-$link-hover-color:      darken($primary, 10%);
+$link-hover-color:      color.adjust($primary, $lightness: -10%);
 $link-decoration:       none;
 $link-hover-decoration: underline;
 
@@ -993,7 +995,7 @@ code, kbd, pre, samp {
   color: $white !important;
 
   &:hover {
-    background-color: darken($medical-secondary, 8%) !important;
+    background-color: color.adjust($medical-secondary, $lightness: -8%) !important;
     box-shadow: 0 4px 12px rgba(5, 150, 105, 0.35) !important;
   }
 }
@@ -1004,7 +1006,7 @@ code, kbd, pre, samp {
   border-color: $medical-accent !important;
   color: $white !important;
 
-  &:hover { background-color: darken($medical-accent, 8%) !important; }
+  &:hover { background-color: color.adjust($medical-accent, $lightness: -8%) !important; }
 }
 
 // Warning
@@ -1013,7 +1015,7 @@ code, kbd, pre, samp {
   border-color: $medical-warning !important;
   color: $white !important;
 
-  &:hover { background-color: darken($medical-warning, 8%) !important; }
+  &:hover { background-color: color.adjust($medical-warning, $lightness: -8%) !important; }
 }
 
 // Info
@@ -1022,7 +1024,7 @@ code, kbd, pre, samp {
   border-color: $medical-info !important;
   color: $white !important;
 
-  &:hover { background-color: darken($medical-info, 8%) !important; }
+  &:hover { background-color: color.adjust($medical-info, $lightness: -8%) !important; }
 }
 
 // Light / Outline
@@ -1285,7 +1287,7 @@ textarea.form-control {
   &.bg-primary  { background-color: rgba(10, 95, 214, 0.12) !important; color: $medical-primary !important; }
   &.bg-success  { background-color: rgba(5, 150, 105, 0.12) !important; color: $medical-secondary !important; }
   &.bg-danger   { background-color: rgba(239, 68, 68, 0.12) !important; color: $medical-accent !important; }
-  &.bg-warning  { background-color: rgba(245, 158, 11, 0.12) !important; color: darken($medical-warning, 15%) !important; }
+  &.bg-warning  { background-color: rgba(245, 158, 11, 0.12) !important; color: color.adjust($medical-warning, $lightness: -15%) !important; }
   &.bg-info     { background-color: rgba(14, 165, 233, 0.12) !important; color: $medical-info !important; }
   &.bg-secondary{ background-color: $gray-100 !important; color: $gray-600 !important; }
 
@@ -1401,10 +1403,10 @@ textarea.form-control {
   }
 
   &-primary { background: rgba(10,95,214,0.08);  color: $medical-primary-dark; border-left: 4px solid $medical-primary; }
-  &-success { background: rgba(5,150,105,0.08);  color: darken($medical-secondary,15%); border-left: 4px solid $medical-secondary; }
-  &-warning { background: rgba(245,158,11,0.08); color: darken($medical-warning,20%);   border-left: 4px solid $medical-warning; }
-  &-danger  { background: rgba(239,68,68,0.08);  color: darken($medical-accent,15%);    border-left: 4px solid $medical-accent; }
-  &-info    { background: rgba(14,165,233,0.08); color: darken($medical-info,20%);      border-left: 4px solid $medical-info; }
+  &-success { background: rgba(5,150,105,0.08);  color: color.adjust($medical-secondary, $lightness: -15%); border-left: 4px solid $medical-secondary; }
+  &-warning { background: rgba(245,158,11,0.08); color: color.adjust($medical-warning, $lightness: -20%);   border-left: 4px solid $medical-warning; }
+  &-danger  { background: rgba(239,68,68,0.08);  color: color.adjust($medical-accent, $lightness: -15%);    border-left: 4px solid $medical-accent; }
+  &-info    { background: rgba(14,165,233,0.08); color: color.adjust($medical-info, $lightness: -20%);      border-left: 4px solid $medical-info; }
 }
 
 
@@ -2033,7 +2035,7 @@ textarea.form-control {
 }
 
 .bg-gradient-success {
-  background: linear-gradient(135deg, darken($medical-secondary, 10%) 0%, $medical-secondary 100%) !important;
+  background: linear-gradient(135deg, color.adjust($medical-secondary, $lightness: -10%) 0%, $medical-secondary 100%) !important;
 }
 
 .bg-gradient-medical {
