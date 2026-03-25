@@ -50,12 +50,18 @@ describe('LayoutComponent', () => {
     expect(component.currentUser?.role).toBe('admin');
   });
 
-  it('doit basculer la sidebar collapsed', () => {
-    expect(component.sidebarCollapsed).toBeFalse();
-    component.toggleSidebar();
-    expect(component.sidebarCollapsed).toBeTrue();
-    component.toggleSidebar();
-    expect(component.sidebarCollapsed).toBeFalse();
+  it('doit basculer le menu mobile', () => {
+    expect(component.mobileMenuOpen).toBeFalse();
+    component.toggleMobileMenu();
+    expect(component.mobileMenuOpen).toBeTrue();
+    component.toggleMobileMenu();
+    expect(component.mobileMenuOpen).toBeFalse();
+  });
+
+  it('doit fermer le menu mobile', () => {
+    component.mobileMenuOpen = true;
+    component.closeMobileMenu();
+    expect(component.mobileMenuOpen).toBeFalse();
   });
 
   it('doit basculer le panneau de notifications', () => {
