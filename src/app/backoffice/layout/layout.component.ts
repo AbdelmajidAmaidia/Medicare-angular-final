@@ -124,6 +124,14 @@ export class LayoutComponent implements OnInit {
   }
 
   /**
+   * Bascule le panneau de messages
+   */
+  toggleMessages(): void {
+    // TODO: implémenter l'affichage du panneau de messagerie
+    console.log('Messages panel toggled');
+  }
+
+  /**
    * Bascule le panneau de notifications
    */
   toggleNotifications(): void {
