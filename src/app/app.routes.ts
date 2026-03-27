@@ -312,4 +312,14 @@ export const routes: Routes = [
       import('./backoffice/admin/admin.module').then(m => m.AdminModule),
   },
 
+  // ─────────────────────────────────────────
+  // Wildcard – 404 Not Found
+  // ─────────────────────────────────────────
+  {
+    path: '**',
+    title: 'Page introuvable',
+    loadComponent: () =>
+      import('./frontoffice/not-found/not-found.component').then(m => m.NotFoundComponent),
+  },
+
 ];
