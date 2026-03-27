@@ -23,7 +23,7 @@ export interface PharmacyProduct {
     <div class="page-container">
       <div class="page-header d-flex align-items-center justify-content-between flex-wrap gap-3 mb-4">
         <div>
-          <h1 class="page-title">Pharmacie en Ligne</h1>
+          <h1 class="page-title"><i class="bi bi-shop" style="margin-right:.5rem;color:#3b82f6"></i>Pharmacie en Ligne</h1>
           <p class="page-subtitle">Commandez vos médicaments prescrits</p>
         </div>
         <div class="search-wrap" style="max-width:300px;flex:1;position:relative">

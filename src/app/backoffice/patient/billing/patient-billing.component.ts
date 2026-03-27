@@ -21,7 +21,7 @@ export interface Invoice {
   template: `
     <div class="page-container">
       <div class="page-header mb-4">
-        <h1 class="page-title">Facturation</h1>
+        <h1 class="page-title"><i class="bi bi-receipt" style="margin-right:.5rem;color:#3b82f6"></i>Facturation</h1>
         <p class="page-subtitle">Total payé ce mois : <strong class="text-primary">{{ totalPaid | number:'1.2-2' }} €</strong></p>
       </div>
       <div class="table-card">

@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
   template: `
     <div class="page-container">
       <div class="page-header mb-4">
-        <h1 class="page-title">Mon Dossier Médical</h1>
+        <h1 class="page-title"><i class="bi bi-file-medical" style="margin-right:.5rem;color:#3b82f6"></i>Mon Dossier Médical</h1>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem" class="responsive-grid">
         <section class="panel p-4" style="background:#fff;border:1px solid #e2e8f0;border-radius:12px">
