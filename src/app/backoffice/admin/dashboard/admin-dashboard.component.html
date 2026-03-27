@@ -1,0 +1,100 @@
+<!-- src/app/backoffice/admin/dashboard/admin-dashboard.component.html -->
+<div class="admin-dashboard">
+
+  <!-- ─── En-tête ─────────────────────────────────────────────────── -->
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Tableau de Bord Administrateur</h1>
+      <p class="page-subtitle">{{ currentDate | date:"EEEE d MMMM yyyy" : '' : 'fr' }}</p>
+    </div>
+    <button class="btn-refresh" (click)="refreshData()">
+      <i class="bi bi-arrow-clockwise"></i>
+      Actualiser
+    </button>
+  </div>
+
+  <!-- ─── Cartes statistiques ──────────────────────────────────────── -->
+  <div class="stats-grid">
+    <div class="stat-card" *ngFor="let stat of stats" [ngClass]="'stat-card--' + stat.colorClass">
+      <div class="stat-icon">
+        <i [class]="'bi ' + stat.icon"></i>
+      </div>
+      <div class="stat-body">
+        <p class="stat-label">{{ stat.label }}</p>
+        <p class="stat-value">{{ stat.value }}</p>
+        <span class="stat-change" [class.positive]="stat.changePositive" [class.negative]="!stat.changePositive">
+          <i class="bi" [ngClass]="stat.changePositive ? 'bi-arrow-up-short' : 'bi-arrow-down-short'"></i>
+          {{ stat.change }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Grille principale ─────────────────────────────────────────── -->
+  <div class="main-grid">
+
+    <!-- Alertes récentes -->
+    <section class="panel alerts-panel">
+      <div class="panel-header">
+        <h2 class="panel-title">
+          <i class="bi bi-bell-fill"></i>
+          Alertes Récentes
+        </h2>
+        <a href="#" class="panel-link">Voir tout</a>
+      </div>
+
+      <ul class="alerts-list" *ngIf="alerts.length > 0; else noAlerts">
+        <li *ngFor="let alert of alerts" class="alert-item" [ngClass]="'alert-item--' + alert.type">
+          <span class="alert-icon">
+            <i [class]="'bi ' + getAlertIcon(alert.type)"></i>
+          </span>
+          <span class="alert-body">
+            <span class="alert-msg">{{ alert.message }}</span>
+            <span class="alert-time">
+              <i class="bi bi-clock"></i> {{ alert.time }}
+            </span>
+          </span>
+          <button class="btn-close-sm" (click)="closeAlert(alert.id)" aria-label="Fermer l'alerte">
+            <i class="bi bi-x"></i>
+          </button>
+        </li>
+      </ul>
+
+      <ng-template #noAlerts>
+        <div class="empty-state">
+          <i class="bi bi-check2-circle"></i>
+          <p>Aucune alerte — Tout fonctionne correctement</p>
+        </div>
+      </ng-template>
+    </section>
+
+    <!-- État du système -->
+    <section class="panel health-panel">
+      <div class="panel-header">
+        <h2 class="panel-title">
+          <i class="bi bi-activity"></i>
+          État du Système
+        </h2>
+      </div>
+
+      <div class="health-list">
+        <div *ngFor="let h of healthIndicators" class="health-item">
+          <div class="health-meta">
+            <span class="health-label">{{ h.label }}</span>
+            <span class="health-badge" [ngClass]="'badge--' + h.status">
+              {{ h.status === 'online' ? 'En ligne' : h.status === 'warning' ? 'Attention' : 'Critique' }}
+            </span>
+          </div>
+          <div class="health-bar-wrap">
+            <div
+              class="health-bar-fill"
+              [style.width.%]="h.percent"
+              [ngClass]="'fill--' + h.status"
+            ></div>
+          </div>
+          <span class="health-pct">{{ h.percent }} %</span>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

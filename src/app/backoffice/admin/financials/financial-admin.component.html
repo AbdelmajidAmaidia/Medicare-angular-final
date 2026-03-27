@@ -1,0 +1,66 @@
+<!-- src/app/backoffice/admin/financials/financial-admin.component.html -->
+<div class="page-container">
+  <div class="page-header">
+    <h1 class="page-title">Finances de la Plateforme</h1>
+  </div>
+
+  <!-- Résumé financier -->
+  <div class="stats-grid mb-4">
+    <div class="stat-card stat-card--success">
+      <div class="stat-icon"><i class="bi bi-graph-up-arrow"></i></div>
+      <div class="stat-body">
+        <p class="stat-label">Revenus Totaux (Mois)</p>
+        <p class="stat-value">{{ totalRevenue | number }} €</p>
+      </div>
+    </div>
+    <div class="stat-card stat-card--warning">
+      <div class="stat-icon"><i class="bi bi-hourglass-split"></i></div>
+      <div class="stat-body">
+        <p class="stat-label">En Attente</p>
+        <p class="stat-value">{{ totalPending | number }} €</p>
+      </div>
+    </div>
+    <div class="stat-card stat-card--danger">
+      <div class="stat-icon"><i class="bi bi-arrow-counterclockwise"></i></div>
+      <div class="stat-body">
+        <p class="stat-label">Remboursements</p>
+        <p class="stat-value">{{ totalRefunds | number }} €</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tableau des transactions -->
+  <div class="table-card">
+    <div class="panel-header">
+      <h2 class="panel-title"><i class="bi bi-list-ul"></i> Transactions Récentes</h2>
+    </div>
+    <div class="table-responsive">
+      <table class="data-table" aria-label="Transactions financières">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Montant</th>
+            <th>Date</th>
+            <th>Statut</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let t of transactions">
+            <td class="text-muted small">{{ t.id }}</td>
+            <td><span class="role-chip">{{ t.type }}</span></td>
+            <td>{{ t.description }}</td>
+            <td [class.text-success]="t.amount > 0" [class.text-danger]="t.amount < 0">
+              {{ t.amount > 0 ? '+' : '' }}{{ t.amount }} €
+            </td>
+            <td class="text-muted small">{{ t.date }}</td>
+            <td>
+              <span class="status-badge" [ngClass]="getStatusClass(t.status)">{{ t.status }}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

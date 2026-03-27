@@ -1,0 +1,73 @@
+<!-- src/app/backoffice/doctor/dashboard/doctor-dashboard.component.html -->
+<div class="doctor-dashboard">
+
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Bienvenue, Docteur</h1>
+      <p class="page-subtitle">{{ currentDate | date:"EEEE d MMMM yyyy" : '' : 'fr' }}</p>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-grid">
+    <div class="stat-card" *ngFor="let stat of stats" [ngClass]="'stat-card--' + stat.colorClass">
+      <div class="stat-icon"><i [class]="'bi ' + stat.icon"></i></div>
+      <div class="stat-body">
+        <p class="stat-label">{{ stat.label }}</p>
+        <p class="stat-value">{{ stat.value }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Planning du jour -->
+  <section class="panel">
+    <div class="panel-header">
+      <h2 class="panel-title">
+        <i class="bi bi-calendar2-week"></i>
+        Planning du Jour
+      </h2>
+      <a href="#" class="panel-link">Voir tout le planning</a>
+    </div>
+    <div class="table-responsive">
+      <table class="data-table" aria-label="Planning du jour">
+        <thead>
+          <tr>
+            <th>Patient</th>
+            <th>Âge</th>
+            <th>Type</th>
+            <th>Heure</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let appt of todayAppointments">
+            <td class="fw-semibold">{{ appt.patient }}</td>
+            <td>{{ appt.age }} ans</td>
+            <td>{{ appt.type }}</td>
+            <td>
+              <span class="time-chip">
+                <i class="bi bi-clock"></i> {{ appt.time }}
+              </span>
+            </td>
+            <td>
+              <span class="status-badge" [ngClass]="getStatusClass(appt.status)">
+                {{ appt.status }}
+              </span>
+            </td>
+            <td>
+              <div class="d-flex gap-2">
+                <button class="btn btn-primary btn-sm">
+                  <i class="bi bi-camera-video"></i> Débuter
+                </button>
+                <button class="btn btn-outline-secondary btn-sm">
+                  <i class="bi bi-file-text"></i> Dossier
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>

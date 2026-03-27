@@ -1,0 +1,804 @@
+@use 'sass:color';
+
+// =====================================================================
+//  MEDICARE AI — Services Page Styles
+//  Design : Modern & Professional
+// =====================================================================
+
+// ── Tokens ─────────────────────────────────────────────────────────────
+$lp-primary:       #0A5FD6;
+$lp-primary-dark:  #063A8A;
+$lp-primary-light: #3B82F6;
+$lp-green:         #059669;
+$lp-cyan:          #0EA5E9;
+$lp-orange:        #F59E0B;
+$lp-purple:        #7C3AED;
+$lp-red:           #EF4444;
+$lp-accent:        #38BDF8;
+
+$lp-dark:          #0D1117;
+$lp-dark-2:        #161B22;
+$lp-dark-3:        #21262D;
+$lp-surface:       #FFFFFF;
+$lp-surface-2:     #F8FAFC;
+$lp-surface-3:     #F1F5F9;
+
+$lp-text:          #0F172A;
+$lp-text-2:        #334155;
+$lp-text-3:        #64748B;
+$lp-text-4:        #94A3B8;
+
+$lp-border:        #E2E8F0;
+$lp-border-dark:   rgba(255,255,255,0.08);
+
+$lp-radius-sm:   8px;
+$lp-radius:      12px;
+$lp-radius-lg:   20px;
+$lp-radius-xl:   28px;
+$lp-radius-pill: 9999px;
+
+$lp-shadow-sm:   0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+$lp-shadow:      0 4px 16px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+$lp-shadow-lg:   0 12px 40px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.06);
+$lp-shadow-xl:   0 24px 64px rgba(0,0,0,0.16);
+$lp-shadow-blue: 0 8px 32px rgba(10,95,214,0.25);
+
+$lp-font:      'DM Sans', system-ui, sans-serif;
+$lp-font-mono: 'JetBrains Mono', monospace;
+
+// ── Base ───────────────────────────────────────────────────────────────
+.landing-page {
+  font-family: $lp-font;
+  color: $lp-text;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+// ── Containers ─────────────────────────────────────────────────────────
+.lp-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+
+  &--narrow { max-width: 760px; }
+}
+
+// ── Buttons ────────────────────────────────────────────────────────────
+.lp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: $lp-font;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border-radius: $lp-radius-pill;
+  padding: 9px 20px;
+  text-decoration: none;
+  border: 1.5px solid transparent;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  white-space: nowrap;
+
+  &:hover { text-decoration: none; transform: translateY(-1px); }
+  &:active { transform: scale(0.98); }
+
+  &--lg { font-size: 1rem; padding: 13px 28px; }
+
+  &--primary {
+    background: $lp-primary;
+    color: #fff !important;
+    box-shadow: $lp-shadow-blue;
+    &:hover { background: $lp-primary-dark; box-shadow: 0 12px 40px rgba(10,95,214,0.35); color: #fff !important; }
+  }
+
+  &--white {
+    background: #fff;
+    color: $lp-primary !important;
+    box-shadow: $lp-shadow;
+    &:hover { background: #F8FAFC; color: $lp-primary-dark !important; }
+  }
+
+  &--ghost {
+    background: rgba(255,255,255,0.12);
+    color: #fff !important;
+    border-color: rgba(255,255,255,0.25);
+    backdrop-filter: blur(8px);
+    &:hover { background: rgba(255,255,255,0.2); color: #fff !important; }
+  }
+
+  &--ghost-dark {
+    background: transparent;
+    color: $lp-text !important;
+    border-color: $lp-border;
+    &:hover { background: $lp-surface-3; border-color: $lp-primary; color: $lp-primary !important; }
+  }
+}
+
+// ── Section layout ─────────────────────────────────────────────────────
+.lp-section {
+  padding: 96px 0;
+
+  &--light  { background: $lp-surface-2; }
+  &--white  { background: $lp-surface; }
+  &--dark   { background: $lp-dark; }
+}
+
+.lp-section__head {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 64px;
+}
+
+.lp-section__eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $lp-primary;
+  background: rgba($lp-primary, 0.08);
+  border: 1px solid rgba($lp-primary, 0.15);
+  border-radius: $lp-radius-pill;
+  padding: 4px 12px;
+  margin-bottom: 16px;
+
+  &--light {
+    color: $lp-accent;
+    background: rgba($lp-accent, 0.1);
+    border-color: rgba($lp-accent, 0.2);
+  }
+}
+
+.lp-section__title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: $lp-text;
+  margin: 0 0 16px;
+  letter-spacing: -0.02em;
+
+  &--light { color: #fff; }
+}
+
+.lp-section__sub {
+  font-size: 1.0625rem;
+  color: $lp-text-3;
+  line-height: 1.7;
+  margin: 0;
+}
+
+// ── NAVBAR ─────────────────────────────────────────────────────────────
+.lp-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid $lp-border;
+  box-shadow: $lp-shadow-sm;
+
+  &__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    flex-shrink: 0;
+
+    &:hover { text-decoration: none; }
+
+    &-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, $lp-primary, $lp-green);
+      border-radius: $lp-radius;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    &-text {
+      font-size: 1.125rem;
+      color: $lp-text;
+      letter-spacing: -0.02em;
+
+      strong { font-weight: 800; color: $lp-primary; }
+      em { font-style: normal; font-weight: 300; color: $lp-text-3; font-size: 0.875em; }
+    }
+  }
+
+  &__links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+
+    li a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: $lp-text-2;
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: $lp-radius-pill;
+      transition: all 0.15s ease;
+
+      &:hover,
+      &.active {
+        color: $lp-primary;
+        background: rgba($lp-primary, 0.06);
+      }
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 768px) {
+    &__links { display: none; }
+    &__actions .lp-btn--ghost-dark { display: none; }
+  }
+}
+
+// ── SERVICES HERO ──────────────────────────────────────────────────────
+.lp-services-hero {
+  position: relative;
+  background: $lp-dark;
+  padding: 100px 0 80px;
+  overflow: hidden;
+
+  &__bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  &__orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.35;
+
+    &--1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, $lp-primary 0%, transparent 70%);
+      top: -200px; left: -100px;
+    }
+    &--2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, $lp-green 0%, transparent 70%);
+      bottom: -100px; right: 200px;
+    }
+  }
+
+  .lp-container {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__content {
+    text-align: center;
+  }
+
+  &__title {
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: #fff;
+    margin: 0 0 24px;
+
+    span {
+      background: linear-gradient(135deg, $lp-accent, $lp-green);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  }
+
+  &__subtitle {
+    font-size: 1.0625rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.7;
+    margin: 0;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+// ── SERVICES GRID ──────────────────────────────────────────────────────
+.lp-services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+
+  @media (max-width: 992px) { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 640px) { grid-template-columns: 1fr; }
+}
+
+// ── SERVICE CARD ───────────────────────────────────────────────────────
+.lp-service-card {
+  background: $lp-surface;
+  border: 1.5px solid $lp-border;
+  border-radius: $lp-radius-lg;
+  padding: 32px;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-light));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &:hover {
+    border-color: var(--color-primary);
+    box-shadow: $lp-shadow-lg;
+    transform: translateY(-4px);
+
+    &::before {
+      opacity: 1;
+    }
+  }
+
+  &--blue {
+    --color-primary: #{$lp-primary};
+    --color-light: #{$lp-primary-light};
+  }
+
+  &--cyan {
+    --color-primary: #{$lp-cyan};
+    --color-light: #{$lp-accent};
+  }
+
+  &--green {
+    --color-primary: #{$lp-green};
+    --color-light: #{$lp-cyan};
+  }
+
+  &--orange {
+    --color-primary: #{$lp-orange};
+    --color-light: #{color.adjust($lp-orange, $lightness: 15%)};
+  }
+
+  &--purple {
+    --color-primary: #{$lp-purple};
+    --color-light: #{color.adjust($lp-purple, $lightness: 15%)};
+  }
+
+  &--red {
+    --color-primary: #{$lp-red};
+    --color-light: #{color.adjust($lp-red, $lightness: 15%)};
+  }
+
+  &__icon {
+    width: 56px;
+    height: 56px;
+    border-radius: $lp-radius;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+
+    &--blue   { background: rgba($lp-primary,0.1);  color: $lp-primary; }
+    &--cyan   { background: rgba($lp-cyan,0.1);     color: $lp-cyan; }
+    &--green  { background: rgba($lp-green,0.1);    color: $lp-green; }
+    &--orange { background: rgba($lp-orange,0.1);   color: $lp-orange; }
+    &--purple { background: rgba($lp-purple,0.1);   color: $lp-purple; }
+    &--red    { background: rgba($lp-red,0.1);      color: $lp-red; }
+  }
+
+  &__title {
+    font-size: 1.1875rem;
+    font-weight: 700;
+    color: $lp-text;
+    margin: 0;
+  }
+
+  &__desc {
+    font-size: 0.9375rem;
+    color: $lp-text-3;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  &__features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.875rem;
+      color: $lp-text-2;
+
+      i {
+        color: var(--color-primary);
+        font-size: 0.75rem;
+        flex-shrink: 0;
+      }
+    }
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: all 0.2s ease;
+
+    &:hover {
+      gap: 10px;
+      text-decoration: none;
+    }
+  }
+}
+
+// ── SERVICES PROCESS ───────────────────────────────────────────────────
+.lp-services-process {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+
+  @media (max-width: 992px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lp-process-card {
+  position: relative;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+
+  &__number {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 32px;
+    height: 32px;
+    background: $lp-primary;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    font-weight: 800;
+    z-index: 1;
+    box-shadow: 0 0 0 4px $lp-surface;
+  }
+
+  &__icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba($lp-primary,0.08), rgba($lp-primary,0.15));
+    border: 2px solid rgba($lp-primary,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    color: $lp-primary;
+    margin-top: 12px;
+    transition: all 0.3s ease;
+
+    .lp-process-card:hover & {
+      background: linear-gradient(135deg, $lp-primary, $lp-primary-dark);
+      color: #fff;
+      border-color: transparent;
+      transform: scale(1.1);
+      box-shadow: $lp-shadow-blue;
+    }
+  }
+
+  &__title {
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: $lp-text;
+    margin: 0;
+  }
+
+  &__desc {
+    font-size: 0.875rem;
+    color: $lp-text-3;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  &__connector {
+    position: absolute;
+    top: 40px;
+    right: -24px;
+    color: $lp-text-4;
+    font-size: 1.25rem;
+    display: none;
+
+    @media (min-width: 641px) and (max-width: 992px) {
+      display: none;
+    }
+    @media (min-width: 993px) {
+      display: flex;
+    }
+  }
+}
+
+// ── BENEFITS GRID ──────────────────────────────────────────────────────
+.lp-benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+
+  @media (max-width: 992px) { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 640px) { grid-template-columns: 1fr; }
+}
+
+.lp-benefit-card {
+  background: $lp-surface;
+  border: 1.5px solid $lp-border;
+  border-radius: $lp-radius-lg;
+  padding: 28px;
+  transition: all 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: center;
+
+  &:hover {
+    border-color: $lp-primary;
+    box-shadow: $lp-shadow-lg;
+    transform: translateY(-4px);
+  }
+
+  &__icon {
+    width: 56px;
+    height: 56px;
+    border-radius: $lp-radius;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    background: rgba($lp-primary,0.1);
+    color: $lp-primary;
+    margin: 0 auto;
+  }
+
+  &__title {
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: $lp-text;
+    margin: 0;
+  }
+
+  &__desc {
+    font-size: 0.875rem;
+    color: $lp-text-3;
+    line-height: 1.6;
+    margin: 0;
+  }
+}
+
+// ── CTA FINAL ────────────────────────────────────────────���─────────────
+.lp-cta {
+  position: relative;
+  background: $lp-dark;
+  padding: 96px 0;
+  overflow: hidden;
+  text-align: center;
+
+  &__bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  &__orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.4;
+
+    &--1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, $lp-primary 0%, transparent 70%);
+      top: -150px; left: -100px;
+    }
+    &--2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, $lp-green 0%, transparent 70%);
+      bottom: -100px; right: -50px;
+    }
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__title {
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin: 8px 0 20px;
+  }
+
+  &__sub {
+    font-size: 1.0625rem;
+    color: rgba(255,255,255,0.6);
+    max-width: 520px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  &__note {
+    font-size: 0.8125rem;
+    color: rgba(255,255,255,0.35);
+    margin: 0;
+    i { color: $lp-green; }
+  }
+}
+
+// ── FOOTER ─────────────────────────────────────────────────────────────
+.lp-footer {
+  background: #0A0E13;
+  padding: 64px 0 0;
+  border-top: 1px solid rgba(255,255,255,0.06);
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    padding-bottom: 48px;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__brand {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .lp-navbar__brand-icon {
+      width: 40px;
+      height: 40px;
+      font-size: 1rem;
+    }
+
+    .lp-navbar__brand-text {
+      font-size: 1.125rem;
+      color: #fff;
+    }
+
+    p {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.7;
+      margin: 0;
+      max-width: 240px;
+    }
+  }
+
+  &__col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    h5 {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin: 0 0 4px;
+    }
+
+    a {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      transition: color 0.15s ease;
+
+      &:hover { color: #fff; }
+    }
+  }
+
+  &__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    font-size: 0.8125rem;
+    color: rgba(255,255,255,0.3);
+
+    @media (max-width: 480px) {
+      flex-direction: column;
+      gap: 8px;
+      text-align: center;
+    }
+  }
+}
+
+// ── Animations ─────────────────────────────────────────────────────────
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease both;
+}
+.animate-fade-in {
+  animation: fadeIn 0.8s ease both;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@for $i from 1 through 8 {
+  .animate-delay-#{$i} { animation-delay: #{$i * 0.1}s; }
+}

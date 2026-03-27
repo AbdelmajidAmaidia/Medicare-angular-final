@@ -1,0 +1,76 @@
+<!-- src/app/backoffice/patient/dashboard/patient-dashboard.component.html -->
+<div class="patient-dashboard">
+
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Mon Espace Santé</h1>
+      <p class="page-subtitle">{{ currentDate | date:"EEEE d MMMM yyyy" : '' : 'fr' }}</p>
+    </div>
+  </div>
+
+  <!-- Métriques de santé -->
+  <div class="metrics-grid">
+    <div *ngFor="let m of metrics" class="metric-card" [ngClass]="getMetricClass(m.status)">
+      <div class="metric-icon">
+        <i [class]="'bi ' + m.icon"></i>
+      </div>
+      <div class="metric-body">
+        <p class="metric-label">{{ m.label }}</p>
+        <p class="metric-value">{{ m.value }} <span class="metric-unit">{{ m.unit }}</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard-grid">
+    <!-- Prochains rendez-vous -->
+    <section class="panel">
+      <div class="panel-header">
+        <h2 class="panel-title">
+          <i class="bi bi-calendar-event"></i> Prochains Rendez-vous
+        </h2>
+        <a href="#" class="panel-link">Voir tout</a>
+      </div>
+      <div class="appt-list" *ngIf="upcomingAppointments.length > 0; else noAppt">
+        <div *ngFor="let a of upcomingAppointments" class="appt-item">
+          <div class="appt-icon">
+            <i [class]="a.type === 'Téléconsultation' ? 'bi bi-camera-video' : 'bi bi-hospital'"></i>
+          </div>
+          <div class="appt-body">
+            <p class="appt-doctor">{{ a.doctor }}</p>
+            <p class="appt-specialty text-muted small">{{ a.specialty }}</p>
+            <div class="appt-meta">
+              <span><i class="bi bi-calendar3"></i> {{ a.date }}</span>
+              <span><i class="bi bi-clock"></i> {{ a.time }}</span>
+              <span class="appt-type-badge">{{ a.type }}</span>
+            </div>
+          </div>
+          <button class="btn btn-outline-primary btn-sm">Rejoindre</button>
+        </div>
+      </div>
+      <ng-template #noAppt>
+        <div class="empty-state"><i class="bi bi-calendar-x"></i><p>Aucun rendez-vous prévu.</p></div>
+      </ng-template>
+    </section>
+
+    <!-- Activités récentes -->
+    <section class="panel">
+      <div class="panel-header">
+        <h2 class="panel-title">
+          <i class="bi bi-clock-history"></i> Activités Récentes
+        </h2>
+      </div>
+      <ul class="activity-list">
+        <li *ngFor="let act of recentActivities" class="activity-item">
+          <div class="activity-icon">
+            <i [class]="'bi ' + act.icon"></i>
+          </div>
+          <div class="activity-body">
+            <span class="activity-type">{{ act.type }}</span>
+            <span class="activity-desc">{{ act.desc }}</span>
+          </div>
+          <span class="activity-date text-muted small">{{ act.date }}</span>
+        </li>
+      </ul>
+    </section>
+  </div>
+</div>

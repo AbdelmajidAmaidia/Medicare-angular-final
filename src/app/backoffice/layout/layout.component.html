@@ -1,0 +1,156 @@
+<div class="layout">
+  <!-- ════════════════════════════════════════════════════════════════════ -->
+  <!-- NAVBAR MODERNE -->
+  <!-- ════════════════════════════════════════════════════════════════════ -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <!-- LEFT: Logo + Menu -->
+      <div class="navbar-left">
+        <!-- Logo -->
+        <a routerLink="/dashboard" class="navbar-brand">
+          <i class="bi bi-hospital"></i>
+          <span>MediCare AI</span>
+        </a>
+
+        <!-- Menu Links -->
+        <ul class="navbar-links">
+          <li *ngFor="let item of getNavItems()">
+            <a
+              [routerLink]="item.route"
+              routerLinkActive="nav-link-active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="nav-link"
+            >
+              <i [class]="'bi ' + item.icon"></i>
+              <span>{{ item.label }}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- RIGHT: Search + Icons + User -->
+      <div class="navbar-right">
+        <!-- Search Bar -->
+        <div class="search-container">
+          <input
+            type="text"
+            class="search-input"
+            placeholder="Rechercher..."
+            (keyup)="onSearch($event)"
+          />
+          <button class="search-btn">
+            <i class="bi bi-search"></i>
+          </button>
+        </div>
+
+        <!-- Notifications -->
+        <button class="icon-btn notification-btn" (click)="toggleNotifications()">
+          <i class="bi bi-bell"></i>
+          <span *ngIf="unreadCount > 0" class="badge">{{ unreadCount }}</span>
+        </button>
+
+        <!-- User Profile -->
+        <div class="user-profile" (click)="toggleUserDropdown()">
+          <img [src]="getAvatarUrl()" alt="User Avatar" class="user-avatar" />
+          <span class="user-name">{{ currentUser?.firstName }}</span>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button class="mobile-menu-btn" (click)="toggleMobileMenu()">
+          <i class="bi bi-list"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Notifications Dropdown -->
+    <div class="notification-dropdown" *ngIf="notificationOpen">
+      <div class="dropdown-header">
+        <h3>Notifications</h3>
+        <button class="btn-mark-read" (click)="markAllRead()" *ngIf="unreadCount > 0">
+          Marquer tout comme lu
+        </button>
+      </div>
+
+      <div class="notification-list">
+        <div
+          *ngFor="let notif of notifications"
+          [class]="'notification-item notification-' + notif.type"
+          [class.read]="notif.read"
+        >
+          <i [class]="'bi ' + notif.icon"></i>
+          <div class="notification-content">
+            <p class="notification-title">{{ notif.title }}</p>
+            <span class="notification-time">{{ notif.time }}</span>
+          </div>
+          <button class="btn-dismiss" (click)="dismissNotification(notif.id)">
+            <i class="bi bi-x"></i>
+          </button>
+        </div>
+
+        <div *ngIf="notifications.length === 0" class="empty-state">
+          <i class="bi bi-inbox"></i>
+          <p>Aucune notification</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- User Dropdown -->
+    <div class="user-dropdown" *ngIf="userDropdownOpen">
+      <div class="dropdown-header">
+        <img [src]="getAvatarUrl()" alt="User" class="dropdown-avatar" />
+        <div>
+          <p class="user-fullname">
+            {{ currentUser?.firstName }} {{ currentUser?.lastName }}
+          </p>
+          <p class="user-role">{{ getRoleLabel() }}</p>
+        </div>
+      </div>
+
+      <nav class="dropdown-menu">
+        <a href="#" class="dropdown-item">
+          <i class="bi bi-person"></i>
+          Mon profil
+        </a>
+        <a href="#" class="dropdown-item">
+          <i class="bi bi-gear"></i>
+          Paramètres
+        </a>
+        <a href="#" class="dropdown-item">
+          <i class="bi bi-question-circle"></i>
+          Aide
+        </a>
+      </nav>
+
+      <div class="dropdown-divider"></div>
+
+      <button class="dropdown-item logout-btn" (click)="logout()">
+        <i class="bi bi-box-arrow-right"></i>
+        Déconnexion
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" *ngIf="mobileMenuOpen">
+      <ul class="mobile-nav-links">
+        <li *ngFor="let item of getNavItems()">
+          <a
+            [routerLink]="item.route"
+            routerLinkActive="active"
+            (click)="closeMobileMenu()"
+            class="mobile-nav-link"
+          >
+            <i [class]="'bi ' + item.icon"></i>
+            <span>{{ item.label }}</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ════════════════════════════════════════════════════════════════════ -->
+  <!-- MAIN CONTENT -->
+  <!-- ════════════════════════════════════════════════════════════════════ -->
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

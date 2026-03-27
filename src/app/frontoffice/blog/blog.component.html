@@ -1,0 +1,337 @@
+<!-- src/app/frontoffice/blog/blog.component.html -->
+<div class="blog-page">
+
+  <!-- ══════════════════════════════════════
+       NAVBAR
+  ══════════════════════════════════════ -->
+ <nav class="lp-navbar">
+  <div class="lp-navbar__inner">
+    <a class="lp-navbar__brand" routerLink="/">
+      <span class="lp-navbar__brand-icon">
+        <i class="fas fa-heartbeat"></i>
+      </span>
+      <span class="lp-navbar__brand-text">Medi<strong>Care</strong> <em>AI</em></span>
+    </a>
+    
+    <ul class="lp-navbar__links">
+      <li>
+        <a routerLink="/landing" 
+           routerLinkActive="active" 
+           [routerLinkActiveOptions]="{exact: true}">
+          Accueil
+        </a>
+      </li>
+      <li>
+        <a routerLink="/about" 
+           routerLinkActive="active">
+          À propos
+        </a>
+      </li>
+      <li>
+        <a routerLink="/services" 
+           routerLinkActive="active">
+          Services
+        </a>
+      </li>
+      <li>
+        <a routerLink="/blog" 
+           routerLinkActive="active">
+          Blog
+        </a>
+      </li>
+      <li>
+        <a routerLink="/pricing" 
+           routerLinkActive="active">
+          Tarifs
+        </a>
+      </li>
+    </ul>
+    
+    <div class="lp-navbar__actions">
+      <a routerLink="/login" class="lp-btn lp-btn--ghost">Connexion</a>
+      <a routerLink="/login" class="lp-btn lp-btn--primary">Commencer</a>
+    </div>
+  </div>
+</nav>
+  <!-- ══════════════════════════════════════
+       HERO BLOG
+  ══════════════════════════════════════ -->
+  <section class="blog-hero">
+    <div class="blog-hero__bg">
+      <div class="blog-hero__orb blog-hero__orb--1"></div>
+      <div class="blog-hero__orb blog-hero__orb--2"></div>
+      <div class="blog-hero__grid"></div>
+    </div>
+    <div class="lp-container">
+      <div class="blog-hero__content">
+        <span class="lp-section__eyebrow lp-section__eyebrow--light animate-fade-in-up animate-delay-1">
+          Blog MediCare AI
+        </span>
+        <h1 class="blog-hero__title animate-fade-in-up animate-delay-2">
+          Actualités &amp; Insights<br>
+          <span class="blog-hero__title-accent">Santé &amp; Intelligence Artificielle</span>
+        </h1>
+        <p class="blog-hero__sub animate-fade-in-up animate-delay-3">
+          Découvrez les dernières avancées de l'IA médicale, des conseils de santé et des analyses d'experts.
+        </p>
+
+        <!-- Search bar -->
+        <div class="blog-search animate-fade-in-up animate-delay-4">
+          <i class="fas fa-search blog-search__icon"></i>
+          <input
+            type="text"
+            class="blog-search__input"
+            placeholder="Rechercher un article…"
+            [(ngModel)]="searchQuery"
+            (input)="onSearch()">
+          <span class="blog-search__count" *ngIf="searchQuery">
+            {{ filteredPosts.length }} résultat(s)
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       CATEGORIES
+  ══════════════════════════════════════ -->
+  <div class="blog-categories-bar">
+    <div class="lp-container">
+      <div class="blog-categories">
+        <button
+          *ngFor="let cat of categories"
+          class="blog-cat-btn"
+          [class.blog-cat-btn--active]="activeCategory === cat"
+          (click)="setCategory(cat)">
+          {{ cat }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       FEATURED POST
+  ══════════════════════════════════════ -->
+  <section class="blog-main lp-section lp-section--white" *ngIf="!searchQuery">
+    <div class="lp-container">
+      <div class="blog-featured" *ngIf="featuredPost">
+        <div class="blog-featured__visual">
+          <div class="blog-featured__cover" [style.background]="featuredPost.coverGradient">
+            <i [class]="'fas ' + featuredPost.coverIcon"></i>
+          </div>
+          <span class="blog-featured__badge">À la une</span>
+        </div>
+        <div class="blog-featured__body">
+          <div class="blog-featured__meta">
+            <span class="blog-tag" [ngClass]="'blog-tag--' + featuredPost.categoryColor">
+              {{ featuredPost.category }}
+            </span>
+            <span class="blog-meta-dot"></span>
+            <span class="blog-featured__date">
+              <i class="fas fa-calendar"></i> {{ featuredPost.date }}
+            </span>
+            <span class="blog-meta-dot"></span>
+            <span class="blog-featured__read">
+              <i class="fas fa-clock"></i> {{ featuredPost.readTime }}
+            </span>
+          </div>
+          <h2 class="blog-featured__title">{{ featuredPost.title }}</h2>
+          <p class="blog-featured__excerpt">{{ featuredPost.excerpt }}</p>
+          <div class="blog-featured__footer">
+            <div class="blog-author">
+              <div class="blog-author__avatar" [style.background]="featuredPost.authorGradient">
+                {{ featuredPost.authorInitials }}
+              </div>
+              <div>
+                <strong>{{ featuredPost.author }}</strong>
+                <small>{{ featuredPost.authorRole }}</small>
+              </div>
+            </div>
+            <a href="#" class="lp-btn lp-btn--primary">
+              Lire l'article <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       POSTS GRID
+  ══════════════════════════════════════ -->
+  <section class="lp-section lp-section--light">
+    <div class="lp-container">
+
+      <div class="blog-grid-header" *ngIf="!searchQuery">
+        <h2 class="blog-grid-header__title">
+          {{ activeCategory === 'Tous' ? 'Tous les articles' : activeCategory }}
+        </h2>
+        <span class="blog-grid-header__count">{{ filteredPosts.length }} articles</span>
+      </div>
+
+      <!-- Empty state -->
+      <div class="blog-empty" *ngIf="filteredPosts.length === 0">
+        <i class="fas fa-search blog-empty__icon"></i>
+        <h3>Aucun article trouvé</h3>
+        <p>Essayez avec d'autres mots-clés ou explorez toutes les catégories.</p>
+        <button class="lp-btn lp-btn--primary" (click)="resetFilters()">
+          Voir tous les articles
+        </button>
+      </div>
+
+      <!-- Grid -->
+      <div class="blog-grid" *ngIf="filteredPosts.length > 0">
+        <article
+          *ngFor="let post of paginatedPosts; let i = index"
+          class="blog-card animate-fade-in-up"
+          [style.animation-delay]="(i * 0.07) + 's'">
+
+          <!-- Cover -->
+          <div class="blog-card__cover" [style.background]="post.coverGradient">
+            <i [class]="'fas ' + post.coverIcon"></i>
+            <span class="blog-tag blog-tag--overlay" [ngClass]="'blog-tag--' + post.categoryColor">
+              {{ post.category }}
+            </span>
+          </div>
+
+          <!-- Body -->
+          <div class="blog-card__body">
+            <div class="blog-card__meta">
+              <span><i class="fas fa-calendar"></i> {{ post.date }}</span>
+              <span><i class="fas fa-clock"></i> {{ post.readTime }}</span>
+            </div>
+
+            <h3 class="blog-card__title">{{ post.title }}</h3>
+            <p class="blog-card__excerpt">{{ post.excerpt }}</p>
+
+            <div class="blog-card__tags">
+              <span *ngFor="let tag of post.tags" class="blog-tag-mini">{{ tag }}</span>
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div class="blog-card__footer">
+            <div class="blog-author blog-author--sm">
+              <div class="blog-author__avatar blog-author__avatar--sm"
+                   [style.background]="post.authorGradient">
+                {{ post.authorInitials }}
+              </div>
+              <div>
+                <strong>{{ post.author }}</strong>
+                <small>{{ post.authorRole }}</small>
+              </div>
+            </div>
+            <a href="#" class="blog-card__link">
+              Lire <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </article>
+      </div>
+
+      <!-- Pagination -->
+      <div class="blog-pagination" *ngIf="totalPages > 1">
+        <button
+          class="blog-page-btn"
+          [disabled]="currentPage === 1"
+          (click)="goToPage(currentPage - 1)">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <button
+          *ngFor="let p of pageNumbers"
+          class="blog-page-btn"
+          [class.blog-page-btn--active]="p === currentPage"
+          (click)="goToPage(p)">
+          {{ p }}
+        </button>
+
+        <button
+          class="blog-page-btn"
+          [disabled]="currentPage === totalPages"
+          (click)="goToPage(currentPage + 1)">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       NEWSLETTER
+  ══════════════════════════════════════ -->
+  <section class="blog-newsletter">
+    <div class="blog-newsletter__bg">
+      <div class="blog-newsletter__orb"></div>
+    </div>
+    <div class="lp-container">
+      <div class="blog-newsletter__content">
+        <div class="blog-newsletter__text">
+          <span class="lp-section__eyebrow lp-section__eyebrow--light">Newsletter</span>
+          <h2 class="blog-newsletter__title">Restez informé des dernières avancées</h2>
+          <p>Recevez chaque semaine une sélection d'articles sur la santé et l'IA médicale.</p>
+        </div>
+        <form class="blog-newsletter__form" (ngSubmit)="subscribeNewsletter()" #nlForm="ngForm">
+          <div class="blog-newsletter__input-group">
+            <input
+              type="email"
+              placeholder="votre@email.com"
+              [(ngModel)]="newsletterEmail"
+              name="email"
+              required
+              class="blog-newsletter__input">
+            <button type="submit" class="lp-btn lp-btn--primary">
+              <i class="fas fa-paper-plane me-2"></i>S'abonner
+            </button>
+          </div>
+          <p class="blog-newsletter__note" *ngIf="subscribed">
+            <i class="fas fa-check-circle text-success"></i>
+            Merci ! Vous êtes bien abonné(e).
+          </p>
+          <p class="blog-newsletter__disclaimer" *ngIf="!subscribed">
+            <i class="fas fa-lock"></i>
+            Aucun spam. Désabonnement en un clic.
+          </p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════ -->
+  <footer class="lp-footer">
+    <div class="lp-container">
+      <div class="lp-footer__grid">
+        <div class="lp-footer__brand">
+          <span class="lp-navbar__brand-icon"><i class="fas fa-heartbeat"></i></span>
+          <span class="lp-navbar__brand-text">Medi<strong>Care</strong> <em>AI</em></span>
+          <p>La plateforme médicale IA de nouvelle génération. Votre santé, notre priorité.</p>
+        </div>
+        <div class="lp-footer__col">
+          <h5>Produit</h5>
+          <a routerLink="/">Accueil</a>
+          <a routerLink="/blog">Blog</a>
+          <a href="/#services">Services</a>
+          <a routerLink="/auth">Connexion</a>
+        </div>
+        <div class="lp-footer__col">
+          <h5>Légal</h5>
+          <a href="#">Confidentialité</a>
+          <a href="#">CGU</a>
+          <a href="#">Mentions légales</a>
+          <a href="#">RGPD</a>
+        </div>
+        <div class="lp-footer__col">
+          <h5>Contact</h5>
+          <a href="mailto:contact@medicare-ai.tn">contact&#64;medicare-ai.tn</a>
+          <a href="tel:+21698000000">+216 98 000 000</a>
+          <a href="#">Tunis, Tunisie</a>
+        </div>
+      </div>
+      <div class="lp-footer__bottom">
+        <span>© {{ currentYear }} MediCare AI. Tous droits réservés.</span>
+        <span>Fait avec <i class="fas fa-heart text-danger"></i> en Tunisie</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
