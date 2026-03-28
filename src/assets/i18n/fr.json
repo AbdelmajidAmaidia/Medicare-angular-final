@@ -1,0 +1,576 @@
+{
+  "LANG": {
+    "SWITCHER_LABEL": "Langue",
+    "EN": "English",
+    "FR": "Français"
+  },
+  "NAV": {
+    "HOME": "Accueil",
+    "ABOUT": "À propos",
+    "SERVICES": "Services",
+    "BLOG": "Blog",
+    "PRICING": "Tarifs",
+    "LOGIN": "Connexion",
+    "GET_STARTED": "Commencer",
+    "DASHBOARD": "Tableau de Bord"
+  },
+  "FOOTER": {
+    "TAGLINE": "La plateforme médicale IA de nouvelle génération. Votre santé, notre priorité.",
+    "PRODUCT": "Produit",
+    "LEGAL": "Légal",
+    "CONTACT": "Contact",
+    "RESULTS": "Résultats",
+    "FAQ": "FAQ",
+    "PRIVACY": "Confidentialité",
+    "TERMS": "CGU",
+    "LEGAL_NOTICES": "Mentions légales",
+    "GDPR": "RGPD",
+    "COPYRIGHT": "© {{year}} MediCare AI. Tous droits réservés.",
+    "MADE_WITH": "Fait avec",
+    "IN_TUNISIA": "en Tunisie"
+  },
+  "AUTH": {
+    "TABS": {
+      "LOGIN": "Se connecter",
+      "REGISTER": "S'inscrire",
+      "LOGIN_ARIA": "Onglet connexion",
+      "REGISTER_ARIA": "Onglet inscription"
+    },
+    "HEADLINE": "Votre santé, notre priorité",
+    "DESCRIPTION": "Rejoignez des milliers de patients et professionnels de santé qui transforment leur approche médicale avec MediCare AI.",
+    "BENEFITS": {
+      "ACCURACY": "de précision diagnostique",
+      "SECURE": "Dossier médical 100% sécurisé",
+      "SUPPORT": "Support 24/7 en français"
+    },
+    "TESTIMONIAL": {
+      "TEXT": "MediCare AI m'a permis de recevoir un diagnostic en moins de 24h. Incroyable!",
+      "AUTHOR": "— Dr. Amani T., Cardiologue"
+    },
+    "LOGIN_FORM": {
+      "TITLE": "Bienvenue",
+      "SUBTITLE": "Connectez-vous à votre compte MediCare",
+      "EMAIL_LABEL": "Email",
+      "EMAIL_PLACEHOLDER": "vous@example.com",
+      "ROLE_LABEL": "Rôle",
+      "ROLE_PLACEHOLDER": "Sélectionnez votre rôle",
+      "PASSWORD_LABEL": "Mot de passe",
+      "REMEMBER_ME": "Se souvenir de moi",
+      "FORGOT_PASSWORD": "Mot de passe oublié ?",
+      "SUBMIT": "Se connecter",
+      "SUBMITTING": "Connexion en cours...",
+      "NO_ACCOUNT": "Pas encore de compte ?",
+      "SIGN_UP": "S'inscrire",
+      "SHOW_PASSWORD": "Afficher le mot de passe",
+      "HIDE_PASSWORD": "Masquer le mot de passe"
+    },
+    "REGISTER_FORM": {
+      "TITLE": "Créer un compte",
+      "SUBTITLE": "Rejoignez MediCare en quelques étapes",
+      "FIRST_NAME_LABEL": "Prénom",
+      "FIRST_NAME_PLACEHOLDER": "Jean",
+      "FIRST_NAME_REQUIRED": "Le prénom est requis",
+      "LAST_NAME_LABEL": "Nom",
+      "LAST_NAME_PLACEHOLDER": "Dupont",
+      "LAST_NAME_REQUIRED": "Le nom est requis",
+      "EMAIL_LABEL": "Email",
+      "EMAIL_PLACEHOLDER": "vous@example.com",
+      "ROLE_LABEL": "Rôle",
+      "ROLE_PLACEHOLDER": "Sélectionnez votre rôle",
+      "PASSWORD_LABEL": "Mot de passe",
+      "CONFIRM_PASSWORD_LABEL": "Confirmer le mot de passe",
+      "PASSWORDS_MISMATCH": "Les mots de passe ne correspondent pas",
+      "TERMS": "J'accepte les",
+      "TERMS_LINK": "conditions d'utilisation",
+      "AND": "et la",
+      "PRIVACY_LINK": "politique de confidentialité",
+      "SUBMIT": "Créer un compte",
+      "SUBMITTING": "Création en cours...",
+      "ALREADY_REGISTERED": "Déjà inscrit ?",
+      "SIGN_IN": "Se connecter",
+      "SHOW_PASSWORD": "Afficher le mot de passe",
+      "HIDE_PASSWORD": "Masquer le mot de passe"
+    },
+    "PASSWORD_STRENGTH": {
+      "WEAK": "Faible",
+      "FAIR": "Moyen",
+      "GOOD": "Bien",
+      "STRONG": "Fort"
+    },
+    "BACK": "Retour",
+    "BACK_TO_HOME": "Retour à l'accueil",
+    "ERRORS": {
+      "REQUIRED": "Ce champ est requis",
+      "INVALID_EMAIL": "Veuillez entrer une adresse email valide",
+      "MIN_LENGTH": "Minimum {{min}} caractères requis",
+      "INVALID_FORMAT": "Format invalide",
+      "VALIDATION_ERROR": "Erreur de validation"
+    }
+  },
+  "ROLES": {
+    "PATIENT": "Patient",
+    "DOCTOR": "Médecin",
+    "LAB": "Technicien Labo",
+    "PHARMACY": "Pharmacien",
+    "ADMIN": "Administrateur"
+  },
+  "LANDING": {
+    "BADGE": "Plateforme Médicale IA — Nouvelle génération",
+    "HERO_TITLE_1": "La médecine du futur,",
+    "HERO_TITLE_ACCENT": "disponible aujourd'hui",
+    "HERO_SUBTITLE": "MediCare AI combine intelligence artificielle et expertise médicale pour offrir des diagnostics précis, un suivi de santé mental en temps réel et une gestion optimisée des soins.",
+    "CTA_PRIMARY": "Démarrer gratuitement",
+    "CTA_DEMO": "Voir la démo",
+    "TRUST": {
+      "HDS": "Certifié HDS",
+      "GDPR": "RGPD Conforme",
+      "RATING": "4.9/5 — 2 400 avis"
+    },
+    "DASHBOARD_PREVIEW": {
+      "TITLE": "MediCare AI — Dashboard",
+      "NORMAL": "Normal",
+      "OPTIMAL": "Optimal",
+      "STABLE": "Stable",
+      "AI_ANALYSIS": "Analyse IA en cours…",
+      "STRESS": "Stress",
+      "FATIGUE": "Fatigue",
+      "WELLBEING": "Bien-être",
+      "CONFIRMED": "Confirmé",
+      "TOMORROW": "Demain"
+    },
+    "FLOAT_AI": "IA Prédictive",
+    "FLOAT_DIAGNOSTICS": "+1 200 diagnostics / jour",
+    "STATS": {
+      "ACTIVE_PATIENTS": "Patients actifs",
+      "DIAGNOSTICS_DAY": "Diagnostics / jour",
+      "AI_ACCURACY": "Précision IA",
+      "SATISFACTION": "Satisfaction"
+    },
+    "SERVICES_SECTION": {
+      "EYEBROW": "Nos Services",
+      "TITLE": "Une plateforme complète pour chaque besoin médical",
+      "SUBTITLE": "De la prévention au suivi post-consultation, MediCare AI couvre tout le parcours de soin.",
+      "LEARN_MORE": "En savoir plus"
+    },
+    "FEATURES": {
+      "AI_DIAG": {
+        "TITLE": "IA Diagnostique",
+        "DESC": "Notre moteur d'IA analyse vos symptômes et antécédents médicaux pour fournir des diagnostics rapides et précis.",
+        "POINT_1": "Analyse multi-pathologies",
+        "POINT_2": "Suggestions de spécialistes",
+        "POINT_3": "Rapport PDF généré automatiquement"
+      },
+      "MENTAL": {
+        "TITLE": "Santé Mentale",
+        "DESC": "Détection du stress, de l'anxiété et du burnout via reconnaissance faciale et suivi comportemental.",
+        "POINT_1": "Analyse faciale en temps réel",
+        "POINT_2": "Score bien-être quotidien",
+        "POINT_3": "Alertes préventives"
+      },
+      "APPOINTMENTS": {
+        "TITLE": "Rendez-vous Smart",
+        "DESC": "Système de planification intelligent qui optimise les créneaux et réduit les temps d'attente.",
+        "POINT_1": "Réservation instantanée",
+        "POINT_2": "Rappels automatiques",
+        "POINT_3": "Téléconsultation intégrée"
+      },
+      "LAB": {
+        "TITLE": "Résultats de Labo",
+        "DESC": "Consultez vos résultats biologiques et obtenez une explication claire en langage naturel.",
+        "POINT_1": "Synchronisation directe",
+        "POINT_2": "Interprétation IA",
+        "POINT_3": "Historique complet"
+      },
+      "PRESCRIPTIONS": {
+        "TITLE": "Ordonnances Digitales",
+        "DESC": "Gérez, renouvelez et envoyez vos ordonnances directement à votre pharmacie partenaire.",
+        "POINT_1": "QR code sécurisé",
+        "POINT_2": "Renouvellement en 1 clic",
+        "POINT_3": "Rappels de prise"
+      },
+      "RECORDS": {
+        "TITLE": "Dossier Médical",
+        "DESC": "Un dossier médical unifié, sécurisé et accessible par votre équipe soignante autorisée.",
+        "POINT_1": "Chiffrement de bout en bout",
+        "POINT_2": "Accès partagé sécurisé",
+        "POINT_3": "Export FHIR compatible"
+      }
+    },
+    "HOW_IT_WORKS": {
+      "EYEBROW": "Comment ça marche",
+      "TITLE": "En 3 étapes simples",
+      "STEPS": {
+        "STEP_1": {
+          "TITLE": "Créez votre compte",
+          "DESC": "Inscription en 2 minutes avec validation d'identité sécurisée. Renseignez votre profil médical de base."
+        },
+        "STEP_2": {
+          "TITLE": "Décrivez vos symptômes",
+          "DESC": "Utilisez notre interface IA pour décrire vos symptômes, parcourir votre historique ou prendre rendez-vous."
+        },
+        "STEP_3": {
+          "TITLE": "Recevez des soins personnalisés",
+          "DESC": "Obtenez un diagnostic précis, des recommandations et un accès direct aux professionnels de santé."
+        }
+      }
+    },
+    "TESTIMONIALS": {
+      "EYEBROW": "Témoignages",
+      "TITLE": "Ce que disent nos utilisateurs"
+    },
+    "FAQ": {
+      "EYEBROW": "FAQ",
+      "TITLE": "Questions fréquentes"
+    },
+    "CTA_SECTION": {
+      "EYEBROW": "Rejoignez-nous",
+      "TITLE_1": "Prêt à transformer",
+      "TITLE_2": "votre santé ?",
+      "SUBTITLE": "Inscrivez-vous gratuitement et accédez à toute la puissance de l'IA médicale en moins de 2 minutes.",
+      "PRIMARY_BTN": "Créer un compte gratuit",
+      "SECONDARY_BTN": "Déjà inscrit ? Se connecter",
+      "NOTE": "Aucune carte bancaire requise · Annulation à tout moment"
+    }
+  },
+  "ABOUT": {
+    "BADGE": "Qui sommes-nous",
+    "HERO_TITLE_1": "Redéfinir la médecine",
+    "HERO_TITLE_ACCENT": "par l'intelligence",
+    "HERO_SUBTITLE": "MediCare AI comble le fossé entre l'intelligence artificielle de pointe et la pratique clinique compassionnelle — rendant la médecine de précision accessible à tous.",
+    "TRUST": {
+      "ACCURACY": "Précision diagnostique",
+      "PATIENTS": "Patients servis",
+      "STUDIES": "Études publiées"
+    },
+    "MISSION": {
+      "EYEBROW": "Notre Mission",
+      "TITLE": "Nos 3 piliers"
+    },
+    "TEAM": {
+      "EYEBROW": "Les Gens Derrière",
+      "TITLE": "Notre Équipe",
+      "SUBTITLE": "Cliniciens et ingénieurs de classe mondiale unis par une seule vision.",
+      "JOIN_TEAM": "Rejoindre l'équipe",
+      "OUR_SERVICES": "Voir nos services"
+    }
+  },
+  "SERVICES_PAGE": {
+    "BADGE": "Nos Services",
+    "HERO_TITLE_1": "Une plateforme complète",
+    "HERO_TITLE_ACCENT": "pour votre santé",
+    "HERO_SUBTITLE": "De la consultation à la livraison de médicaments, MediCare AI vous accompagne à chaque étape de votre parcours de santé.",
+    "HOW_IT_WORKS": {
+      "EYEBROW": "Comment ça marche",
+      "TITLE": "4 étapes simples",
+      "SUBTITLE": "Commencez votre parcours de santé dès aujourd'hui"
+    },
+    "BENEFITS": {
+      "EYEBROW": "Pourquoi MediCare AI",
+      "TITLE": "Les avantages qui font la différence"
+    },
+    "CTA": {
+      "EYEBROW": "Prêt à commencer?",
+      "TITLE_1": "Transformez votre",
+      "TITLE_2": "approche de la santé",
+      "SUBTITLE": "Rejoignez des milliers de patients qui font confiance à MediCare AI pour leur santé.",
+      "PRIMARY_BTN": "Démarrer gratuitement",
+      "SECONDARY_BTN": "Voir les tarifs",
+      "NOTE": "Aucune carte bancaire requise · Annulation à tout moment"
+    },
+    "LEARN_MORE": "En savoir plus"
+  },
+  "BLOG_PAGE": {
+    "BADGE": "Blog",
+    "HERO_TITLE_1": "Actualités santé et",
+    "HERO_TITLE_ACCENT": "innovations médicales",
+    "HERO_SUBTITLE": "Découvrez les dernières avancées en médecine IA, des conseils pratiques et des témoignages d'experts.",
+    "SEARCH_PLACEHOLDER": "Rechercher un article...",
+    "ALL_CATEGORIES": "Tous",
+    "EMPTY_STATE": "Essayez avec d'autres mots-clés ou explorez toutes les catégories.",
+    "READ_MORE": "Lire la suite",
+    "CTA": {
+      "EYEBROW": "Restez informé",
+      "TITLE_1": "Abonnez-vous à notre",
+      "TITLE_2": "newsletter",
+      "SUBTITLE": "Recevez chaque semaine les dernières actualités médicales et les mises à jour de MediCare AI.",
+      "SUBSCRIBE_BTN": "S'abonner",
+      "EMAIL_PLACEHOLDER": "votre@email.com",
+      "NOTE": "Pas de spam · Désabonnement à tout moment",
+      "SUBSCRIBED_THANKS": "Merci ! Vous êtes bien abonné(e)."
+    }
+  },
+  "PRICING_PAGE": {
+    "BADGE": "Tarifs",
+    "HERO_TITLE_1": "Des tarifs simples et",
+    "HERO_TITLE_ACCENT": "transparents",
+    "HERO_SUBTITLE": "Choisissez le forfait qui correspond à vos besoins. Sans frais cachés, sans engagement.",
+    "PLANS": {
+      "EYEBROW": "Nos Forfaits",
+      "TITLE": "Une offre pour chaque besoin",
+      "POPULAR": "Populaire",
+      "NOTE": "Tous les forfaits incluent le support client et les mises à jour gratuites. Essai gratuit de 7 jours pour les forfaits Plus et Premium."
+    },
+    "BENEFITS": {
+      "EYEBROW": "Pourquoi nous choisir",
+      "TITLE": "Avantages inclus dans tous les forfaits",
+      "SECURE_TITLE": "100% Sécurisé",
+      "SECURE_DESC": "Chiffrement de bout en bout. Certifié HDS. Conforme RGPD.",
+      "SUPPORT_TITLE": "Support 24/7",
+      "SUPPORT_DESC": "Équipe disponible en français pour vous aider à tout moment.",
+      "FLEXIBLE_TITLE": "Changement facile",
+      "FLEXIBLE_DESC": "Changez de forfait à tout moment. Pas de contrat d'engagement.",
+      "GUARANTEE_TITLE": "Garantie 30 jours",
+      "GUARANTEE_DESC": "Remboursement complet si vous n'êtes pas satisfait."
+    },
+    "FAQ": {
+      "EYEBROW": "Questions Fréquentes",
+      "TITLE": "Tout ce que vous devez savoir"
+    },
+    "CTA": {
+      "EYEBROW": "Prêt à commencer?",
+      "TITLE_1": "Rejoignez des milliers",
+      "TITLE_2": "de patients satisfaits",
+      "SUBTITLE": "Choisissez votre forfait et commencez votre parcours de santé dès aujourd'hui. C'est gratuit pour les 7 premiers jours!",
+      "PRIMARY_BTN": "Démarrer gratuitement",
+      "SECONDARY_BTN": "En savoir plus",
+      "NOTE": "Aucune carte bancaire requise · Annulation à tout moment"
+    }
+  },
+  "NOT_FOUND": {
+    "TITLE": "Page introuvable",
+    "MESSAGE": "Oops ! La page que vous recherchez n'existe pas ou a été déplacée.",
+    "BACK_HOME": "Retour à l'accueil"
+  },
+  "LAYOUT": {
+    "SEARCH_PLACEHOLDER": "Rechercher...",
+    "MESSAGES": "Messages",
+    "NOTIFICATIONS": "Notifications",
+    "MARK_ALL_READ": "Marquer tout comme lu",
+    "NO_NOTIFICATIONS": "Aucune notification",
+    "MY_PROFILE": "Mon profil",
+    "SETTINGS": "Paramètres",
+    "HELP": "Aide",
+    "LOGOUT": "Déconnexion",
+    "NOTIFICATIONS_TITLE": "Notifications",
+    "NOTIF": {
+      "NEW_APPOINTMENT": "Nouveau rendez-vous demain",
+      "NEW_APPOINTMENT_TIME": "Il y a 5 minutes",
+      "LAB_RESULTS": "Résultats d'analyse disponibles",
+      "LAB_RESULTS_TIME": "Il y a 2 heures",
+      "SYSTEM_UPDATE": "Mise à jour système disponible",
+      "SYSTEM_UPDATE_TIME": "Hier"
+    }
+  },
+  "ADMIN_LAYOUT": {
+    "MAIN_MENU": "MENU PRINCIPAL",
+    "ADMINISTRATION": "ADMINISTRATION",
+    "ADMIN_PANEL": "Panneau d'Administration",
+    "COLLAPSE": "Réduire",
+    "EXPAND": "Développer",
+    "TOGGLE_SIDEBAR": "Basculer la barre latérale",
+    "LOGOUT": "Déconnexion",
+    "NAV": {
+      "DASHBOARD": "Tableau de Bord",
+      "USERS": "Utilisateurs",
+      "VERIFICATIONS": "Vérifications",
+      "FINANCES": "Finances",
+      "PAYROLL": "Paie",
+      "SETTINGS": "Paramètres",
+      "PARAMETERS": "Paramètres"
+    }
+  },
+  "ADMIN_DASHBOARD": {
+    "TITLE": "Tableau de Bord Administrateur",
+    "REFRESH": "Actualiser",
+    "STATS": {
+      "TOTAL_USERS": "Utilisateurs Totaux",
+      "ACTIVE_DOCTORS": "Médecins Actifs",
+      "MONTHLY_APPOINTMENTS": "Rendez-vous / Mois",
+      "MONTHLY_REVENUE": "Revenus / Mois",
+      "CHANGE_THIS_MONTH": "+{{count}} ce mois",
+      "CHANGE_THIS_WEEK": "+{{count}} cette semaine"
+    },
+    "ALERTS": {
+      "TITLE": "Alertes Récentes",
+      "VIEW_ALL": "Voir tout",
+      "CLOSE": "Fermer l'alerte",
+      "EMPTY": "Aucune alerte — Tout fonctionne correctement"
+    },
+    "SYSTEM_HEALTH": {
+      "TITLE": "État du Système",
+      "ONLINE": "En ligne",
+      "WARNING": "Attention",
+      "CRITICAL": "Critique"
+    }
+  },
+  "USER_MANAGEMENT": {
+    "TITLE": "Gestion des Utilisateurs",
+    "FOUND": "{{count}} utilisateur(s) trouvé(s)",
+    "ADD_USER": "Ajouter un Utilisateur",
+    "SEARCH_PLACEHOLDER": "Rechercher par nom ou email…",
+    "SEARCH_ARIA": "Rechercher un utilisateur",
+    "FILTER_ROLE": "Filtrer par rôle",
+    "ALL_ROLES": "Tous les rôles",
+    "TABLE": {
+      "USER": "Utilisateur",
+      "ROLE": "Rôle",
+      "JOINED": "Inscription",
+      "STATUS": "Statut",
+      "ACTIONS": "Actions"
+    },
+    "ACTIONS": {
+      "EDIT": "Modifier",
+      "SUSPEND": "Suspendre",
+      "ACTIVATE": "Activer",
+      "DELETE": "Supprimer"
+    },
+    "EMPTY": "Aucun utilisateur ne correspond à votre recherche."
+  },
+  "DOCTOR_VERIFICATION": {
+    "TITLE": "Vérifications Médecins",
+    "PENDING": "{{count}} demande(s) en attente",
+    "TABLE": {
+      "DOCTOR": "Médecin",
+      "SPECIALTY": "Spécialité",
+      "SUBMITTED": "Soumis le",
+      "DOCUMENTS": "Documents",
+      "STATUS": "Statut",
+      "ACTIONS": "Actions"
+    },
+    "STATUS": {
+      "PENDING": "En attente",
+      "APPROVED": "Approuvé",
+      "REJECTED": "Rejeté"
+    },
+    "ACTIONS": {
+      "APPROVE": "Approuver",
+      "REJECT": "Rejeter"
+    }
+  },
+  "FINANCIALS": {
+    "TITLE": "Finances de la Plateforme",
+    "TOTAL_REVENUE": "Revenus Totaux (Mois)",
+    "PENDING": "En Attente",
+    "REFUNDS": "Remboursements",
+    "RECENT_TRANSACTIONS": "Transactions Récentes",
+    "TABLE": {
+      "ID": "ID",
+      "TYPE": "Type",
+      "DESCRIPTION": "Description",
+      "AMOUNT": "Montant",
+      "DATE": "Date",
+      "STATUS": "Statut"
+    }
+  },
+  "PAYROLL": {
+    "TITLE": "Gestion de la Paie",
+    "TOTAL_NET": "Total net à payer :",
+    "MONTHS": {
+      "JAN": "Janvier 2026",
+      "FEB": "Février 2026",
+      "MAR": "Mars 2026"
+    },
+    "TABLE": {
+      "EMPLOYEE": "Employé",
+      "ROLE": "Rôle",
+      "BASE_SALARY": "Salaire Base",
+      "BONUSES": "Primes",
+      "DEDUCTIONS": "Déductions",
+      "NET": "Net",
+      "STATUS": "Statut",
+      "ACTION": "Action"
+    },
+    "STATUS": {
+      "PAID": "Payé",
+      "PENDING": "En attente"
+    },
+    "PAY_BTN": "Payer",
+    "PROCESSED": "Traité"
+  },
+  "ADMIN_SETTINGS": {
+    "TITLE": "Paramètres de la Plateforme",
+    "SUBTITLE": "Configurez les paramètres généraux du système MediCare.",
+    "SAVED": "Paramètres sauvegardés avec succès !",
+    "PLATFORM_NAME": "Nom de la Plateforme",
+    "SUPPORT_EMAIL": "Email de Support",
+    "MAX_APPOINTMENTS": "Max Rendez-vous / Jour",
+    "MAINTENANCE_MODE": "Mode Maintenance",
+    "ALLOW_REGISTRATIONS": "Autoriser les inscriptions",
+    "SAVE": "Sauvegarder",
+    "CANCEL": "Annuler"
+  },
+  "DOCTOR_DASHBOARD": {
+    "TITLE": "Bienvenue, Docteur",
+    "STATS": {
+      "TODAY_APPOINTMENTS": "Rendez-vous Aujourd'hui",
+      "TOTAL_PATIENTS": "Patients Total",
+      "PENDING_REPORTS": "Rapports en Attente",
+      "THIS_WEEK": "Cette Semaine"
+    },
+    "SCHEDULE": {
+      "TITLE": "Planning du Jour",
+      "VIEW_ALL": "Voir tout le planning",
+      "TABLE": {
+        "PATIENT": "Patient",
+        "AGE": "Âge",
+        "TYPE": "Type",
+        "TIME": "Heure",
+        "STATUS": "Statut",
+        "ACTIONS": "Actions"
+      },
+      "AGE_SUFFIX": "ans",
+      "START": "Débuter",
+      "FILE": "Dossier"
+    }
+  },
+  "PATIENT_LIST": {
+    "TITLE": "Mes Patients",
+    "FOUND": "{{count}} patient(s)",
+    "SEARCH_PLACEHOLDER": "Rechercher un patient…",
+    "TABLE": {
+      "PATIENT": "Patient",
+      "AGE": "Âge",
+      "CONDITION": "Condition",
+      "LAST_VISIT": "Dernière Visite",
+      "NEXT_VISIT": "Prochaine Visite",
+      "STATUS": "Statut",
+      "ACTIONS": "Actions"
+    },
+    "AGE_SUFFIX": "ans",
+    "ACTIONS": {
+      "FILE": "Dossier",
+      "APPOINTMENT": "RDV"
+    },
+    "EMPTY": "Aucun patient trouvé."
+  },
+  "PATIENT_DASHBOARD": {
+    "TITLE": "Mon Espace Santé",
+    "APPOINTMENTS": {
+      "TITLE": "Prochains Rendez-vous",
+      "VIEW_ALL": "Voir tout",
+      "JOIN": "Rejoindre",
+      "TELECONSULTATION": "Téléconsultation",
+      "EMPTY": "Aucun rendez-vous prévu."
+    },
+    "ACTIVITIES": {
+      "TITLE": "Activités Récentes"
+    }
+  },
+  "COMMON": {
+    "LOADING": "Chargement...",
+    "ERROR": "Une erreur s'est produite",
+    "SAVE": "Enregistrer",
+    "CANCEL": "Annuler",
+    "CLOSE": "Fermer",
+    "CONFIRM": "Confirmer",
+    "DELETE": "Supprimer",
+    "EDIT": "Modifier",
+    "VIEW_ALL": "Voir tout",
+    "SEARCH": "Rechercher",
+    "BACK": "Retour",
+    "NEXT": "Suivant",
+    "PREVIOUS": "Précédent",
+    "YES": "Oui",
+    "NO": "Non"
+  }
+}

@@ -18,7 +18,6 @@ export interface FinancialTransaction {
 @Component({
   selector: 'app-financial-admin',
   standalone: true,
-  imports: [CommonModule],
   templateUrl: './financial-admin.component.html',
 })
 export class FinancialAdminComponent {

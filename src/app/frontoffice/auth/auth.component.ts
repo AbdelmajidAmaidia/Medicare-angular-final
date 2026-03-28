@@ -2,8 +2,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
 import { NavigationService, UserRole } from '../../services/navigation.service';
+import { LanguageSwitcherComponent } from '../../shared/language-switcher/language-switcher.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -18,7 +20,7 @@ type PasswordStrength = 'weak' | 'fair' | 'good' | 'strong';
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, TranslateModule, LanguageSwitcherComponent],
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss'],
 })
@@ -39,13 +41,13 @@ export class AuthComponent implements OnInit, OnDestroy {
   passwordMismatch = false;
   passwordStrength: PasswordStrength = 'weak';
 
-  // Roles
+  // Roles - use translation keys
   roles: RoleOption[] = [
-    { value: 'patient', label: 'Patient', icon: 'fa-user' },
-    { value: 'doctor', label: 'Médecin', icon: 'fa-stethoscope' },
-    { value: 'lab', label: 'Technicien Labo', icon: 'fa-flask' },
-    { value: 'pharmacy', label: 'Pharmacien', icon: 'fa-pills' },
-    { value: 'admin', label: 'Admin', icon: 'fa-shield-alt' },
+    { value: 'patient', label: 'ROLES.PATIENT', icon: 'fa-user' },
+    { value: 'doctor', label: 'ROLES.DOCTOR', icon: 'fa-stethoscope' },
+    { value: 'lab', label: 'ROLES.LAB', icon: 'fa-flask' },
+    { value: 'pharmacy', label: 'ROLES.PHARMACY', icon: 'fa-pills' },
+    { value: 'admin', label: 'ROLES.ADMIN', icon: 'fa-shield-alt' },
   ];
 
   // Destroy subject
@@ -55,7 +57,8 @@ export class AuthComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private authService: AuthService,
     private navService: NavigationService,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {
     this.initializeForms();
   }
@@ -244,19 +247,16 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Get password strength label
+   * Get password strength label (translated)
    */
   getPasswordStrengthLabel(): string {
-    switch (this.passwordStrength) {
-      case 'weak':
-        return 'Faible';
-      case 'fair':
-        return 'Moyen';
-      case 'good':
-        return 'Bon';
-      case 'strong':
-        return 'Très fort';
-    }
+    const keyMap: Record<string, string> = {
+      weak: 'AUTH.PASSWORD_STRENGTH.WEAK',
+      fair: 'AUTH.PASSWORD_STRENGTH.FAIR',
+      good: 'AUTH.PASSWORD_STRENGTH.GOOD',
+      strong: 'AUTH.PASSWORD_STRENGTH.STRONG',
+    };
+    return this.translate.instant(keyMap[this.passwordStrength] ?? 'AUTH.PASSWORD_STRENGTH.WEAK');
   }
 
   /**
@@ -269,7 +269,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Get error message for a form control
+   * Get error message for a form control (translated)
    */
   getErrorMessage(control: AbstractControl | null): string {
     if (!control || !control.errors) {
@@ -277,23 +277,23 @@ export class AuthComponent implements OnInit, OnDestroy {
     }
 
     if (control.errors['required']) {
-      return 'Ce champ est requis';
+      return this.translate.instant('AUTH.ERRORS.REQUIRED');
     }
 
     if (control.errors['email']) {
-      return 'Veuillez entrer une adresse email valide';
+      return this.translate.instant('AUTH.ERRORS.INVALID_EMAIL');
     }
 
     if (control.errors['minlength']) {
       const minLength = control.errors['minlength'].requiredLength;
-      return `Le minimum est ${minLength} caractères`;
+      return this.translate.instant('AUTH.ERRORS.MIN_LENGTH', { min: minLength });
     }
 
     if (control.errors['pattern']) {
-      return 'Format invalide';
+      return this.translate.instant('AUTH.ERRORS.INVALID_FORMAT');
     }
 
-    return 'Erreur de validation';
+    return this.translate.instant('AUTH.ERRORS.VALIDATION_ERROR');
   }
 
   /**

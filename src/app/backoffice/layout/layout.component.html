@@ -35,7 +35,7 @@
           <input
             type="text"
             class="search-input"
-            placeholder="Rechercher..."
+            [placeholder]="'LAYOUT.SEARCH_PLACEHOLDER' | translate"
             (keyup)="onSearch($event)"
           />
           <button class="search-btn">
@@ -43,8 +43,11 @@
           </button>
         </div>
 
+        <!-- Language Switcher -->
+        <app-language-switcher></app-language-switcher>
+
         <!-- Messages -->
-        <button class="icon-btn" title="Messages" aria-label="Messages" (click)="toggleMessages()">
+        <button class="icon-btn" [title]="'LAYOUT.MESSAGES' | translate" [attr.aria-label]="'LAYOUT.MESSAGES' | translate" (click)="toggleMessages()">
           <i class="bi bi-chat-dots"></i>
         </button>
 
@@ -70,9 +73,9 @@
     <!-- Notifications Dropdown -->
     <div class="notification-dropdown" *ngIf="notificationOpen">
       <div class="dropdown-header">
-        <h3>Notifications</h3>
+        <h3>{{ 'LAYOUT.NOTIFICATIONS_TITLE' | translate }}</h3>
         <button class="btn-mark-read" (click)="markAllRead()" *ngIf="unreadCount > 0">
-          Marquer tout comme lu
+          {{ 'LAYOUT.MARK_ALL_READ' | translate }}
         </button>
       </div>
 
@@ -84,8 +87,8 @@
         >
           <i [class]="'bi ' + notif.icon"></i>
           <div class="notification-content">
-            <p class="notification-title">{{ notif.title }}</p>
-            <span class="notification-time">{{ notif.time }}</span>
+            <p class="notification-title">{{ notif.title | translate }}</p>
+            <span class="notification-time">{{ notif.time | translate }}</span>
           </div>
           <button class="btn-dismiss" (click)="dismissNotification(notif.id)">
             <i class="bi bi-x"></i>
@@ -94,7 +97,7 @@
 
         <div *ngIf="notifications.length === 0" class="empty-state">
           <i class="bi bi-inbox"></i>
-          <p>Aucune notification</p>
+          <p>{{ 'LAYOUT.NO_NOTIFICATIONS' | translate }}</p>
         </div>
       </div>
     </div>
@@ -114,15 +117,15 @@
       <nav class="dropdown-menu">
         <a href="#" class="dropdown-item">
           <i class="bi bi-person"></i>
-          Mon profil
+          {{ 'LAYOUT.MY_PROFILE' | translate }}
         </a>
         <a href="#" class="dropdown-item">
           <i class="bi bi-gear"></i>
-          Paramètres
+          {{ 'LAYOUT.SETTINGS' | translate }}
         </a>
         <a href="#" class="dropdown-item">
           <i class="bi bi-question-circle"></i>
-          Aide
+          {{ 'LAYOUT.HELP' | translate }}
         </a>
       </nav>
 
@@ -130,7 +133,7 @@
 
       <button class="dropdown-item logout-btn" (click)="logout()">
         <i class="bi bi-box-arrow-right"></i>
-        Déconnexion
+        {{ 'LAYOUT.LOGOUT' | translate }}
       </button>
     </div>
 
