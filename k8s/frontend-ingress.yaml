@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: medicare-frontend
+  namespace: medicare
+  labels:
+    app: medicare-frontend
+    app.kubernetes.io/part-of: medicare
+  annotations:
+    # Works with nginx-ingress-controller (installed by kubeadm + helm)
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    # SSL redirect is disabled below so the manifest works in bare-metal lab
+    # environments without TLS certificates.  For production, remove the
+    # ssl-redirect annotation, configure a TLS secret, and add:
+    #   tls:
+    #     - hosts: [medicare.example.com]
+    #       secretName: medicare-tls
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+    # Replace with your actual domain or node IP
+    - host: medicare.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: medicare-frontend
+                port:
+                  number: 80
