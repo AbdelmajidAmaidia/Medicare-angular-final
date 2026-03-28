@@ -1,0 +1,574 @@
+{
+  "LANG": {
+    "SWITCHER_LABEL": "Language",
+    "EN": "English",
+    "FR": "Français"
+  },
+  "NAV": {
+    "HOME": "Home",
+    "ABOUT": "About",
+    "SERVICES": "Services",
+    "BLOG": "Blog",
+    "PRICING": "Pricing",
+    "LOGIN": "Sign In",
+    "GET_STARTED": "Get Started",
+    "DASHBOARD": "Dashboard"
+  },
+  "FOOTER": {
+    "TAGLINE": "Next-generation AI medical platform. Your health, our priority.",
+    "PRODUCT": "Product",
+    "LEGAL": "Legal",
+    "CONTACT": "Contact",
+    "RESULTS": "Results",
+    "FAQ": "FAQ",
+    "PRIVACY": "Privacy",
+    "TERMS": "Terms",
+    "LEGAL_NOTICES": "Legal Notices",
+    "GDPR": "GDPR",
+    "COPYRIGHT": "© {{year}} MediCare AI. All rights reserved.",
+    "MADE_WITH": "Made with",
+    "IN_TUNISIA": "in Tunisia"
+  },
+  "AUTH": {
+    "TABS": {
+      "LOGIN": "Sign In",
+      "REGISTER": "Register",
+      "LOGIN_ARIA": "Login tab",
+      "REGISTER_ARIA": "Registration tab"
+    },
+    "HEADLINE": "Your health, our priority",
+    "DESCRIPTION": "Join thousands of patients and healthcare professionals transforming their medical approach with MediCare AI.",
+    "BENEFITS": {
+      "ACCURACY": "diagnostic accuracy",
+      "SECURE": "secure medical records",
+      "SUPPORT": "support in English"
+    },
+    "TESTIMONIAL": {
+      "TEXT": "MediCare AI allowed me to receive a diagnosis in less than 24 hours. Incredible!",
+      "AUTHOR": "— Dr. Amani T., Cardiologist"
+    },
+    "LOGIN_FORM": {
+      "TITLE": "Welcome",
+      "SUBTITLE": "Sign in to your MediCare account",
+      "EMAIL_LABEL": "Email",
+      "EMAIL_PLACEHOLDER": "you@example.com",
+      "ROLE_LABEL": "Role",
+      "ROLE_PLACEHOLDER": "Select your role",
+      "PASSWORD_LABEL": "Password",
+      "REMEMBER_ME": "Remember me",
+      "FORGOT_PASSWORD": "Forgot password?",
+      "SUBMIT": "Sign In",
+      "SUBMITTING": "Signing in...",
+      "NO_ACCOUNT": "No account yet?",
+      "SIGN_UP": "Register",
+      "SHOW_PASSWORD": "Show password",
+      "HIDE_PASSWORD": "Hide password"
+    },
+    "REGISTER_FORM": {
+      "TITLE": "Create an account",
+      "SUBTITLE": "Join MediCare in a few steps",
+      "FIRST_NAME_LABEL": "First Name",
+      "FIRST_NAME_PLACEHOLDER": "John",
+      "FIRST_NAME_REQUIRED": "First name is required",
+      "LAST_NAME_LABEL": "Last Name",
+      "LAST_NAME_PLACEHOLDER": "Smith",
+      "LAST_NAME_REQUIRED": "Last name is required",
+      "EMAIL_LABEL": "Email",
+      "EMAIL_PLACEHOLDER": "you@example.com",
+      "ROLE_LABEL": "Role",
+      "ROLE_PLACEHOLDER": "Select your role",
+      "PASSWORD_LABEL": "Password",
+      "CONFIRM_PASSWORD_LABEL": "Confirm Password",
+      "PASSWORDS_MISMATCH": "Passwords do not match",
+      "TERMS": "I accept the",
+      "TERMS_LINK": "terms of use",
+      "AND": "and the",
+      "PRIVACY_LINK": "privacy policy",
+      "SUBMIT": "Create account",
+      "SUBMITTING": "Creating account...",
+      "ALREADY_REGISTERED": "Already registered?",
+      "SIGN_IN": "Sign In",
+      "SHOW_PASSWORD": "Show password",
+      "HIDE_PASSWORD": "Hide password"
+    },
+    "PASSWORD_STRENGTH": {
+      "WEAK": "Weak",
+      "FAIR": "Fair",
+      "GOOD": "Good",
+      "STRONG": "Strong"
+    },
+    "BACK": "Back",
+    "BACK_TO_HOME": "Back to home",
+    "ERRORS": {
+      "REQUIRED": "This field is required",
+      "INVALID_EMAIL": "Please enter a valid email address",
+      "MIN_LENGTH": "Minimum {{min}} characters required",
+      "INVALID_FORMAT": "Invalid format",
+      "VALIDATION_ERROR": "Validation error"
+    }
+  },
+  "ROLES": {
+    "PATIENT": "Patient",
+    "DOCTOR": "Doctor",
+    "LAB": "Lab Technician",
+    "PHARMACY": "Pharmacist",
+    "ADMIN": "Administrator"
+  },
+  "LANDING": {
+    "BADGE": "AI Medical Platform — Next Generation",
+    "HERO_TITLE_1": "The medicine of the future,",
+    "HERO_TITLE_ACCENT": "available today",
+    "HERO_SUBTITLE": "MediCare AI combines artificial intelligence and medical expertise to deliver accurate diagnoses, real-time mental health monitoring, and optimized care management.",
+    "CTA_PRIMARY": "Start for free",
+    "CTA_DEMO": "View demo",
+    "TRUST": {
+      "HDS": "HDS Certified",
+      "GDPR": "GDPR Compliant",
+      "RATING": "4.9/5 — 2,400 reviews"
+    },
+    "DASHBOARD_PREVIEW": {
+      "TITLE": "MediCare AI — Dashboard",
+      "NORMAL": "Normal",
+      "OPTIMAL": "Optimal",
+      "STABLE": "Stable",
+      "AI_ANALYSIS": "AI analysis in progress…",
+      "STRESS": "Stress",
+      "FATIGUE": "Fatigue",
+      "WELLBEING": "Wellbeing",
+      "CONFIRMED": "Confirmed",
+      "TOMORROW": "Tomorrow"
+    },
+    "FLOAT_AI": "Predictive AI",
+    "FLOAT_DIAGNOSTICS": "+1,200 diagnoses / day",
+    "STATS": {
+      "ACTIVE_PATIENTS": "Active patients",
+      "DIAGNOSTICS_DAY": "Diagnoses / day",
+      "AI_ACCURACY": "AI Accuracy",
+      "SATISFACTION": "Satisfaction"
+    },
+    "SERVICES_SECTION": {
+      "EYEBROW": "Our Services",
+      "TITLE": "A complete platform for every medical need",
+      "SUBTITLE": "From prevention to post-consultation follow-up, MediCare AI covers the entire care journey.",
+      "LEARN_MORE": "Learn more"
+    },
+    "FEATURES": {
+      "AI_DIAG": {
+        "TITLE": "AI Diagnostics",
+        "DESC": "Our AI engine analyzes your symptoms and medical history to provide fast, accurate diagnoses.",
+        "POINT_1": "Multi-pathology analysis",
+        "POINT_2": "Specialist suggestions",
+        "POINT_3": "Auto-generated PDF report"
+      },
+      "MENTAL": {
+        "TITLE": "Mental Health",
+        "DESC": "Detection of stress, anxiety, and burnout via facial recognition and behavioral tracking.",
+        "POINT_1": "Real-time facial analysis",
+        "POINT_2": "Daily wellbeing score",
+        "POINT_3": "Preventive alerts"
+      },
+      "APPOINTMENTS": {
+        "TITLE": "Smart Appointments",
+        "DESC": "Intelligent scheduling that optimizes time slots and reduces waiting times.",
+        "POINT_1": "Instant booking",
+        "POINT_2": "Automatic reminders",
+        "POINT_3": "Integrated teleconsultation"
+      },
+      "LAB": {
+        "TITLE": "Lab Results",
+        "DESC": "Consult your lab results and get a clear explanation in natural language.",
+        "POINT_1": "Direct synchronization",
+        "POINT_2": "AI interpretation",
+        "POINT_3": "Complete history"
+      },
+      "PRESCRIPTIONS": {
+        "TITLE": "Digital Prescriptions",
+        "DESC": "Manage, renew, and send your prescriptions directly to your partner pharmacy.",
+        "POINT_1": "Secure QR code",
+        "POINT_2": "1-click renewal",
+        "POINT_3": "Medication reminders"
+      },
+      "RECORDS": {
+        "TITLE": "Medical Records",
+        "DESC": "A unified, secure medical record accessible by your authorized care team.",
+        "POINT_1": "End-to-end encryption",
+        "POINT_2": "Secure shared access",
+        "POINT_3": "FHIR-compatible export"
+      }
+    },
+    "HOW_IT_WORKS": {
+      "EYEBROW": "How it works",
+      "TITLE": "In 3 simple steps",
+      "STEPS": {
+        "STEP_1": {
+          "TITLE": "Create your account",
+          "DESC": "2-minute registration with secure identity verification. Fill in your basic medical profile."
+        },
+        "STEP_2": {
+          "TITLE": "Describe your symptoms",
+          "DESC": "Use our AI interface to describe your symptoms, browse your history, or schedule an appointment."
+        },
+        "STEP_3": {
+          "TITLE": "Receive personalized care",
+          "DESC": "Get a precise diagnosis, recommendations, and direct access to health professionals."
+        }
+      }
+    },
+    "TESTIMONIALS": {
+      "EYEBROW": "Testimonials",
+      "TITLE": "What our users say"
+    },
+    "FAQ": {
+      "EYEBROW": "FAQ",
+      "TITLE": "Frequently asked questions"
+    },
+    "CTA_SECTION": {
+      "EYEBROW": "Join us",
+      "TITLE_1": "Ready to transform",
+      "TITLE_2": "your health?",
+      "SUBTITLE": "Sign up for free and access the full power of medical AI in less than 2 minutes.",
+      "PRIMARY_BTN": "Create a free account",
+      "SECONDARY_BTN": "Already registered? Sign In",
+      "NOTE": "No credit card required · Cancel anytime"
+    }
+  },
+  "ABOUT": {
+    "BADGE": "Who we are",
+    "HERO_TITLE_1": "Redefining medicine",
+    "HERO_TITLE_ACCENT": "through intelligence",
+    "HERO_SUBTITLE": "MediCare AI bridges the gap between cutting-edge artificial intelligence and compassionate clinical practice — making precision medicine accessible to all.",
+    "TRUST": {
+      "ACCURACY": "Diagnostic accuracy",
+      "PATIENTS": "Patients served",
+      "STUDIES": "Published studies"
+    },
+    "MISSION": {
+      "EYEBROW": "Our Mission",
+      "TITLE": "Our 3 pillars"
+    },
+    "TEAM": {
+      "EYEBROW": "The People Behind",
+      "TITLE": "Our Team",
+      "SUBTITLE": "World-class clinicians and engineers united by a single vision.",
+      "JOIN_TEAM": "Join the team",
+      "OUR_SERVICES": "Our services"
+    }
+  },
+  "SERVICES_PAGE": {
+    "BADGE": "Our Services",
+    "HERO_TITLE_1": "A complete platform",
+    "HERO_TITLE_ACCENT": "for your health",
+    "HERO_SUBTITLE": "From consultation to medication delivery, MediCare AI accompanies you at every step of your health journey.",
+    "HOW_IT_WORKS": {
+      "EYEBROW": "How it works",
+      "TITLE": "4 simple steps",
+      "SUBTITLE": "Start your health journey today"
+    },
+    "BENEFITS": {
+      "EYEBROW": "Why MediCare AI",
+      "TITLE": "The advantages that make the difference"
+    },
+    "CTA": {
+      "EYEBROW": "Ready to start?",
+      "TITLE_1": "Transform your",
+      "TITLE_2": "health approach",
+      "SUBTITLE": "Join thousands of patients who trust MediCare AI for their health.",
+      "PRIMARY_BTN": "Start for free",
+      "SECONDARY_BTN": "View pricing",
+      "NOTE": "No credit card required · Cancel anytime"
+    },
+    "LEARN_MORE": "Learn more"
+  },
+  "BLOG_PAGE": {
+    "BADGE": "Blog",
+    "HERO_TITLE_1": "Health news and",
+    "HERO_TITLE_ACCENT": "medical innovations",
+    "HERO_SUBTITLE": "Discover the latest advances in AI medicine, practical advice, and expert testimonials.",
+    "SEARCH_PLACEHOLDER": "Search an article...",
+    "ALL_CATEGORIES": "All",
+    "READ_MORE": "Read more",
+    "CTA": {
+      "EYEBROW": "Stay informed",
+      "TITLE_1": "Subscribe to our",
+      "TITLE_2": "newsletter",
+      "SUBTITLE": "Receive every week the latest medical news and updates from MediCare AI.",
+      "SUBSCRIBE_BTN": "Subscribe",
+      "EMAIL_PLACEHOLDER": "your@email.com",
+      "NOTE": "No spam · Unsubscribe anytime"
+    }
+  },
+  "PRICING_PAGE": {
+    "BADGE": "Pricing",
+    "HERO_TITLE_1": "Simple and transparent",
+    "HERO_TITLE_ACCENT": "pricing",
+    "HERO_SUBTITLE": "Choose the plan that fits your needs. No hidden fees, no commitment.",
+    "PLANS": {
+      "EYEBROW": "Our Plans",
+      "TITLE": "An offer for every need",
+      "POPULAR": "Popular",
+      "NOTE": "All plans include customer support and free updates. 7-day free trial for Plus and Premium plans."
+    },
+    "BENEFITS": {
+      "EYEBROW": "Why choose us",
+      "TITLE": "Advantages included in all plans",
+      "SECURE_TITLE": "100% Secure",
+      "SECURE_DESC": "End-to-end encryption. HDS Certified. GDPR Compliant.",
+      "SUPPORT_TITLE": "24/7 Support",
+      "SUPPORT_DESC": "Team available in English to help you at any time.",
+      "FLEXIBLE_TITLE": "Easy switching",
+      "FLEXIBLE_DESC": "Change plans at any time. No commitment contract.",
+      "GUARANTEE_TITLE": "30-day guarantee",
+      "GUARANTEE_DESC": "Full refund if you are not satisfied."
+    },
+    "FAQ": {
+      "EYEBROW": "Frequently Asked Questions",
+      "TITLE": "Everything you need to know"
+    },
+    "CTA": {
+      "EYEBROW": "Ready to start?",
+      "TITLE_1": "Join thousands of",
+      "TITLE_2": "satisfied patients",
+      "SUBTITLE": "Choose your plan and start your health journey today. Free for the first 7 days!",
+      "PRIMARY_BTN": "Start for free",
+      "SECONDARY_BTN": "Learn more",
+      "NOTE": "No credit card required · Cancel anytime"
+    }
+  },
+  "NOT_FOUND": {
+    "TITLE": "Page not found",
+    "MESSAGE": "Oops! The page you are looking for does not exist or has been moved.",
+    "BACK_HOME": "Back to home"
+  },
+  "LAYOUT": {
+    "SEARCH_PLACEHOLDER": "Search...",
+    "MESSAGES": "Messages",
+    "NOTIFICATIONS": "Notifications",
+    "MARK_ALL_READ": "Mark all as read",
+    "NO_NOTIFICATIONS": "No notifications",
+    "MY_PROFILE": "My profile",
+    "SETTINGS": "Settings",
+    "HELP": "Help",
+    "LOGOUT": "Sign Out",
+    "NOTIFICATIONS_TITLE": "Notifications",
+    "NOTIF": {
+      "NEW_APPOINTMENT": "New appointment tomorrow",
+      "NEW_APPOINTMENT_TIME": "5 minutes ago",
+      "LAB_RESULTS": "Lab results available",
+      "LAB_RESULTS_TIME": "2 hours ago",
+      "SYSTEM_UPDATE": "System update available",
+      "SYSTEM_UPDATE_TIME": "Yesterday"
+    }
+  },
+  "ADMIN_LAYOUT": {
+    "MAIN_MENU": "MAIN MENU",
+    "ADMINISTRATION": "ADMINISTRATION",
+    "ADMIN_PANEL": "Administration Panel",
+    "COLLAPSE": "Collapse",
+    "EXPAND": "Expand",
+    "TOGGLE_SIDEBAR": "Toggle sidebar",
+    "LOGOUT": "Sign Out",
+    "NAV": {
+      "DASHBOARD": "Dashboard",
+      "USERS": "Users",
+      "VERIFICATIONS": "Verifications",
+      "FINANCES": "Finances",
+      "PAYROLL": "Payroll",
+      "SETTINGS": "Settings",
+      "PARAMETERS": "Parameters"
+    }
+  },
+  "ADMIN_DASHBOARD": {
+    "TITLE": "Admin Dashboard",
+    "REFRESH": "Refresh",
+    "STATS": {
+      "TOTAL_USERS": "Total Users",
+      "ACTIVE_DOCTORS": "Active Doctors",
+      "MONTHLY_APPOINTMENTS": "Monthly Appointments",
+      "MONTHLY_REVENUE": "Monthly Revenue",
+      "CHANGE_THIS_MONTH": "+{{count}} this month",
+      "CHANGE_THIS_WEEK": "+{{count}} this week"
+    },
+    "ALERTS": {
+      "TITLE": "Recent Alerts",
+      "VIEW_ALL": "View all",
+      "CLOSE": "Close alert",
+      "EMPTY": "No alerts — Everything working correctly"
+    },
+    "SYSTEM_HEALTH": {
+      "TITLE": "System Health",
+      "ONLINE": "Online",
+      "WARNING": "Warning",
+      "CRITICAL": "Critical"
+    }
+  },
+  "USER_MANAGEMENT": {
+    "TITLE": "User Management",
+    "FOUND": "{{count}} user(s) found",
+    "ADD_USER": "Add User",
+    "SEARCH_PLACEHOLDER": "Search by name or email…",
+    "SEARCH_ARIA": "Search user",
+    "FILTER_ROLE": "Filter by role",
+    "ALL_ROLES": "All roles",
+    "TABLE": {
+      "USER": "User",
+      "ROLE": "Role",
+      "JOINED": "Joined",
+      "STATUS": "Status",
+      "ACTIONS": "Actions"
+    },
+    "ACTIONS": {
+      "EDIT": "Edit",
+      "SUSPEND": "Suspend",
+      "ACTIVATE": "Activate",
+      "DELETE": "Delete"
+    },
+    "EMPTY": "No users match your search."
+  },
+  "DOCTOR_VERIFICATION": {
+    "TITLE": "Doctor Verifications",
+    "PENDING": "{{count}} request(s) pending",
+    "TABLE": {
+      "DOCTOR": "Doctor",
+      "SPECIALTY": "Specialty",
+      "SUBMITTED": "Submitted on",
+      "DOCUMENTS": "Documents",
+      "STATUS": "Status",
+      "ACTIONS": "Actions"
+    },
+    "STATUS": {
+      "PENDING": "Pending",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected"
+    },
+    "ACTIONS": {
+      "APPROVE": "Approve",
+      "REJECT": "Reject"
+    }
+  },
+  "FINANCIALS": {
+    "TITLE": "Platform Finances",
+    "TOTAL_REVENUE": "Total Revenue (Month)",
+    "PENDING": "Pending",
+    "REFUNDS": "Refunds",
+    "RECENT_TRANSACTIONS": "Recent Transactions",
+    "TABLE": {
+      "ID": "ID",
+      "TYPE": "Type",
+      "DESCRIPTION": "Description",
+      "AMOUNT": "Amount",
+      "DATE": "Date",
+      "STATUS": "Status"
+    }
+  },
+  "PAYROLL": {
+    "TITLE": "Payroll Management",
+    "TOTAL_NET": "Total net payable:",
+    "MONTHS": {
+      "JAN": "January 2026",
+      "FEB": "February 2026",
+      "MAR": "March 2026"
+    },
+    "TABLE": {
+      "EMPLOYEE": "Employee",
+      "ROLE": "Role",
+      "BASE_SALARY": "Base Salary",
+      "BONUSES": "Bonuses",
+      "DEDUCTIONS": "Deductions",
+      "NET": "Net",
+      "STATUS": "Status",
+      "ACTION": "Action"
+    },
+    "STATUS": {
+      "PAID": "Paid",
+      "PENDING": "Pending"
+    },
+    "PAY_BTN": "Pay",
+    "PROCESSED": "Processed"
+  },
+  "ADMIN_SETTINGS": {
+    "TITLE": "Platform Settings",
+    "SUBTITLE": "Configure the general settings of the MediCare system.",
+    "SAVED": "Settings saved successfully!",
+    "PLATFORM_NAME": "Platform Name",
+    "SUPPORT_EMAIL": "Support Email",
+    "MAX_APPOINTMENTS": "Max Appointments / Day",
+    "MAINTENANCE_MODE": "Maintenance Mode",
+    "ALLOW_REGISTRATIONS": "Allow Registrations",
+    "SAVE": "Save",
+    "CANCEL": "Cancel"
+  },
+  "DOCTOR_DASHBOARD": {
+    "TITLE": "Welcome, Doctor",
+    "STATS": {
+      "TODAY_APPOINTMENTS": "Today's Appointments",
+      "TOTAL_PATIENTS": "Total Patients",
+      "PENDING_REPORTS": "Pending Reports",
+      "THIS_WEEK": "This Week"
+    },
+    "SCHEDULE": {
+      "TITLE": "Today's Schedule",
+      "VIEW_ALL": "View full schedule",
+      "TABLE": {
+        "PATIENT": "Patient",
+        "AGE": "Age",
+        "TYPE": "Type",
+        "TIME": "Time",
+        "STATUS": "Status",
+        "ACTIONS": "Actions"
+      },
+      "AGE_SUFFIX": "yrs",
+      "START": "Start",
+      "FILE": "File"
+    }
+  },
+  "PATIENT_LIST": {
+    "TITLE": "My Patients",
+    "FOUND": "{{count}} patient(s)",
+    "SEARCH_PLACEHOLDER": "Search a patient…",
+    "TABLE": {
+      "PATIENT": "Patient",
+      "AGE": "Age",
+      "CONDITION": "Condition",
+      "LAST_VISIT": "Last Visit",
+      "NEXT_VISIT": "Next Visit",
+      "STATUS": "Status",
+      "ACTIONS": "Actions"
+    },
+    "AGE_SUFFIX": "yrs",
+    "ACTIONS": {
+      "FILE": "File",
+      "APPOINTMENT": "Appt."
+    },
+    "EMPTY": "No patients found."
+  },
+  "PATIENT_DASHBOARD": {
+    "TITLE": "My Health Space",
+    "APPOINTMENTS": {
+      "TITLE": "Upcoming Appointments",
+      "VIEW_ALL": "View all",
+      "JOIN": "Join",
+      "TELECONSULTATION": "Teleconsultation",
+      "EMPTY": "No scheduled appointments."
+    },
+    "ACTIVITIES": {
+      "TITLE": "Recent Activities"
+    }
+  },
+  "COMMON": {
+    "LOADING": "Loading...",
+    "ERROR": "An error occurred",
+    "SAVE": "Save",
+    "CANCEL": "Cancel",
+    "CLOSE": "Close",
+    "CONFIRM": "Confirm",
+    "DELETE": "Delete",
+    "EDIT": "Edit",
+    "VIEW_ALL": "View all",
+    "SEARCH": "Search",
+    "BACK": "Back",
+    "NEXT": "Next",
+    "PREVIOUS": "Previous",
+    "YES": "Yes",
+    "NO": "No"
+  }
+}

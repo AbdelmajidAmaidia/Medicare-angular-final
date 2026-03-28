@@ -18,38 +18,39 @@
         <a routerLink="/landing" 
            routerLinkActive="active" 
            [routerLinkActiveOptions]="{exact: true}">
-          Accueil
+          {{ 'NAV.HOME' | translate }}
         </a>
       </li>
       <li>
         <a routerLink="/about" 
            routerLinkActive="active">
-          À propos
+          {{ 'NAV.ABOUT' | translate }}
         </a>
       </li>
       <li>
         <a routerLink="/services" 
            routerLinkActive="active">
-          Services
+          {{ 'NAV.SERVICES' | translate }}
         </a>
       </li>
       <li>
         <a routerLink="/blog" 
            routerLinkActive="active">
-          Blog
+          {{ 'NAV.BLOG' | translate }}
         </a>
       </li>
       <li>
         <a routerLink="/pricing" 
            routerLinkActive="active">
-          Tarifs
+          {{ 'NAV.PRICING' | translate }}
         </a>
       </li>
     </ul>
     
     <div class="lp-navbar__actions">
-      <a routerLink="/login" class="lp-btn lp-btn--ghost">Connexion</a>
-      <a routerLink="/login" class="lp-btn lp-btn--primary">Commencer</a>
+      <a routerLink="/auth" class="lp-btn lp-btn--ghost">{{ 'NAV.LOGIN' | translate }}</a>
+      <a routerLink="/auth" class="lp-btn lp-btn--primary">{{ 'NAV.GET_STARTED' | translate }}</a>
+      <app-language-switcher></app-language-switcher>
     </div>
   </div>
 </nav>
@@ -71,27 +72,27 @@
         <!-- Badge -->
         <div class="lp-hero__badge animate-fade-in-up animate-delay-1">
           <span class="lp-pulse"></span>
-          <span>Plateforme Médicale IA — Nouvelle génération</span>
+          <span>{{ 'LANDING.BADGE' | translate }}</span>
         </div>
 
         <!-- Headline -->
         <h1 class="lp-hero__title animate-fade-in-up animate-delay-2">
-          La médecine du futur,<br>
-          <span class="lp-hero__title-accent">disponible aujourd'hui</span>
+          {{ 'LANDING.HERO_TITLE_1' | translate }}<br>
+          <span class="lp-hero__title-accent">{{ 'LANDING.HERO_TITLE_ACCENT' | translate }}</span>
         </h1>
 
         <!-- Subtitle -->
         <p class="lp-hero__subtitle animate-fade-in-up animate-delay-3">
-          MediCare AI combine intelligence artificielle et expertise médicale pour offrir des diagnostics précis, un suivi de santé mental en temps réel et une gestion optimisée des soins.
+          {{ 'LANDING.HERO_SUBTITLE' | translate }}
         </p>
 
         <!-- CTAs -->
         <div class="lp-hero__ctas animate-fade-in-up animate-delay-4">
           <a routerLink="/auth/register" class="lp-btn lp-btn--primary lp-btn--lg">
-            <i class="fas fa-rocket me-2"></i>Démarrer gratuitement
+            <i class="fas fa-rocket me-2"></i>{{ 'LANDING.CTA_PRIMARY' | translate }}
           </a>
           <a href="#services" class="lp-btn lp-btn--ghost-dark lp-btn--lg">
-            <i class="fas fa-play-circle me-2"></i>Voir la démo
+            <i class="fas fa-play-circle me-2"></i>{{ 'LANDING.CTA_DEMO' | translate }}
           </a>
         </div>
 
@@ -99,17 +100,17 @@
         <div class="lp-hero__trust animate-fade-in-up animate-delay-5">
           <div class="lp-hero__trust-item">
             <i class="fas fa-shield-alt"></i>
-            <span>Certifié HDS</span>
+            <span>{{ 'LANDING.TRUST.HDS' | translate }}</span>
           </div>
           <div class="lp-hero__trust-sep"></div>
           <div class="lp-hero__trust-item">
             <i class="fas fa-lock"></i>
-            <span>RGPD Conforme</span>
+            <span>{{ 'LANDING.TRUST.GDPR' | translate }}</span>
           </div>
           <div class="lp-hero__trust-sep"></div>
           <div class="lp-hero__trust-item">
             <i class="fas fa-star"></i>
-            <span>4.9/5 — 2 400 avis</span>
+            <span>{{ 'LANDING.TRUST.RATING' | translate }}</span>
           </div>
         </div>
       </div>
@@ -122,7 +123,7 @@
             <div class="ldp-dots">
               <span></span><span></span><span></span>
             </div>
-            <span class="ldp-title">MediCare AI — Dashboard</span>
+            <span class="ldp-title">{{ 'LANDING.DASHBOARD_PREVIEW.TITLE' | translate }}</span>
           </div>
 
           <!-- Vitals row -->
@@ -134,7 +135,7 @@
                   <strong>72</strong>
                   <small>BPM</small>
                 </div>
-                <span class="ldp-badge ldp-badge--green">Normal</span>
+                <span class="ldp-badge ldp-badge--green">{{ 'LANDING.DASHBOARD_PREVIEW.NORMAL' | translate }}</span>
               </div>
               <div class="ldp-vital ldp-vital--warn">
                 <i class="fas fa-lungs"></i>
@@ -142,7 +143,7 @@
                   <strong>98%</strong>
                   <small>SpO2</small>
                 </div>
-                <span class="ldp-badge ldp-badge--green">Optimal</span>
+                <span class="ldp-badge ldp-badge--green">{{ 'LANDING.DASHBOARD_PREVIEW.OPTIMAL' | translate }}</span>
               </div>
               <div class="ldp-vital ldp-vital--info">
                 <i class="fas fa-thermometer-half"></i>
@@ -150,7 +151,7 @@
                   <strong>37.1°</strong>
                   <small>Temp</small>
                 </div>
-                <span class="ldp-badge ldp-badge--blue">Stable</span>
+                <span class="ldp-badge ldp-badge--blue">{{ 'LANDING.DASHBOARD_PREVIEW.STABLE' | translate }}</span>
               </div>
             </div>
 
@@ -158,21 +159,21 @@
             <div class="ldp-ai-card">
               <div class="ldp-ai-header">
                 <span class="ldp-ai-dot"></span>
-                <span>Analyse IA en cours…</span>
+                <span>{{ 'LANDING.DASHBOARD_PREVIEW.AI_ANALYSIS' | translate }}</span>
               </div>
               <div class="ldp-ai-bars">
                 <div class="ldp-bar">
-                  <span>Stress</span>
+                  <span>{{ 'LANDING.DASHBOARD_PREVIEW.STRESS' | translate }}</span>
                   <div class="ldp-bar-track"><div class="ldp-bar-fill" style="width:28%"></div></div>
                   <span>28%</span>
                 </div>
                 <div class="ldp-bar">
-                  <span>Fatigue</span>
+                  <span>{{ 'LANDING.DASHBOARD_PREVIEW.FATIGUE' | translate }}</span>
                   <div class="ldp-bar-track"><div class="ldp-bar-fill ldp-bar-fill--warn" style="width:54%"></div></div>
                   <span>54%</span>
                 </div>
                 <div class="ldp-bar">
-                  <span>Bien-être</span>
+                  <span>{{ 'LANDING.DASHBOARD_PREVIEW.WELLBEING' | translate }}</span>
                   <div class="ldp-bar-track"><div class="ldp-bar-fill ldp-bar-fill--green" style="width:81%"></div></div>
                   <span>81%</span>
                 </div>
@@ -184,9 +185,9 @@
               <i class="fas fa-calendar-check"></i>
               <div>
                 <strong>Dr. Amani Trabelsi</strong>
-                <small>Cardiologue · Demain 14h30</small>
+                <small>Cardiologist · {{ 'LANDING.DASHBOARD_PREVIEW.TOMORROW' | translate }} 14h30</small>
               </div>
-              <span class="ldp-badge ldp-badge--blue">Confirmé</span>
+              <span class="ldp-badge ldp-badge--blue">{{ 'LANDING.DASHBOARD_PREVIEW.CONFIRMED' | translate }}</span>
             </div>
           </div>
         </div>
@@ -194,11 +195,11 @@
         <!-- Floating cards -->
         <div class="lp-float lp-float--1 animate-fade-in-up animate-delay-5">
           <i class="fas fa-brain text-primary"></i>
-          <span>IA Prédictive</span>
+          <span>{{ 'LANDING.FLOAT_AI' | translate }}</span>
         </div>
         <div class="lp-float lp-float--2 animate-fade-in-up animate-delay-6">
           <i class="fas fa-check-circle text-success"></i>
-          <span>+1 200 diagnostics / jour</span>
+          <span>{{ 'LANDING.FLOAT_DIAGNOSTICS' | translate }}</span>
         </div>
       </div>
     </div>
@@ -212,7 +213,7 @@
       <div class="lp-stats__grid">
         <div *ngFor="let stat of stats" class="lp-stats__item">
           <span class="lp-stats__num">{{ stat.value }}</span>
-          <span class="lp-stats__label">{{ stat.label }}</span>
+          <span class="lp-stats__label">{{ stat.labelKey | translate }}</span>
         </div>
       </div>
     </div>
@@ -224,9 +225,9 @@
   <section id="services" class="lp-section lp-section--light">
     <div class="lp-container">
       <div class="lp-section__head">
-        <span class="lp-section__eyebrow">Nos Services</span>
-        <h2 class="lp-section__title">Une plateforme complète<br>pour chaque besoin médical</h2>
-        <p class="lp-section__sub">De la prévention au suivi post-consultation, MediCare AI couvre tout le parcours de soin.</p>
+        <span class="lp-section__eyebrow">{{ 'LANDING.SERVICES_SECTION.EYEBROW' | translate }}</span>
+        <h2 class="lp-section__title">{{ 'LANDING.SERVICES_SECTION.TITLE' | translate }}</h2>
+        <p class="lp-section__sub">{{ 'LANDING.SERVICES_SECTION.SUBTITLE' | translate }}</p>
       </div>
 
       <div class="lp-features">
@@ -236,15 +237,15 @@
           <div class="lp-feature-card__icon" [ngClass]="'lp-feature-card__icon--' + f.color">
             <i [class]="'fas ' + f.icon"></i>
           </div>
-          <h3 class="lp-feature-card__title">{{ f.title }}</h3>
-          <p class="lp-feature-card__desc">{{ f.desc }}</p>
+          <h3 class="lp-feature-card__title">{{ f.titleKey | translate }}</h3>
+          <p class="lp-feature-card__desc">{{ f.descKey | translate }}</p>
           <ul class="lp-feature-card__list">
-            <li *ngFor="let point of f.points">
-              <i class="fas fa-check"></i> {{ point }}
+            <li *ngFor="let pointKey of f.pointKeys">
+              <i class="fas fa-check"></i> {{ pointKey | translate }}
             </li>
           </ul>
           <a [routerLink]="['/auth']" class="lp-feature-card__link">
-            En savoir plus <i class="fas fa-arrow-right"></i>
+            {{ 'LANDING.SERVICES_SECTION.LEARN_MORE' | translate }} <i class="fas fa-arrow-right"></i>
           </a>
         </div>
       </div>
@@ -257,8 +258,8 @@
   <section class="lp-section lp-section--white">
     <div class="lp-container">
       <div class="lp-section__head">
-        <span class="lp-section__eyebrow">Comment ça marche</span>
-        <h2 class="lp-section__title">En 3 étapes simples</h2>
+        <span class="lp-section__eyebrow">{{ 'LANDING.HOW_IT_WORKS.EYEBROW' | translate }}</span>
+        <h2 class="lp-section__title">{{ 'LANDING.HOW_IT_WORKS.TITLE' | translate }}</h2>
       </div>
 
       <div class="lp-steps">
@@ -268,8 +269,8 @@
           <div class="lp-step__icon">
             <i [class]="'fas ' + step.icon"></i>
           </div>
-          <h4 class="lp-step__title">{{ step.title }}</h4>
-          <p class="lp-step__desc">{{ step.desc }}</p>
+          <h4 class="lp-step__title">{{ step.titleKey | translate }}</h4>
+          <p class="lp-step__desc">{{ step.descKey | translate }}</p>
         </div>
       </div>
     </div>
@@ -281,8 +282,8 @@
   <section id="testimonials" class="lp-section lp-section--dark">
     <div class="lp-container">
       <div class="lp-section__head lp-section__head--light">
-        <span class="lp-section__eyebrow lp-section__eyebrow--light">Témoignages</span>
-        <h2 class="lp-section__title lp-section__title--light">Ce que disent nos utilisateurs</h2>
+        <span class="lp-section__eyebrow lp-section__eyebrow--light">{{ 'LANDING.TESTIMONIALS.EYEBROW' | translate }}</span>
+        <h2 class="lp-section__title lp-section__title--light">{{ 'LANDING.TESTIMONIALS.TITLE' | translate }}</h2>
       </div>
 
       <div class="lp-testimonials">
@@ -309,8 +310,8 @@
   <section id="faq" class="lp-section lp-section--light">
     <div class="lp-container lp-container--narrow">
       <div class="lp-section__head">
-        <span class="lp-section__eyebrow">FAQ</span>
-        <h2 class="lp-section__title">Questions fréquentes</h2>
+        <span class="lp-section__eyebrow">{{ 'LANDING.FAQ.EYEBROW' | translate }}</span>
+        <h2 class="lp-section__title">{{ 'LANDING.FAQ.TITLE' | translate }}</h2>
       </div>
 
       <div class="lp-faq">
@@ -340,20 +341,20 @@
     </div>
     <div class="lp-container">
       <div class="lp-cta__content">
-        <span class="lp-section__eyebrow lp-section__eyebrow--light">Rejoignez-nous</span>
-        <h2 class="lp-cta__title">Prêt à transformer<br>votre santé ?</h2>
-        <p class="lp-cta__sub">Inscrivez-vous gratuitement et accédez à toute la puissance de l'IA médicale en moins de 2 minutes.</p>
+        <span class="lp-section__eyebrow lp-section__eyebrow--light">{{ 'LANDING.CTA_SECTION.EYEBROW' | translate }}</span>
+        <h2 class="lp-cta__title">{{ 'LANDING.CTA_SECTION.TITLE_1' | translate }}<br>{{ 'LANDING.CTA_SECTION.TITLE_2' | translate }}</h2>
+        <p class="lp-cta__sub">{{ 'LANDING.CTA_SECTION.SUBTITLE' | translate }}</p>
         <div class="lp-cta__actions">
           <a routerLink="/auth/register" class="lp-btn lp-btn--white lp-btn--lg">
-            <i class="fas fa-user-plus me-2"></i>Créer un compte gratuit
+            <i class="fas fa-user-plus me-2"></i>{{ 'LANDING.CTA_SECTION.PRIMARY_BTN' | translate }}
           </a>
           <a routerLink="/auth" class="lp-btn lp-btn--ghost lp-btn--lg">
-            Déjà inscrit ? Se connecter
+            {{ 'LANDING.CTA_SECTION.SECONDARY_BTN' | translate }}
           </a>
         </div>
         <p class="lp-cta__note">
           <i class="fas fa-shield-alt me-1"></i>
-          Aucune carte bancaire requise · Annulation à tout moment
+          {{ 'LANDING.CTA_SECTION.NOTE' | translate }}
         </p>
       </div>
     </div>
@@ -368,34 +369,33 @@
         <div class="lp-footer__brand">
           <span class="lp-navbar__brand-icon"><i class="fas fa-heartbeat"></i></span>
           <span class="lp-navbar__brand-text">Medi<strong>Care</strong> <em>AI</em></span>
-          <p>La plateforme médicale IA de nouvelle génération. Votre santé, notre priorité.</p>
+          <p>{{ 'FOOTER.TAGLINE' | translate }}</p>
         </div>
         <div class="lp-footer__col">
-          <h5>Produit</h5>
-          <a href="#services">Services</a>
-          <a href="#stats">Résultats</a>
-          <a href="#faq">FAQ</a>
-          <a routerLink="/auth">Connexion</a>
+          <h5>{{ 'FOOTER.PRODUCT' | translate }}</h5>
+          <a href="#services">{{ 'NAV.SERVICES' | translate }}</a>
+          <a href="#stats">{{ 'LANDING.STATS.ACTIVE_PATIENTS' | translate }}</a>
+          <a href="#faq">{{ 'LANDING.FAQ.EYEBROW' | translate }}</a>
+          <a routerLink="/auth">{{ 'NAV.LOGIN' | translate }}</a>
         </div>
         <div class="lp-footer__col">
-          <h5>Légal</h5>
-          <a href="#">Confidentialité</a>
-          <a href="#">CGU</a>
-          <a href="#">Mentions légales</a>
-          <a href="#">RGPD</a>
+          <h5>{{ 'FOOTER.LEGAL' | translate }}</h5>
+          <a href="#">{{ 'FOOTER.PRIVACY' | translate }}</a>
+          <a href="#">{{ 'FOOTER.TERMS' | translate }}</a>
+          <a href="#">{{ 'FOOTER.LEGAL_NOTICES' | translate }}</a>
+          <a href="#">{{ 'FOOTER.GDPR' | translate }}</a>
         </div>
         <div class="lp-footer__col">
-          <h5>Contact</h5>
+          <h5>{{ 'FOOTER.CONTACT' | translate }}</h5>
           <a href="mailto:contact@medicare-ai.tn">contact&#64;medicare-ai.tn</a>
           <a href="tel:+21698000000">+216 98 000 000</a>
-          <a href="#">Tunis, Tunisie</a>
+          <a href="#">Tunis, Tunisia</a>
         </div>
       </div>
       <div class="lp-footer__bottom">
-        <span>© {{ currentYear }} MediCare AI. Tous droits réservés.</span>
-        <span>Fait avec <i class="fas fa-heart text-danger"></i> en Tunisie</span>
+        <span>© {{ currentYear }} MediCare AI. {{ 'FOOTER.COPYRIGHT' | translate }}</span>
+        <span>{{ 'FOOTER.MADE_WITH' | translate }} <i class="fas fa-heart text-danger"></i> {{ 'FOOTER.IN_TUNISIA' | translate }}</span>
       </div>
     </div>
   </footer>
 
-</div>

@@ -1,6 +1,8 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, provideZoneChangeDetection, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, HTTP_INTERCEPTORS, withXsrfConfiguration } from '@angular/common/http';
+import { TranslateModule } from '@ngx-translate/core';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { routes } from './app.routes';
 import { AuthHttpInterceptor } from './frontoffice/services/auth.http.interceptor';
 
@@ -18,6 +20,12 @@ export const appConfig: ApplicationConfig = {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthHttpInterceptor,
       multi: true
-    }
+    },
+    importProvidersFrom(
+      TranslateModule.forRoot({
+        defaultLanguage: 'en',
+      })
+    ),
+    ...provideTranslateHttpLoader({ prefix: './assets/i18n/', suffix: '.json' }),
   ]
 };

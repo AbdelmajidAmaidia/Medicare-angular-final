@@ -5,6 +5,11 @@
     <div class="auth-orb auth-orb--2"></div>
   </div>
 
+  <!-- Language Switcher (top right) -->
+  <div class="auth-lang-switcher">
+    <app-language-switcher></app-language-switcher>
+  </div>
+
   <div class="auth-container">
     <!-- Left Section -->
     <div class="auth-left">
@@ -17,18 +22,17 @@
         </a>
 
         <h1 class="auth-headline">
-          Votre santé,<br>
-          <span>notre priorité</span>
+          {{ 'AUTH.HEADLINE' | translate }}
         </h1>
 
         <p class="auth-description">
-          Rejoignez des milliers de patients et professionnels de santé qui transforment leur approche médicale avec MediCare AI.
+          {{ 'AUTH.DESCRIPTION' | translate }}
         </p>
 
         <ul class="auth-benefits">
-          <li><i class="fas fa-check-circle"></i> <span><strong>98.4%</strong> de précision diagnostique</span></li>
-          <li><i class="fas fa-check-circle"></i> <span>Dossier médical <strong>100% sécurisé</strong></span></li>
-          <li><i class="fas fa-check-circle"></i> <span>Support <strong>24/7</strong> en français</span></li>
+          <li><i class="fas fa-check-circle"></i> <span><strong>98.4%</strong> {{ 'AUTH.BENEFITS.ACCURACY' | translate }}</span></li>
+          <li><i class="fas fa-check-circle"></i> <span>{{ 'AUTH.BENEFITS.SECURE' | translate }}</span></li>
+          <li><i class="fas fa-check-circle"></i> <span>{{ 'AUTH.BENEFITS.SUPPORT' | translate }}</span></li>
         </ul>
 
         <div class="auth-testimonial">
@@ -36,9 +40,9 @@
             <i *ngFor="let s of [1,2,3,4,5]" class="fas fa-star"></i>
           </div>
           <p class="auth-testimonial__text">
-            "MediCare AI m'a permis de recevoir un diagnostic en moins de 24h. Incroyable!"
+            "{{ 'AUTH.TESTIMONIAL.TEXT' | translate }}"
           </p>
-          <span class="auth-testimonial__author">— Dr. Amani T., Cardiologue</span>
+          <span class="auth-testimonial__author">{{ 'AUTH.TESTIMONIAL.AUTHOR' | translate }}</span>
         </div>
       </div>
     </div>
@@ -50,8 +54,8 @@
                 class="auth-tab"
                 [class.auth-tab--active]="activeTab === 'login'"
                 (click)="switchTab('login')"
-                aria-label="Onglet connexion">
-          <span>Se connecter</span>
+                [attr.aria-label]="'AUTH.TABS.LOGIN_ARIA' | translate">
+          <span>{{ 'AUTH.TABS.LOGIN' | translate }}</span>
           <i class="fas fa-sign-in-alt"></i>
         </button>
 
@@ -59,8 +63,8 @@
                 class="auth-tab"
                 [class.auth-tab--active]="activeTab === 'register'"
                 (click)="switchTab('register')"
-                aria-label="Onglet inscription">
-          <span>S'inscrire</span>
+                [attr.aria-label]="'AUTH.TABS.REGISTER_ARIA' | translate">
+          <span>{{ 'AUTH.TABS.REGISTER' | translate }}</span>
           <i class="fas fa-user-plus"></i>
         </button>
       </div>
@@ -69,11 +73,10 @@
       <form *ngIf="activeTab === 'login'"
             [formGroup]="loginForm"
             (ngSubmit)="onLogin()"
-            class="auth-form animate-fade-in"
-            [attr.aria-label]="'Formulaire de connexion'">
+            class="auth-form animate-fade-in">
 
-        <h2 class="auth-form__title">Bienvenue</h2>
-        <p class="auth-form__subtitle">Connectez-vous à votre compte MediCare</p>
+        <h2 class="auth-form__title">{{ 'AUTH.LOGIN_FORM.TITLE' | translate }}</h2>
+        <p class="auth-form__subtitle">{{ 'AUTH.LOGIN_FORM.SUBTITLE' | translate }}</p>
 
         <!-- Error Message -->
         <div *ngIf="loginError" class="auth-error-banner">
@@ -85,13 +88,13 @@
         <div class="auth-form__group">
           <label class="auth-label">
             <i class="fas fa-envelope"></i>
-            Email
+            {{ 'AUTH.LOGIN_FORM.EMAIL_LABEL' | translate }}
           </label>
           <div class="auth-input-wrapper">
             <input type="email" 
                    formControlName="email" 
                    class="auth-input"
-                   placeholder="vous@example.com"
+                   [placeholder]="'AUTH.LOGIN_FORM.EMAIL_PLACEHOLDER' | translate"
                    [attr.aria-invalid]="isFieldInvalid('loginForm', 'email')">
             <i class="fas fa-check-circle" *ngIf="loginForm.get('email')?.valid && loginForm.get('email')?.touched"></i>
           </div>
@@ -105,14 +108,14 @@
         <div class="auth-form__group">
           <label class="auth-label">
             <i class="fas fa-user-circle"></i>
-            Rôle
+            {{ 'AUTH.LOGIN_FORM.ROLE_LABEL' | translate }}
           </label>
           <div class="auth-select-wrapper">
             <i class="fas fa-chevron-down"></i>
             <select formControlName="role" class="auth-select">
-              <option value="" disabled>Sélectionnez votre rôle</option>
+              <option value="" disabled>{{ 'AUTH.LOGIN_FORM.ROLE_PLACEHOLDER' | translate }}</option>
               <option *ngFor="let role of roles" [value]="role.value">
-                {{ role.label }}
+                {{ role.label | translate }}
               </option>
             </select>
           </div>
@@ -122,7 +125,7 @@
         <div class="auth-form__group">
           <label class="auth-label">
             <i class="fas fa-lock"></i>
-            Mot de passe
+            {{ 'AUTH.LOGIN_FORM.PASSWORD_LABEL' | translate }}
           </label>
           <div class="auth-input-wrapper auth-input-wrapper--password">
             <input [type]="showPassword ? 'text' : 'password'"
@@ -133,7 +136,7 @@
             <button type="button"
                     class="auth-input__toggle"
                     (click)="togglePasswordVisibility()"
-                    [attr.aria-label]="showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'">
+                    [attr.aria-label]="(showPassword ? 'AUTH.LOGIN_FORM.HIDE_PASSWORD' : 'AUTH.LOGIN_FORM.SHOW_PASSWORD') | translate">
               <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
             </button>
           </div>
@@ -150,9 +153,9 @@
                  formControlName="rememberMe" 
                  class="auth-checkbox">
           <label for="rememberMe" class="auth-checkbox__label">
-            Se souvenir de moi
+            {{ 'AUTH.LOGIN_FORM.REMEMBER_ME' | translate }}
           </label>
-          <a href="#" class="auth-forgot">Mot de passe oublié ?</a>
+          <a href="#" class="auth-forgot">{{ 'AUTH.LOGIN_FORM.FORGOT_PASSWORD' | translate }}</a>
         </div>
 
         <!-- Submit Button -->
@@ -162,13 +165,13 @@
                 [attr.aria-busy]="isLoading">
           <i *ngIf="!isLoading" class="fas fa-sign-in-alt"></i>
           <i *ngIf="isLoading" class="fas fa-spinner fa-spin"></i>
-          {{ isLoading ? 'Connexion en cours...' : 'Se connecter' }}
+          {{ (isLoading ? 'AUTH.LOGIN_FORM.SUBMITTING' : 'AUTH.LOGIN_FORM.SUBMIT') | translate }}
         </button>
 
         <!-- Sign Up Link -->
         <div class="auth-form__footer">
-          <span>Pas encore de compte ?</span>
-          <a class="auth-link" (click)="switchTab('register')">S'inscrire</a>
+          <span>{{ 'AUTH.LOGIN_FORM.NO_ACCOUNT' | translate }}</span>
+          <a class="auth-link" (click)="switchTab('register')">{{ 'AUTH.LOGIN_FORM.SIGN_UP' | translate }}</a>
         </div>
       </form>
 
@@ -176,11 +179,10 @@
       <form *ngIf="activeTab === 'register'"
             [formGroup]="registerForm"
             (ngSubmit)="onRegister()"
-            class="auth-form animate-fade-in"
-            [attr.aria-label]="'Formulaire d\'inscription'">
+            class="auth-form animate-fade-in">
 
-        <h2 class="auth-form__title">Créer un compte</h2>
-        <p class="auth-form__subtitle">Rejoignez MediCare en quelques étapes</p>
+        <h2 class="auth-form__title">{{ 'AUTH.REGISTER_FORM.TITLE' | translate }}</h2>
+        <p class="auth-form__subtitle">{{ 'AUTH.REGISTER_FORM.SUBTITLE' | translate }}</p>
 
         <!-- Error Message -->
         <div *ngIf="registerError" class="auth-error-banner">
@@ -193,32 +195,32 @@
           <div class="auth-form__group">
             <label class="auth-label">
               <i class="fas fa-user"></i>
-              Prénom
+              {{ 'AUTH.REGISTER_FORM.FIRST_NAME_LABEL' | translate }}
             </label>
             <input type="text" 
                    formControlName="firstName" 
                    class="auth-input"
-                   placeholder="Jean"
+                   [placeholder]="'AUTH.REGISTER_FORM.FIRST_NAME_PLACEHOLDER' | translate"
                    [attr.aria-invalid]="isFieldInvalid('registerForm', 'firstName')">
             <div *ngIf="isFieldInvalid('registerForm', 'firstName')" class="auth-error">
               <i class="fas fa-exclamation-circle"></i>
-              <span>Le prénom est requis</span>
+              <span>{{ 'AUTH.REGISTER_FORM.FIRST_NAME_REQUIRED' | translate }}</span>
             </div>
           </div>
 
           <div class="auth-form__group">
             <label class="auth-label">
               <i class="fas fa-user"></i>
-              Nom
+              {{ 'AUTH.REGISTER_FORM.LAST_NAME_LABEL' | translate }}
             </label>
             <input type="text" 
                    formControlName="lastName" 
                    class="auth-input"
-                   placeholder="Dupont"
+                   [placeholder]="'AUTH.REGISTER_FORM.LAST_NAME_PLACEHOLDER' | translate"
                    [attr.aria-invalid]="isFieldInvalid('registerForm', 'lastName')">
             <div *ngIf="isFieldInvalid('registerForm', 'lastName')" class="auth-error">
               <i class="fas fa-exclamation-circle"></i>
-              <span>Le nom est requis</span>
+              <span>{{ 'AUTH.REGISTER_FORM.LAST_NAME_REQUIRED' | translate }}</span>
             </div>
           </div>
         </div>
@@ -227,13 +229,13 @@
         <div class="auth-form__group">
           <label class="auth-label">
             <i class="fas fa-envelope"></i>
-            Email
+            {{ 'AUTH.REGISTER_FORM.EMAIL_LABEL' | translate }}
           </label>
           <div class="auth-input-wrapper">
             <input type="email" 
                    formControlName="email" 
                    class="auth-input"
-                   placeholder="vous@example.com"
+                   [placeholder]="'AUTH.REGISTER_FORM.EMAIL_PLACEHOLDER' | translate"
                    [attr.aria-invalid]="isFieldInvalid('registerForm', 'email')">
             <i class="fas fa-check-circle" *ngIf="registerForm.get('email')?.valid && registerForm.get('email')?.touched"></i>
           </div>
@@ -247,14 +249,14 @@
         <div class="auth-form__group">
           <label class="auth-label">
             <i class="fas fa-user-circle"></i>
-            Rôle
+            {{ 'AUTH.REGISTER_FORM.ROLE_LABEL' | translate }}
           </label>
           <div class="auth-select-wrapper">
             <i class="fas fa-chevron-down"></i>
             <select formControlName="role" class="auth-select">
-              <option value="" disabled>Sélectionnez votre rôle</option>
+              <option value="" disabled>{{ 'AUTH.REGISTER_FORM.ROLE_PLACEHOLDER' | translate }}</option>
               <option *ngFor="let role of roles" [value]="role.value">
-                {{ role.label }}
+                {{ role.label | translate }}
               </option>
             </select>
           </div>
@@ -264,7 +266,7 @@
         <div class="auth-form__group">
           <label class="auth-label">
             <i class="fas fa-lock"></i>
-            Mot de passe
+            {{ 'AUTH.REGISTER_FORM.PASSWORD_LABEL' | translate }}
           </label>
           <div class="auth-input-wrapper auth-input-wrapper--password">
             <input [type]="showPassword ? 'text' : 'password'"
@@ -276,7 +278,7 @@
             <button type="button"
                     class="auth-input__toggle"
                     (click)="togglePasswordVisibility()"
-                    [attr.aria-label]="showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'">
+                    [attr.aria-label]="(showPassword ? 'AUTH.REGISTER_FORM.HIDE_PASSWORD' : 'AUTH.REGISTER_FORM.SHOW_PASSWORD') | translate">
               <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
             </button>
           </div>
@@ -303,7 +305,7 @@
         <div class="auth-form__group">
           <label class="auth-label">
             <i class="fas fa-lock"></i>
-            Confirmer le mot de passe
+            {{ 'AUTH.REGISTER_FORM.CONFIRM_PASSWORD_LABEL' | translate }}
           </label>
           <div class="auth-input-wrapper auth-input-wrapper--password">
             <input [type]="showConfirmPassword ? 'text' : 'password'"
@@ -314,13 +316,13 @@
             <button type="button"
                     class="auth-input__toggle"
                     (click)="toggleConfirmPasswordVisibility()"
-                    [attr.aria-label]="showConfirmPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'">
+                    [attr.aria-label]="(showConfirmPassword ? 'AUTH.REGISTER_FORM.HIDE_PASSWORD' : 'AUTH.REGISTER_FORM.SHOW_PASSWORD') | translate">
               <i [class]="showConfirmPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
             </button>
           </div>
           <div *ngIf="passwordMismatch && registerForm.get('confirmPassword')?.touched" class="auth-error">
             <i class="fas fa-exclamation-circle"></i>
-            <span>Les mots de passe ne correspondent pas</span>
+            <span>{{ 'AUTH.REGISTER_FORM.PASSWORDS_MISMATCH' | translate }}</span>
           </div>
         </div>
 
@@ -332,7 +334,10 @@
                  class="auth-checkbox"
                  [attr.aria-invalid]="isFieldInvalid('registerForm', 'agreeTerms')">
           <label for="agreeTerms" class="auth-checkbox__label">
-            J'accepte les <a href="#" target="_blank">conditions d'utilisation</a> et la <a href="#" target="_blank">politique de confidentialité</a>
+            {{ 'AUTH.REGISTER_FORM.TERMS' | translate }}
+            <a href="#" target="_blank">{{ 'AUTH.REGISTER_FORM.TERMS_LINK' | translate }}</a>
+            {{ 'AUTH.REGISTER_FORM.AND' | translate }}
+            <a href="#" target="_blank">{{ 'AUTH.REGISTER_FORM.PRIVACY_LINK' | translate }}</a>
           </label>
         </div>
 
@@ -343,21 +348,21 @@
                 [attr.aria-busy]="isLoading">
           <i *ngIf="!isLoading" class="fas fa-user-plus"></i>
           <i *ngIf="isLoading" class="fas fa-spinner fa-spin"></i>
-          {{ isLoading ? 'Création en cours...' : 'Créer un compte' }}
+          {{ (isLoading ? 'AUTH.REGISTER_FORM.SUBMITTING' : 'AUTH.REGISTER_FORM.SUBMIT') | translate }}
         </button>
 
         <!-- Login Link -->
         <div class="auth-form__footer">
-          <span>Déjà inscrit ?</span>
-          <a class="auth-link" (click)="switchTab('login')">Se connecter</a>
+          <span>{{ 'AUTH.REGISTER_FORM.ALREADY_REGISTERED' | translate }}</span>
+          <a class="auth-link" (click)="switchTab('login')">{{ 'AUTH.REGISTER_FORM.SIGN_IN' | translate }}</a>
         </div>
       </form>
     </div>
   </div>
 
   <!-- Back Button -->
-  <a routerLink="/" class="auth-back" aria-label="Retour à l'accueil">
+  <a routerLink="/" class="auth-back" [attr.aria-label]="'AUTH.BACK_TO_HOME' | translate">
     <i class="fas fa-arrow-left"></i>
-    Retour
+    {{ 'AUTH.BACK' | translate }}
   </a>
 </div>
