@@ -1,0 +1,27 @@
+# Git
+.git
+.gitignore
+
+# Node modules (installed inside the container)
+node_modules
+
+# Local build artefacts
+dist
+
+# IDE / editor folders
+.vscode
+.idea
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test & coverage reports
+coverage
+
+# Kubernetes / Helm files (not needed in the image)
+k8s
+
+# Misc dev files
+*.md
+*.log
