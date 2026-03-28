@@ -286,6 +286,7 @@
     "HERO_SUBTITLE": "Découvrez les dernières avancées en médecine IA, des conseils pratiques et des témoignages d'experts.",
     "SEARCH_PLACEHOLDER": "Rechercher un article...",
     "ALL_CATEGORIES": "Tous",
+    "EMPTY_STATE": "Essayez avec d'autres mots-clés ou explorez toutes les catégories.",
     "READ_MORE": "Lire la suite",
     "CTA": {
       "EYEBROW": "Restez informé",
@@ -294,7 +295,8 @@
       "SUBTITLE": "Recevez chaque semaine les dernières actualités médicales et les mises à jour de MediCare AI.",
       "SUBSCRIBE_BTN": "S'abonner",
       "EMAIL_PLACEHOLDER": "votre@email.com",
-      "NOTE": "Pas de spam · Désabonnement à tout moment"
+      "NOTE": "Pas de spam · Désabonnement à tout moment",
+      "SUBSCRIBED_THANKS": "Merci ! Vous êtes bien abonné(e)."
     }
   },
   "PRICING_PAGE": {

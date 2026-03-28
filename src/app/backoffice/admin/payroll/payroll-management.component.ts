@@ -22,7 +22,6 @@ export interface PayrollEntry {
 @Component({
   selector: 'app-payroll-management',
   standalone: true,
-  imports: [CommonModule, FormsModule],
   templateUrl: './payroll-management.component.html',
 })
 export class PayrollManagementComponent {

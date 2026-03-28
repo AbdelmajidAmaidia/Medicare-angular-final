@@ -9,7 +9,6 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-admin-settings',
   standalone: true,
-  imports: [CommonModule, FormsModule],
   templateUrl: './admin-settings.component.html',
 })
 export class AdminSettingsComponent {
