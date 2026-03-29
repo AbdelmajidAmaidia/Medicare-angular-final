@@ -1,1 +1,1 @@
-{"scripts":{"test:ci":"ng test --code-coverage --watch=false"}}
+{"scripts":{"test:ci":" npx ng test --code-coverage --watch=false"}}
