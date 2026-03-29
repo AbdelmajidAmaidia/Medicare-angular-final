@@ -1,0 +1,91 @@
+# ============================================================
+# CI/CD Pipeline – Frontend Angular (Medicare AI UI)
+# ============================================================
+# Triggered on every push or pull request targeting 'main'.
+# Steps:
+#   1. Checkout the source code
+#   2. Set up Node.js and cache npm dependencies
+#   3. Install all npm dependencies (npm ci)
+#   4. Verify critical config files (package.json, tsconfig.json)
+#   5. Build the Angular application (ng build)
+#   6. Run unit tests with code coverage (ng test)
+#   7. Upload the build artefact (dist/) for deployment
+# ============================================================
+
+name: Frontend CI – Angular
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    name: Build & Test (Angular)
+    runs-on: ubuntu-latest
+
+    # Minimal permissions: only read the repository contents
+    permissions:
+      contents: read
+
+    steps:
+      # ----------------------------------------------------------
+      # Step 1 – Retrieve the source code from the repository
+      # ----------------------------------------------------------
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      # ----------------------------------------------------------
+      # Step 2 – Set up Node.js 20 and enable npm dependency cache
+      # ----------------------------------------------------------
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # ----------------------------------------------------------
+      # Step 3 – Install all npm dependencies
+      #           'npm ci' uses the lock file for a reproducible install
+      # ----------------------------------------------------------
+      - name: Install dependencies
+        run: npm ci
+
+      # ----------------------------------------------------------
+      # Step 4 – Verify that critical configuration files exist
+      #           and are valid JSON (package.json & tsconfig.json)
+      # ----------------------------------------------------------
+      - name: Verify package.json
+        run: node -e "require('./package.json'); console.log('package.json is valid')"
+
+      - name: Verify tsconfig.json
+        run: node -e "require('./tsconfig.json'); console.log('tsconfig.json is valid')"
+
+      # ----------------------------------------------------------
+      # Step 5 – Build the Angular application
+      #           Output is written to dist/medicare-angular/
+      # ----------------------------------------------------------
+      - name: Build Angular application
+        run: npm run build
+
+      # ----------------------------------------------------------
+      # Step 6 – Run unit tests with Karma/Jasmine (headless Chrome)
+      #           --watch=false  → single run, then exit
+      #           --code-coverage → generate coverage report
+      # ----------------------------------------------------------
+      - name: Run unit tests
+        run: npm run test:ci
+        env:
+          CI: true
+
+      # ----------------------------------------------------------
+      # Step 7 – Upload the build artefact so it can be downloaded
+      #           and deployed without rebuilding
+      # ----------------------------------------------------------
+      - name: Upload build artefact (dist/)
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-medicare-angular
+          path: dist/medicare-angular
+          retention-days: 7
