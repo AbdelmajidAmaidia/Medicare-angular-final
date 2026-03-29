@@ -1,0 +1,94 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboards-provider
+  namespace: monitoring
+  labels:
+    app: grafana
+data:
+  dashboards.yaml: |
+    apiVersion: 1
+    providers:
+      - name: default
+        orgId: 1
+        type: file
+        disableDeletion: false
+        updateIntervalSeconds: 30
+        options:
+          path: /var/lib/grafana/dashboards
+---
+# ── Pre-loaded dashboard: Nginx (Medicare Frontend) ──────────────────────────
+# Based on Nginx Exporter dashboard (Grafana ID 12708 / community)
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboard-nginx
+  namespace: monitoring
+  labels:
+    app: grafana
+    grafana_dashboard: "1"
+data:
+  nginx-dashboard.json: |
+    {
+      "title": "Medicare Frontend – Nginx",
+      "uid": "medicare-nginx",
+      "schemaVersion": 27,
+      "version": 1,
+      "panels": [
+        {
+          "type": "stat",
+          "title": "Active Connections",
+          "id": 1,
+          "gridPos": {"h": 4, "w": 4, "x": 0, "y": 0},
+          "targets": [
+            {
+              "expr": "nginx_connections_active{namespace=\"medicare\"}",
+              "legendFormat": "Active"
+            }
+          ]
+        },
+        {
+          "type": "stat",
+          "title": "Total Requests",
+          "id": 2,
+          "gridPos": {"h": 4, "w": 4, "x": 4, "y": 0},
+          "targets": [
+            {
+              "expr": "rate(nginx_http_requests_total{namespace=\"medicare\"}[5m])",
+              "legendFormat": "req/s"
+            }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "Request Rate",
+          "id": 3,
+          "gridPos": {"h": 8, "w": 12, "x": 0, "y": 4},
+          "targets": [
+            {
+              "expr": "rate(nginx_http_requests_total{namespace=\"medicare\"}[5m])",
+              "legendFormat": "{{pod}}"
+            }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "Connections",
+          "id": 4,
+          "gridPos": {"h": 8, "w": 12, "x": 12, "y": 4},
+          "targets": [
+            {
+              "expr": "nginx_connections_active{namespace=\"medicare\"}",
+              "legendFormat": "active – {{pod}}"
+            },
+            {
+              "expr": "nginx_connections_waiting{namespace=\"medicare\"}",
+              "legendFormat": "waiting – {{pod}}"
+            }
+          ]
+        }
+      ],
+      "templating": {"list": []},
+      "time": {"from": "now-1h", "to": "now"},
+      "refresh": "30s"
+    }

@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
   template: `
     <div class="page-container">
       <div class="page-header mb-4">
-        <h1 class="page-title">Tableau de Bord Laboratoire</h1>
+        <h1 class="page-title"><i class="bi bi-clipboard2-pulse" style="margin-right:.5rem;color:#3b82f6"></i>Tableau de Bord Laboratoire</h1>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-bottom:1.75rem">
         <div *ngFor="let s of stats" class="stat-card" [ngClass]="'stat-card--'+s.color" style="display:flex;align-items:flex-start;gap:1rem;background:#fff;border-radius:12px;padding:1.25rem;border:1px solid #e2e8f0">

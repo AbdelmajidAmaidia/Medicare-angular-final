@@ -2,22 +2,25 @@
   "name": "medicare-ai-ui",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "ng": "npx ng",
+    "start": "npx ng serve",
+    "build": "npx ng build",
+    "watch": "npx ng build --watch --configuration development",
+    "test": "npx ng test",
+    "test:ci": "npx ng test --watch=false --code-coverage",
+    "lint": "npx ng lint"
   },
-  "private": true,
   "dependencies": {
-    "@angular/animations": "19.2.18",
-    "@angular/common": "19.2.18",
-    "@angular/compiler": "19.2.18",
-    "@angular/core": "19.2.18",
-    "@angular/forms": "19.2.18",
-    "@angular/platform-browser": "19.2.18",
-    "@angular/platform-browser-dynamic": "19.2.18",
-    "@angular/router": "19.2.18",
+    "@angular/animations": "19.2.20",
+    "@angular/common": "19.2.20",
+    "@angular/compiler": "19.2.20",
+    "@angular/core": "19.2.20",
+    "@angular/forms": "19.2.20",
+    "@angular/platform-browser": "19.2.20",
+    "@angular/platform-browser-dynamic": "19.2.20",
+    "@angular/router": "19.2.20",
+    "@ngx-translate/core": "^17.0.0",
+    "@ngx-translate/http-loader": "^17.0.0",
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
     "rxjs": "~7.8.0",
@@ -26,9 +29,9 @@
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "19.2.18",
-    "@angular/cli": "19.2.18",
-    "@angular/compiler-cli": "19.2.18",
+    "@angular-devkit/build-angular": "19.2.20",
+    "@angular/cli": "19.2.20",
+    "@angular/compiler-cli": "19.2.20",
     "@types/jasmine": "~5.1.0",
     "jasmine-core": "~5.2.0",
     "karma": "~6.4.0",
@@ -39,3 +42,4 @@
     "typescript": "~5.5.2"
   }
 }
+

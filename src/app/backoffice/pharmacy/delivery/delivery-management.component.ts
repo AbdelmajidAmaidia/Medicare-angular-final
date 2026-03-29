@@ -21,7 +21,7 @@ export interface Delivery {
   template: `
     <div class="page-container">
       <div class="page-header mb-4">
-        <h1 class="page-title">Gestion des Livraisons</h1>
+        <h1 class="page-title"><i class="bi bi-truck" style="margin-right:.5rem;color:#3b82f6"></i>Gestion des Livraisons</h1>
         <p class="page-subtitle">{{ deliveries.length }} livraison(s) actives</p>
       </div>
       <div class="table-card">

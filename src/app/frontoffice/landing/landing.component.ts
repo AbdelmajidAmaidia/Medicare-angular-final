@@ -2,11 +2,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+import { LanguageSwitcherComponent } from '../../shared/language-switcher/language-switcher.component';
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, TranslateModule, LanguageSwitcherComponent],
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss'],
 })
@@ -16,77 +18,77 @@ export class LandingComponent {
   openFaq: number | null = null;
 
   stats = [
-    { value: '50 000+', label: 'Patients actifs' },
-    { value: '1 200+', label: 'Diagnostics / jour' },
-    { value: '98.4%',  label: 'Précision IA' },
-    { value: '4.9/5',  label: 'Satisfaction' },
+    { value: '50 000+', labelKey: 'LANDING.STATS.ACTIVE_PATIENTS' },
+    { value: '1 200+',  labelKey: 'LANDING.STATS.DIAGNOSTICS_DAY' },
+    { value: '98.4%',   labelKey: 'LANDING.STATS.AI_ACCURACY' },
+    { value: '4.9/5',   labelKey: 'LANDING.STATS.SATISFACTION' },
   ];
 
   features = [
     {
       icon: 'fa-robot',
       color: 'blue',
-      title: 'IA Diagnostique',
-      desc: 'Notre moteur d\'IA analyse vos symptômes et antécédents médicaux pour fournir des diagnostics rapides et précis.',
-      points: [
-        'Analyse multi-pathologies',
-        'Suggestions de spécialistes',
-        'Rapport PDF généré automatiquement',
+      titleKey: 'LANDING.FEATURES.AI_DIAG.TITLE',
+      descKey: 'LANDING.FEATURES.AI_DIAG.DESC',
+      pointKeys: [
+        'LANDING.FEATURES.AI_DIAG.POINT_1',
+        'LANDING.FEATURES.AI_DIAG.POINT_2',
+        'LANDING.FEATURES.AI_DIAG.POINT_3',
       ],
     },
     {
       icon: 'fa-brain',
       color: 'green',
-      title: 'Santé Mentale',
-      desc: 'Détection du stress, de l\'anxiété et du burnout via reconnaissance faciale et suivi comportemental.',
-      points: [
-        'Analyse faciale en temps réel',
-        'Score bien-être quotidien',
-        'Alertes préventives',
+      titleKey: 'LANDING.FEATURES.MENTAL.TITLE',
+      descKey: 'LANDING.FEATURES.MENTAL.DESC',
+      pointKeys: [
+        'LANDING.FEATURES.MENTAL.POINT_1',
+        'LANDING.FEATURES.MENTAL.POINT_2',
+        'LANDING.FEATURES.MENTAL.POINT_3',
       ],
     },
     {
       icon: 'fa-calendar-check',
       color: 'cyan',
-      title: 'Rendez-vous Smart',
-      desc: 'Système de planification intelligent qui optimise les créneaux et réduit les temps d\'attente.',
-      points: [
-        'Réservation instantanée',
-        'Rappels automatiques',
-        'Téléconsultation intégrée',
+      titleKey: 'LANDING.FEATURES.APPOINTMENTS.TITLE',
+      descKey: 'LANDING.FEATURES.APPOINTMENTS.DESC',
+      pointKeys: [
+        'LANDING.FEATURES.APPOINTMENTS.POINT_1',
+        'LANDING.FEATURES.APPOINTMENTS.POINT_2',
+        'LANDING.FEATURES.APPOINTMENTS.POINT_3',
       ],
     },
     {
       icon: 'fa-flask',
       color: 'orange',
-      title: 'Résultats de Labo',
-      desc: 'Consultez vos résultats biologiques et obtenez une explication claire en langage naturel.',
-      points: [
-        'Synchronisation directe',
-        'Interprétation IA',
-        'Historique complet',
+      titleKey: 'LANDING.FEATURES.LAB.TITLE',
+      descKey: 'LANDING.FEATURES.LAB.DESC',
+      pointKeys: [
+        'LANDING.FEATURES.LAB.POINT_1',
+        'LANDING.FEATURES.LAB.POINT_2',
+        'LANDING.FEATURES.LAB.POINT_3',
       ],
     },
     {
       icon: 'fa-pills',
       color: 'purple',
-      title: 'Ordonnances Digitales',
-      desc: 'Gérez, renouvelez et envoyez vos ordonnances directement à votre pharmacie partenaire.',
-      points: [
-        'QR code sécurisé',
-        'Renouvellement en 1 clic',
-        'Rappels de prise',
+      titleKey: 'LANDING.FEATURES.PRESCRIPTIONS.TITLE',
+      descKey: 'LANDING.FEATURES.PRESCRIPTIONS.DESC',
+      pointKeys: [
+        'LANDING.FEATURES.PRESCRIPTIONS.POINT_1',
+        'LANDING.FEATURES.PRESCRIPTIONS.POINT_2',
+        'LANDING.FEATURES.PRESCRIPTIONS.POINT_3',
       ],
     },
     {
       icon: 'fa-shield-heart',
       color: 'red',
-      title: 'Dossier Médical',
-      desc: 'Un dossier médical unifié, sécurisé et accessible par votre équipe soignante autorisée.',
-      points: [
-        'Chiffrement de bout en bout',
-        'Accès partagé sécurisé',
-        'Export FHIR compatible',
+      titleKey: 'LANDING.FEATURES.RECORDS.TITLE',
+      descKey: 'LANDING.FEATURES.RECORDS.DESC',
+      pointKeys: [
+        'LANDING.FEATURES.RECORDS.POINT_1',
+        'LANDING.FEATURES.RECORDS.POINT_2',
+        'LANDING.FEATURES.RECORDS.POINT_3',
       ],
     },
   ];
@@ -94,36 +96,36 @@ export class LandingComponent {
   steps = [
     {
       icon: 'fa-user-plus',
-      title: 'Créez votre compte',
-      desc: 'Inscription en 2 minutes avec validation d\'identité sécurisée. Renseignez votre profil médical de base.',
+      titleKey: 'LANDING.HOW_IT_WORKS.STEPS.STEP_1.TITLE',
+      descKey: 'LANDING.HOW_IT_WORKS.STEPS.STEP_1.DESC',
     },
     {
       icon: 'fa-stethoscope',
-      title: 'Décrivez vos symptômes',
-      desc: 'Notre IA analyse vos symptômes, votre historique et vos constantes pour établir un pré-diagnostic.',
+      titleKey: 'LANDING.HOW_IT_WORKS.STEPS.STEP_2.TITLE',
+      descKey: 'LANDING.HOW_IT_WORKS.STEPS.STEP_2.DESC',
     },
     {
       icon: 'fa-heart-pulse',
-      title: 'Recevez votre suivi',
-      desc: 'Consultez votre bilan de santé, prenez rendez-vous et suivez votre évolution en temps réel.',
+      titleKey: 'LANDING.HOW_IT_WORKS.STEPS.STEP_3.TITLE',
+      descKey: 'LANDING.HOW_IT_WORKS.STEPS.STEP_3.DESC',
     },
   ];
 
   testimonials = [
     {
-      text: 'MediCare AI a détecté mon niveau de stress bien avant que je ne réalise à quel point j\'étais épuisée. Le suivi est incroyablement précis.',
+      text: 'MediCare AI detected my stress level well before I realized how exhausted I was. The tracking is incredibly accurate.',
       name: 'Salma B.',
-      role: 'Enseignante, Tunis',
+      role: 'Teacher, Tunis',
       initials: 'SB',
     },
     {
-      text: 'En tant que médecin, j\'apprécie la qualité des pré-diagnostics. Cela me permet de me concentrer sur les cas complexes et de mieux servir mes patients.',
+      text: 'As a doctor, I appreciate the quality of pre-diagnoses. It allows me to focus on complex cases and better serve my patients.',
       name: 'Dr. Karim M.',
-      role: 'Médecin généraliste, Sfax',
+      role: 'General Practitioner, Sfax',
       initials: 'KM',
     },
     {
-      text: 'La gestion de mes ordonnances et rendez-vous sur une seule plateforme est un vrai gain de temps. Je recommande à toute ma famille.',
+      text: 'Managing my prescriptions and appointments on a single platform is a real time-saver. I recommend it to my whole family.',
       name: 'Mehdi T.',
       role: 'Entrepreneur, Sousse',
       initials: 'MT',
@@ -132,24 +134,24 @@ export class LandingComponent {
 
   faqItems = [
     {
-      q: 'MediCare AI remplace-t-il un médecin ?',
-      a: 'Non. MediCare AI est un outil d\'aide à la décision médicale. Il complète l\'expertise du médecin en fournissant des analyses préliminaires et un suivi continu, mais ne se substitue jamais à une consultation médicale professionnelle.',
+      q: 'Does MediCare AI replace a doctor?',
+      a: 'No. MediCare AI is a medical decision-support tool. It complements the doctor\'s expertise by providing preliminary analyses and continuous monitoring, but never replaces a professional medical consultation.',
     },
     {
-      q: 'Mes données de santé sont-elles sécurisées ?',
-      a: 'Absolument. Toutes vos données sont chiffrées de bout en bout, hébergées sur des serveurs certifiés HDS (Hébergeur de Données de Santé) et traitées en conformité totale avec le RGPD. Vous gardez le contrôle total sur vos données.',
+      q: 'Is my health data secure?',
+      a: 'Absolutely. All your data is end-to-end encrypted, hosted on HDS-certified servers (Health Data Host) and processed in full compliance with GDPR. You retain full control over your data.',
     },
     {
-      q: 'La plateforme est-elle gratuite ?',
-      a: 'Un accès de base est disponible gratuitement avec les fonctionnalités essentielles. Des formules Premium offrent l\'accès à l\'analyse IA avancée, la téléconsultation illimitée et le dossier médical complet.',
+      q: 'Is the platform free?',
+      a: 'Basic access is available for free with essential features. Premium plans offer access to advanced AI analysis, unlimited teleconsultation, and complete medical records.',
     },
     {
-      q: 'Comment fonctionne la détection du stress par IA ?',
-      a: 'Notre système analyse des micro-expressions faciales via votre caméra (avec votre consentement explicite), combinées à vos données de sommeil et d\'activité, pour calculer un indice de bien-être mental quotidien.',
+      q: 'How does AI stress detection work?',
+      a: 'Our system analyzes facial micro-expressions via your camera (with your explicit consent), combined with your sleep and activity data, to calculate a daily mental wellbeing index.',
     },
     {
-      q: 'Puis-je utiliser MediCare AI pour mes enfants ?',
-      a: 'Oui. La plateforme prend en charge des profils familiaux. Un parent peut gérer les dossiers de santé de ses enfants mineurs avec des parcours adaptés à chaque tranche d\'âge.',
+      q: 'Can I use MediCare AI for my children?',
+      a: 'Yes. The platform supports family profiles. A parent can manage the health records of their minor children with pathways adapted to each age group.',
     },
   ];
 

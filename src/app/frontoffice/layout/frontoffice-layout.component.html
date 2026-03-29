@@ -13,28 +13,31 @@
       </button>
       
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
+        <ul class="navbar-nav ms-auto align-items-center">
           <li class="nav-item">
-            <a class="nav-link" routerLink="/landing">Accueil</a>
+            <a class="nav-link" routerLink="/landing">{{ 'NAV.HOME' | translate }}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/about">À Propos</a>
+            <a class="nav-link" routerLink="/about">{{ 'NAV.ABOUT' | translate }}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/services">Services</a>
+            <a class="nav-link" routerLink="/services">{{ 'NAV.SERVICES' | translate }}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/blog">Blog</a>
+            <a class="nav-link" routerLink="/blog">{{ 'NAV.BLOG' | translate }}</a>
           </li>
           <li class="nav-item">
-            <a class="btn btn-primary ms-2" routerLink="/auth">Connexion</a>
+            <a class="btn btn-primary ms-2" routerLink="/auth">{{ 'NAV.LOGIN' | translate }}</a>
+          </li>
+          <li class="nav-item ms-2">
+            <app-language-switcher></app-language-switcher>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <!-- Contenu Principal -->
+  <!-- Main Content -->
   <main class="main-content">
     <router-outlet></router-outlet>
   </main>
@@ -45,18 +48,18 @@
       <div class="row">
         <div class="col-md-4">
           <h5 class="text-primary">MediCare AI</h5>
-          <p>Plateforme médicale intelligente pour des soins de qualité.</p>
+          <p>{{ 'FOOTER.TAGLINE' | translate }}</p>
         </div>
         <div class="col-md-4">
-          <h6>Liens Rapides</h6>
+          <h6>{{ 'NAV.SERVICES' | translate }}</h6>
           <ul class="list-unstyled">
-            <li><a href="#" class="text-light text-decoration-none">Services</a></li>
-            <li><a href="#" class="text-light text-decoration-none">Contact</a></li>
+            <li><a href="#" class="text-light text-decoration-none">{{ 'NAV.SERVICES' | translate }}</a></li>
+            <li><a href="#" class="text-light text-decoration-none">{{ 'FOOTER.CONTACT' | translate }}</a></li>
           </ul>
         </div>
         <div class="col-md-4">
-          <h6>Contact</h6>
-          <p><i class="bi bi-envelope me-2"></i>contact@medicareai.com</p>
+          <h6>{{ 'FOOTER.CONTACT' | translate }}</h6>
+          <p><i class="bi bi-envelope me-2"></i>contact&#64;medicareai.com</p>
           <p><i class="bi bi-telephone me-2"></i>+33 1 23 45 67 89</p>
         </div>
       </div>

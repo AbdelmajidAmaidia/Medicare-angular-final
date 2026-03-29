@@ -7,9 +7,11 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterModule, Router } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NavigationService } from '../../services/navigation.service';
 import { AuthService } from '../../services/auth.service';
 import { LayoutNavigationService, NavItem, NavSection } from './navigation.service';
+import { LanguageSwitcherComponent } from '../../shared/language-switcher/language-switcher.component';
 
 // Re-export for existing consumers
 export type { NavItem, NavSection };
@@ -40,7 +42,7 @@ export interface CurrentUser {
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterModule],
+  imports: [CommonModule, RouterOutlet, RouterModule, TranslateModule, LanguageSwitcherComponent],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',
 })
@@ -56,24 +58,24 @@ export class LayoutComponent implements OnInit {
   notifications: AppNotification[] = [
     {
       id: '1',
-      title: 'Nouveau rendez-vous demain',
-      time: 'Il y a 5 minutes',
+      title: 'LAYOUT.NOTIF.NEW_APPOINTMENT',
+      time: 'LAYOUT.NOTIF.NEW_APPOINTMENT_TIME',
       type: 'info',
       icon: 'bi-calendar-event',
       read: false,
     },
     {
       id: '2',
-      title: "Résultats d'analyse disponibles",
-      time: 'Il y a 2 heures',
+      title: 'LAYOUT.NOTIF.LAB_RESULTS',
+      time: 'LAYOUT.NOTIF.LAB_RESULTS_TIME',
       type: 'success',
       icon: 'bi-file-medical',
       read: false,
     },
     {
       id: '3',
-      title: 'Mise à jour système disponible',
-      time: 'Hier',
+      title: 'LAYOUT.NOTIF.SYSTEM_UPDATE',
+      time: 'LAYOUT.NOTIF.SYSTEM_UPDATE_TIME',
       type: 'warning',
       icon: 'bi-arrow-up-circle',
       read: true,
@@ -85,6 +87,7 @@ export class LayoutComponent implements OnInit {
     private navService: NavigationService,
     private authService: AuthService,
     private layoutNavService: LayoutNavigationService,
+    private translate: TranslateService,
   ) {}
 
   ngOnInit(): void {
@@ -121,6 +124,14 @@ export class LayoutComponent implements OnInit {
    */
   closeMobileMenu(): void {
     this.mobileMenuOpen = false;
+  }
+
+  /**
+   * Bascule le panneau de messages
+   */
+  toggleMessages(): void {
+    // TODO: implémenter l'affichage du panneau de messagerie
+    console.log('Messages panel toggled');
   }
 
   /**
@@ -213,16 +224,17 @@ export class LayoutComponent implements OnInit {
   }
 
   /**
-   * Retourne le libellé du rôle en français
+   * Returns role label using translation key
    */
   getRoleLabel(): string {
-    const labels: Record<string, string> = {
-      patient: 'Patient',
-      doctor: 'Médecin',
-      lab: 'Technicien Labo',
-      pharmacy: 'Pharmacien',
-      admin: 'Administrateur',
+    const roleKeys: Record<string, string> = {
+      patient: 'ROLES.PATIENT',
+      doctor: 'ROLES.DOCTOR',
+      lab: 'ROLES.LAB',
+      pharmacy: 'ROLES.PHARMACY',
+      admin: 'ROLES.ADMIN',
     };
-    return labels[this.currentUser?.role ?? ''] ?? 'Utilisateur';
+    const key = roleKeys[this.currentUser?.role ?? ''] ?? 'ROLES.PATIENT';
+    return this.translate.instant(key);
   }
 }
