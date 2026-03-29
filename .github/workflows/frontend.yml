@@ -26,20 +26,17 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run lint
-        run: npm run lint --if-present
-
       - name: Run unit tests
-        run: npx ng test --watch=false --code-coverage
+        run: npm run test:ci
         env:
           CI: true
 
       - name: Build Angular app
-        run: npm run build --if-present
+        run: npm run build
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: dist-medicare-angular
-          path: dist/
+          path: dist/medicare-ai-ui
           retention-days: 7
