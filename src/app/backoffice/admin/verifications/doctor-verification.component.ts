@@ -18,6 +18,7 @@ export interface VerificationRequest {
 @Component({
   selector: 'app-doctor-verification',
   standalone: true,
+  imports: [CommonModule],
   templateUrl: './doctor-verification.component.html',
 })
 export class DoctorVerificationComponent {

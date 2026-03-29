@@ -20,6 +20,7 @@ export interface DoctorPatient {
 @Component({
   selector: 'app-patient-list',
   standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './patient-list.component.html',
 })
 export class PatientListComponent {

@@ -24,6 +24,7 @@ export interface UpcomingAppointment {
 @Component({
   selector: 'app-patient-dashboard',
   standalone: true,
+  imports: [CommonModule],
   templateUrl: './patient-dashboard.component.html',
   styleUrl: './patient-dashboard.component.scss',
 })
