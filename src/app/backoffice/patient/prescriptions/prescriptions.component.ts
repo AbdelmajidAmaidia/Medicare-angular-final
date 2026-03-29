@@ -21,7 +21,7 @@ export interface Prescription {
   template: `
     <div class="page-container">
       <div class="page-header mb-4">
-        <h1 class="page-title">Mes Ordonnances</h1>
+        <h1 class="page-title"><i class="bi bi-capsule" style="margin-right:.5rem;color:#3b82f6"></i>Mes Ordonnances</h1>
         <p class="page-subtitle">{{ prescriptions.length }} ordonnance(s)</p>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem">

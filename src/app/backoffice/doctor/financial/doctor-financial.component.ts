@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
   template: `
     <div class="page-container">
       <div class="page-header mb-4">
-        <h1 class="page-title">Mes Finances</h1>
+        <h1 class="page-title"><i class="bi bi-graph-up" style="margin-right:.5rem;color:#3b82f6"></i>Mes Finances</h1>
       </div>
       <div class="stats-grid mb-4" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem">
         <div class="stat-card stat-card--success" style="display:flex;align-items:flex-start;gap:1rem;background:#fff;border-radius:12px;padding:1.25rem;border:1px solid #e2e8f0">

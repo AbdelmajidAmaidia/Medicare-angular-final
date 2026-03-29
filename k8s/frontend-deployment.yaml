@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: medicare-frontend
+  namespace: medicare
+  labels:
+    app: medicare-frontend
+    app.kubernetes.io/part-of: medicare
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: medicare-frontend
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: medicare-frontend
+      annotations:
+        # Prometheus will scrape Nginx stub-status metrics via the sidecar
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9113"
+    spec:
+      containers:
+        # ── Main Angular/Nginx container ──────────────────────────────────
+        - name: frontend
+          # Replace with your actual image, e.g.:
+          #   docker.io/<your-dockerhub-user>/medicare-frontend:latest
+          image: medicare-frontend:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+              name: http
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 15
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "200m"
+              memory: "128Mi"
+
+        # ── Nginx Prometheus exporter sidecar ─────────────────────────────
+        - name: nginx-exporter
+          image: nginx/nginx-prometheus-exporter:1.1
+          args:
+            - --nginx.scrape-uri=http://localhost:80/nginx_status
+          ports:
+            - containerPort: 9113
+              name: metrics
+          resources:
+            requests:
+              cpu: "10m"
+              memory: "16Mi"
+            limits:
+              cpu: "50m"
+              memory: "32Mi"

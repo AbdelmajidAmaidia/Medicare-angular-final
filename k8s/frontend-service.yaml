@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: medicare-frontend
+  namespace: medicare
+  labels:
+    app: medicare-frontend
+    app.kubernetes.io/part-of: medicare
+spec:
+  selector:
+    app: medicare-frontend
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      protocol: TCP
+  type: ClusterIP

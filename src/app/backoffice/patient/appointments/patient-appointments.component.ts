@@ -23,7 +23,7 @@ export interface PatientAppointment {
     <div class="page-container">
       <div class="page-header d-flex align-items-center justify-content-between flex-wrap gap-3 mb-4">
         <div>
-          <h1 class="page-title">Mes Rendez-vous</h1>
+          <h1 class="page-title"><i class="bi bi-calendar-event" style="margin-right:.5rem;color:#3b82f6"></i>Mes Rendez-vous</h1>
           <p class="page-subtitle">{{ appointments.length }} rendez-vous au total</p>
         </div>
         <button class="btn btn-primary"><i class="bi bi-calendar-plus"></i> Nouveau RDV</button>

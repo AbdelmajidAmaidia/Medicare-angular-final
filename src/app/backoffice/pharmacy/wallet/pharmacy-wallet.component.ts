@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
   template: `
     <div class="page-container" style="max-width:800px">
       <div class="page-header mb-4">
-        <h1 class="page-title">Portefeuille</h1>
+        <h1 class="page-title"><i class="bi bi-wallet2" style="margin-right:.5rem;color:#3b82f6"></i>Portefeuille</h1>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem">
         <div style="background:linear-gradient(135deg,#3b82f6,#2563eb);border-radius:16px;padding:1.5rem;color:#fff">

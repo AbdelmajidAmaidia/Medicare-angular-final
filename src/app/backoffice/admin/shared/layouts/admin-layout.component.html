@@ -1,10 +1,10 @@
 <!-- src/app/backoffice/admin/shared/layouts/admin-layout.component.html -->
 <div class="admin-wrapper" [class.sidebar-collapsed]="sidebarCollapsed">
 
-  <!-- ═══════════════════════ BARRE LATÉRALE ═══════════════════════ -->
+  <!-- ═══════════════════════ SIDEBAR ═══════════════════════ -->
   <aside class="admin-sidebar">
 
-    <!-- En-tête -->
+    <!-- Header -->
     <div class="admin-sidebar__header">
       <a routerLink="/" class="admin-sidebar__brand">
         <i class="bi bi-hospital brand-icon"></i>
@@ -13,84 +13,87 @@
       <button
         class="admin-sidebar__toggle"
         (click)="toggleSidebar()"
-        [title]="sidebarCollapsed ? 'Développer' : 'Réduire'"
-        aria-label="Basculer la barre latérale"
+        [title]="sidebarCollapsed ? ('ADMIN_LAYOUT.EXPAND' | translate) : ('ADMIN_LAYOUT.COLLAPSE' | translate)"
+        [attr.aria-label]="'ADMIN_LAYOUT.TOGGLE_SIDEBAR' | translate"
       >
         <i class="bi" [ngClass]="sidebarCollapsed ? 'bi-chevron-double-right' : 'bi-chevron-double-left'"></i>
       </button>
     </div>
 
-    <!-- Navigation principale -->
-    <nav class="admin-sidebar__nav" aria-label="Navigation administrateur">
+    <!-- Main Navigation -->
+    <nav class="admin-sidebar__nav" [attr.aria-label]="'ADMIN_LAYOUT.MAIN_MENU' | translate">
 
       <div class="nav-section">
-        <span class="nav-section__label">MENU PRINCIPAL</span>
+        <span class="nav-section__label">{{ 'ADMIN_LAYOUT.MAIN_MENU' | translate }}</span>
         <a
           *ngFor="let item of mainNavItems"
           [routerLink]="item.route"
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
           class="nav-link"
-          [title]="sidebarCollapsed ? item.label : ''"
+          [title]="sidebarCollapsed ? (item.labelKey | translate) : ''"
         >
           <i [class]="'bi ' + item.icon + ' nav-icon'"></i>
-          <span class="nav-label">{{ item.label }}</span>
+          <span class="nav-label">{{ item.labelKey | translate }}</span>
         </a>
       </div>
 
       <div class="nav-section">
-        <span class="nav-section__label">ADMINISTRATION</span>
+        <span class="nav-section__label">{{ 'ADMIN_LAYOUT.ADMINISTRATION' | translate }}</span>
         <a
           *ngFor="let item of adminNavItems"
           [routerLink]="item.route"
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
           class="nav-link"
-          [title]="sidebarCollapsed ? item.label : ''"
+          [title]="sidebarCollapsed ? (item.labelKey | translate) : ''"
         >
           <i [class]="'bi ' + item.icon + ' nav-icon'"></i>
-          <span class="nav-label">{{ item.label }}</span>
+          <span class="nav-label">{{ item.labelKey | translate }}</span>
         </a>
       </div>
 
     </nav>
 
-    <!-- Pied de barre latérale -->
+    <!-- Sidebar Footer -->
     <div class="admin-sidebar__footer">
-      <button class="btn-logout" (click)="logout()" title="Déconnexion">
+      <button class="btn-logout" (click)="logout()" [title]="'ADMIN_LAYOUT.LOGOUT' | translate">
         <i class="bi bi-box-arrow-right nav-icon"></i>
-        <span class="nav-label">Déconnexion</span>
+        <span class="nav-label">{{ 'ADMIN_LAYOUT.LOGOUT' | translate }}</span>
       </button>
     </div>
 
   </aside>
 
-  <!-- ═══════════════════════ ZONE PRINCIPALE ═══════════════════════ -->
+  <!-- ═══════════════════════ MAIN AREA ═══════════════════════ -->
   <div class="admin-main">
 
-    <!-- Barre de navigation supérieure -->
+    <!-- Top Navigation Bar -->
     <header class="admin-topbar">
       <div class="admin-topbar__left">
         <button
           class="btn-icon"
           (click)="toggleSidebar()"
-          aria-label="Basculer la barre latérale"
+          [attr.aria-label]="'ADMIN_LAYOUT.TOGGLE_SIDEBAR' | translate"
         >
           <i class="bi bi-layout-sidebar"></i>
         </button>
-        <span class="admin-topbar__title">Panneau d'Administration</span>
+        <span class="admin-topbar__title">{{ 'ADMIN_LAYOUT.ADMIN_PANEL' | translate }}</span>
       </div>
 
       <div class="admin-topbar__right">
-        <!-- Menu utilisateur -->
+        <!-- Language Switcher -->
+        <app-language-switcher></app-language-switcher>
+
+        <!-- User Menu -->
         <div class="admin-user-dropdown" [class.open]="userDropdownOpen">
           <button
             class="btn-user"
             (click)="toggleUserDropdown()"
             [attr.aria-expanded]="userDropdownOpen"
-            aria-label="Menu utilisateur"
+            [attr.aria-label]="'LAYOUT.MY_PROFILE' | translate"
           >
-            <img [src]="getAvatarUrl()" alt="Avatar administrateur" class="user-avatar-sm" />
+            <img [src]="getAvatarUrl()" alt="Admin avatar" class="user-avatar-sm" />
             <span class="user-display-name d-none d-md-inline">
               {{ currentUser?.firstName }}
             </span>
@@ -105,13 +108,13 @@
             <li role="separator"><hr class="dropdown-divider" /></li>
             <li role="menuitem">
               <a routerLink="/dashboard/admin/settings" class="user-menu__item" (click)="userDropdownOpen = false">
-                <i class="bi bi-gear"></i> Paramètres
+                <i class="bi bi-gear"></i> {{ 'LAYOUT.SETTINGS' | translate }}
               </a>
             </li>
             <li role="separator"><hr class="dropdown-divider" /></li>
             <li role="menuitem">
               <button class="user-menu__item danger" (click)="logout()">
-                <i class="bi bi-box-arrow-right"></i> Déconnexion
+                <i class="bi bi-box-arrow-right"></i> {{ 'ADMIN_LAYOUT.LOGOUT' | translate }}
               </button>
             </li>
           </ul>
@@ -119,7 +122,7 @@
       </div>
     </header>
 
-    <!-- Contenu de la page -->
+    <!-- Page Content -->
     <main class="admin-content" id="admin-main-content">
       <router-outlet></router-outlet>
     </main>

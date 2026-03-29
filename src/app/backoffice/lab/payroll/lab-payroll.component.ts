@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
   template: `
     <div class="page-container" style="max-width:600px">
       <div class="page-header mb-4">
-        <h1 class="page-title">Ma Fiche de Paie</h1>
+        <h1 class="page-title"><i class="bi bi-wallet2" style="margin-right:.5rem;color:#3b82f6"></i>Ma Fiche de Paie</h1>
         <p class="page-subtitle">Mars 2026</p>
       </div>
       <div class="panel p-4" style="background:#fff;border:1px solid #e2e8f0;border-radius:12px">

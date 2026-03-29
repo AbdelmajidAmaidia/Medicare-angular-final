@@ -22,7 +22,7 @@ export interface Consultation {
   template: `
     <div class="page-container">
       <div class="page-header mb-4">
-        <h1 class="page-title">Historique des Consultations</h1>
+        <h1 class="page-title"><i class="bi bi-chat-dots" style="margin-right:.5rem;color:#3b82f6"></i>Historique des Consultations</h1>
       </div>
       <div class="table-card">
         <div class="table-responsive">
