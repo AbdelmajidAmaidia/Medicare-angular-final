@@ -36,7 +36,7 @@ pipeline {
   }
 
   post {
-    always {
+    success {
       archiveArtifacts artifacts: 'dist/**', allowEmptyArchive: false
     }
   }
