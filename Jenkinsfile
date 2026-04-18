@@ -18,7 +18,6 @@ pipeline {
 
     stage('Install dependencies') {
       steps {
-        sh 'npm cache clean --force'
         sh 'npm ci'
       }
     }
@@ -38,7 +37,7 @@ pipeline {
 
   post {
     always {
-      archiveArtifacts artifacts: 'dist/**', allowEmptyArchive: true
+      archiveArtifacts artifacts: 'dist/**', allowEmptyArchive: false
     }
   }
 }
