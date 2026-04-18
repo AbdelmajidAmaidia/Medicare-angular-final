@@ -11,9 +11,7 @@ export const roleGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
   // ✅ Obtenir l'utilisateur depuis le service
   const currentUser = authService.getCurrentUser();
 
-  if (currentUser && allowedRoles.includes(currentUser.role)) {
-    return true;
-  }
+
 
   // Si connecté mais mauvais rôle → rediriger vers son propre tableau de bord
   if (currentUser && VALID_ROLES.includes(currentUser.role)) {
